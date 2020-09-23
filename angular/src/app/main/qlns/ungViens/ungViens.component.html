@@ -1,0 +1,514 @@
+﻿<div [@routerTransition]>
+    <!-- <div [busyIf]="viewIsLoading" *ngIf="viewIsLoading"></div> -->
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <div class="col-xl-12" style="padding: 4px 17px 4px 1px;  background-color: #248cbf ;
+                    color: white;">
+                        <dx-button #myButton text="Thêm mới" stylingMode="text" type="default" icon="fa fa-plus"
+                            (onClick)="createUngVien()"> </dx-button>
+                        &nbsp;
+                        <dx-button #myButton text="Chỉnh sửa" stylingMode="text" type="default" icon="rename"
+                            [disabled]="a" (onClick)="editUngVien()"> </dx-button>
+                        &nbsp;
+                        <dx-button #myButton text="Xóa" stylingMode="text" type="default" icon="clear" [disabled]="a"
+                            (onClick)="deleteUngVien()">
+                        </dx-button>
+                        &nbsp;
+
+                        <dx-button #myButton text="Xem chi tiết" stylingMode="text" type="default" icon="menu"
+                            [disabled]="a" (onClick)="viewDetailUngVien()"></dx-button>
+                        &nbsp;
+
+
+                        <dx-button #myButton text="Tìm kiếm" stylingMode="text" type="default" icon="fa fa-search"
+                            (onClick)="searchUngVien()">
+                        </dx-button>
+
+                        &nbsp;
+                        <dx-button text="Tải mẫu Import" *ngIf="permission.isGranted('Pages.UngViens.Export')"
+                            type="success" icon="exportpdf" (onClick)="dowloadTemplate()">
+                        </dx-button>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body">
+                    <div class="kt-subheader__main">
+                        <h3 class="kt-subheader__title">
+                            <span style="font-family: Arial, Helvetica, sans-serif;
+							font-size: 76%;
+							font-weight: bold;
+							color: #246faf;"> <i class="fas fa-home"></i> {{l("Trang chủ")}} | {{l("Danh sách ứng viên")}} </span>
+                        </h3>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+
+                        </div>
+                        <div class="col-md-auto">
+                            <dx-button stylingMode="contained" icon="pulldown" text="Làm mới" type="default"
+                                [width]="140" (onClick)="lamtuoi()">
+                            </dx-button>
+
+                        </div>
+
+                        <div class="col col-lg-2" *ngIf="permission.isGranted('Pages.UngViens.Import')">
+
+                            <dx-file-uploader icon="save" uploadUrl="{{uploadUrl}}" #fileUploader1 [multiple]="true"
+                                selectButtonText="Import" labelText="" accept="*" [(value)]="value"
+                                uploadMode="instantly" showFileList="false" (onUploaded)="importToExcel()">
+                            </dx-file-uploader>
+
+                        </div>
+                    </div>
+                    <br>
+
+                    <form class="kt-form" autocomplete="off">
+                        <div>
+                            <div class="row align-items-center">
+                                <div class="col-xl-12">
+                                    <div class="form-group m-form__group align-items-center">
+                                        <div class="input-group">
+                                            <input [(ngModel)]="filterText" name="filterText" autoFocus
+                                                class="form-control m-input" [placeholder]="l('Tìm kiếm theo Mã ứng viên, họ và tên, số điện thoại')"
+                                                type="text">
+                                            <span class="input-group-btn">
+                                                <button (click)="getUngViens()" class="btn btn-action" type="submit"><i
+                                                        class="flaticon-search-1"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="ViTriUngTuyenCodeFilter">{{l("ViTriUngTuyenCode")}}</label>
+
+                                        <select class="form-control" id="ViTriUngTuyenCodeFilter"
+                                            [(ngModel)]="viTriUngTuyenCodeFilter" name="viTriUngTuyenCodeFilter">
+                                            (change)="getUngViens()"
+                                            <option value="">--- Tất cả ---</option>
+                                            <option *ngFor="let item of viTriCongViec" [ngValue]="item.cdName">
+                                                {{item.value}}</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="KenhTuyenDungCodeFilter">{{l("KenhTuyenDungCode")}}</label>
+
+                                        <select class="form-control" id="KenhTuyenDungCodeFilter"
+                                            name="kenhTuyenDungCodeFilter" [(ngModel)]="kenhTuyenDungCodeFilter">
+                                            (change)="getUngViens()"
+                                            <option value="">--- Tất cả ---</option>
+                                            <option *ngFor="let item of kenhTuyenDung" [ngValue]="item.cdName">
+                                                {{item.value}}</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="GioiTinhCodeFilter">{{l("GioiTinhCode")}}</label>
+
+                                        <select class="form-control" id="GioiTinhCodeFilter" name="gioiTinhCodeFilter"
+                                            [(ngModel)]="gioiTinhCodeFilter">
+                                            (change)="getUngViens()"
+                                            <option value="">--- Tất cả ---</option>
+                                            <option *ngFor="let item of gioiTinh" [ngValue]="item.cdName">
+                                                {{item.value}}
+                                            </option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="TienDoTuyenDungCodeFilter">{{l("TienDoTuyenDungCode")}}</label>
+
+                                        <select class="form-control" id="TienDoTuyenDungCodeFilter"
+                                            name="tienDoTuyenDungCodeFilter" [(ngModel)]="tienDoTuyenDungCodeFilter">
+                                            (change)="getUngViens()"
+                                            <option value="">--- Tất cả ---</option>
+                                            <option *ngFor="let item of tienDoTuyenDung" [ngValue]="item.cdName">
+                                                {{item.value}}</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="TrangThaiCodeFilter">{{l("Trạng thái")}}</label>
+
+                                <select class="form-control" id="TrangThaiCodeFilter" name="trangThaiCodeFilter"
+                                    [(ngModel)]="trangThaiCodeFilter">
+                                    <!-- (change)="getUngViens()" -->
+                                    <option value="">--- Tất cả ---</option>
+                                    <option *ngFor="let item of trangThai" [ngValue]="item.cdName">
+                                        {{item.value}}</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="startDateFilter">{{l("Từ ngày")}}</label>
+                                <dx-date-box displayFormat="dd/MM/yyyy" [value]="startDateFilter" type="date"
+                                    [(ngModel)]="startDateFilter">
+
+                                </dx-date-box>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="endDateFilter">{{l("Đến ngày")}}</label>
+                                <dx-date-box displayFormat="dd/MM/yyyy" [value]="endDateFilter" type="date"
+                                    [(ngModel)]="endDateFilter">
+
+                                </dx-date-box>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="lastModificationTimeFilter"></label>
+                                <div class="checkbox">
+                                    <dx-check-box text="Ngày cập nhật" [value]="isCheckTimeFilter"
+                                        [(ngModel)]="isCheckTimeFilter">
+
+                                    </dx-check-box>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="MinDay1Filter">{{l("Ngày phỏng vấn vòng 1")}}</label>
+                                <div class="input-group">
+
+                                    <input class="form-control m-input" id="MinDay1Filter" name="MinDay1Filter"
+
+                                        type="datetime" bsDatepicker placeholder="{{l('Từ ngày')}}"
+                                        [(bsValue)]="minDay1Filter" value="{{ minDay1Filter | date:'dd/MM/yyyy' }}"
+                                        [(ngModel)]="minDay1Filter">
+
+
+
+                                    <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+
+
+                                    <input class="form-control m-input" id="MaxDay1Filter" name="MaxDay1Filter"
+                                        type="datetime" bsDatepicker placeholder="{{l('Đến ngày')}}"
+                                        [(bsValue)]="maxDay1Filter" value="{{ maxDay1Filter | date:'dd/MM/yyyy' }}"
+                                        [(ngModel)]="maxDay1Filter">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="MinDay2Filter">{{l("Ngày phỏng vấn vòng 2")}}</label>
+                                <div class="input-group">
+                                    <input class="form-control m-input" id="MinDay2Filter" name="MinDay2Filter"
+                                        type="datetime" bsDatepicker placeholder="{{l('Từ ngày')}}"
+                                        [(bsValue)]="minDay2Filter" value="{{ minDay2Filter | date:'dd/MM/yyyy' }}"
+                                        [(ngModel)]="minDay2Filter">
+                                    <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                    <input class="form-control m-input" id="MaxDay2Filter" name="MaxDay2Filter"
+                                        type="datetime" bsDatepicker placeholder="{{l('Đến ngày')}}"
+                                        [(bsValue)]="maxDay2Filter" value="{{ maxDay2Filter | date:'dd/MM/yyyy' }}"
+                                        [(ngModel)]="maxDay2Filter">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="MinDay3Filter">{{l("Ngày phỏng vấn vòng 3")}}</label>
+                                <div class="input-group">
+                                    <input class="form-control m-input" id="MinDay3Filter" name="MinDay3Filter"
+                                        type="datetime" bsDatepicker placeholder="{{l('Từ ngày')}}"
+                                        [(ngModel)]="minDay3Filter">
+                                    <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                    <input class="form-control m-input" id="MaxDay3Filter" name="MaxDay3Filter"
+                                        type="datetime" bsDatepicker placeholder="{{l('Đến ngày')}}"
+                                        [(bsValue)]="maxDay3Filter" value="{{ maxDay3Filter | date:'dd/MM/yyyy' }}"
+                                        [(ngModel)]="maxDay3Filter">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <!-- <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="day1Filter">{{l("Ngày phỏng vấn vòng 1")}}</label>
+                                <dx-date-box displayFormat="d/M/yyyy" [value]="day1Filter" type="date"
+                                    [(ngModel)]="day1Filter">
+
+                                </dx-date-box>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="day2Filter">{{l("Ngày phỏng vấn vòng 2")}}</label>
+                                <dx-date-box displayFormat="d/M/yyyy" [value]="day2Filter" type="date"
+                                    [(ngModel)]="day2Filter">
+
+                                </dx-date-box>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="day3Filter">{{l("Ngày phỏng vấn vòng 3")}}</label>
+                                <dx-date-box displayFormat="d/M/yyyy" [value]="day3Filter" type="date"
+                                    [(ngModel)]="day3Filter">
+
+                                </dx-date-box>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div class="row align-items-center">
+                        <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                            <!-- <p-table #dataTable (onLazyLoad)="getUngViens($event)" [value]="primengTableHelper.records"
+                                rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false"
+                                [lazy]="false" [scrollable]="true" ScrollWidth="100%"
+                                [responsive]="primengTableHelper.isResponsive"
+                                [resizableColumns]="primengTableHelper.resizableColumns"> -->
+                                <p-table #dataTable scrollHeight="450px" (onLazyLoad)="getUngViens($event)"
+                                    [value]="primengTableHelper.records"
+                                    rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false"
+                                    [lazy]="false" [scrollable]="true" ScrollWidth="100%"
+                                    [responsive]="primengTableHelper.isResponsive"
+                                    [resizableColumns]="primengTableHelper.resizableColumns">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 70px">
+                                            {{l('STT')}}</th>
+
+                                        <th style="width: 200px" pSortableColumn="ungVien.maUngVien">
+                                            {{l('Mã ứng viên')}}
+                                            <p-sortIcon field="ungVien.maUngVien"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 250px" pSortableColumn="ungVien.hoVaTen">
+                                            {{l('Họ và tên')}}
+                                            <p-sortIcon field="ungVien.hoVaTen"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 250px">
+                                            {{l('Vị trí ứng tuyển')}}
+                                        </th>
+                                        <th style="width: 250px">
+                                            {{l('Kênh tuyển dụng')}}
+                                        </th>
+                                        <th style="width: 250px">
+                                            {{l('Tiến độ tuyển dụng')}}
+                                        </th>
+                                        <th style="width: 100px">
+                                            {{l('Trạng thái')}}
+                                        </th>
+                                        <th style="width: 150px">
+                                            {{l('Giới tính')}}
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="ungVien.ngaySinh">
+                                            {{l('Ngày sinh')}}
+                                            <p-sortIcon field="ungVien.ngaySinh"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="ungVien.createTime">
+                                            {{l('Ngày tạo')}}
+                                            <p-sortIcon field="ungVien.createTime"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="ungVien.lastModificationTime">
+                                            {{l('Ngày cập nhật')}}
+                                            <p-sortIcon field="ungVien.lastModificationTime"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="ungVien.day1">
+                                            {{l('Ngày PV vòng 1')}}
+                                            <p-sortIcon field="ungVien.day1"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="ungVien.time1">
+                                            {{l('Thời gian pv vòng 1')}}
+                                            <p-sortIcon field="ungVien.time1"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="ungVien.day2">
+                                            {{l('Ngày PV vòng 2')}}
+                                            <p-sortIcon field="ungVien.day2"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="ungVien.time2">
+                                            {{l('Thời gian pv vòng 2')}}
+                                            <p-sortIcon field="ungVien.time2"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="ungVien.day3">
+                                            {{l('Ngày PV vòng 3')}}
+                                            <p-sortIcon field="ungVien.day3"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="ungVien.time3">
+                                            {{l('Thời gian pv vòng 3')}}
+                                            <p-sortIcon field="ungVien.time3"></p-sortIcon>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-record="$implicit" let-rowIndex="rowIndex" >
+                                    <tr [ngClass] = "{'highlighted' : record.ungVien.id == selectedName}" (click)="startEdit(record.ungVien.id)" style="white-space: nowrap;" >
+
+                                        <td style="width: 70px">
+                                            <span class="ui-column-title">{{l('STT')}}</span>
+                                            <!-- {{record.stt}} -->
+                                            {{rowIndex + 1}}
+                                        </td>
+
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Mã ứng viên')}}</span>
+                                            {{record.ungVien.maUngVien}}
+                                        </td>
+                                        <td style="width: 250px">
+                                            <span class="ui-column-title"> {{l('Họ và tên')}}</span>
+                                            {{record.ungVien.hoVaTen | truncate : 100 }}
+                                        </td>
+                                        <td style="width: 250px">
+                                            <span class="ui-column-title"> {{l('Vị trí ứng tuyển')}}</span>
+                                            {{record.viTriUngTuyenValue}}
+                                        </td>
+                                        <td style="width: 250px">
+                                            <span class="ui-column-title"> {{l('Kênh tuyển dụng')}}</span>
+                                            {{record.kenhTuyenDungValue}}
+                                        </td>
+                                        <td style="width: 250px">
+                                            <span class="ui-column-title"> {{l('Tiến độ tuyển dụng')}}</span>
+                                            {{record.tienDoTuyenDungValue}}
+                                        </td>
+                                        <td style="width: 100px">
+                                            <span class="ui-column-title"> {{l('Trạng thái')}}</span>
+                                            {{record.trangThaiValue}}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title"> {{l('Giới tính')}}</span>
+                                            {{record.gioiTinhValue}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Ngày sinh')}}</span>
+                                            {{record.ungVien.ngaySinh | date: 'dd/MM/yyyy'}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Ngày tạo')}}</span>
+                                            {{record.ungVien.createTime | date: 'dd/MM/yyyy'}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Ngày cập nhật')}}</span>
+                                            {{record.ungVien.lastModificationTime | date: 'dd/MM/yyyy'}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Ngày PV vòng 1')}}</span>
+                                            {{record.ungVien.day1 | date: 'dd/MM/yyyy '}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Thời gian pv vòng 1')}}</span>
+                                            {{record.ungVien.time1 }}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Ngày PV vòng 2')}}</span>
+                                            {{record.ungVien.day2 | date: 'dd/MM/yyyy'}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Thời gian pv vòng 2')}}</span>
+                                            {{record.ungVien.time2 }}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Ngày PV vòng 3')}}</span>
+                                            {{record.ungVien.day3 | date: 'dd/MM/yyyy '}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Thời gian pv vòng 3')}}</span>
+                                            {{record.ungVien.time3 }}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td style="width: 2048px" colspan="100">{{l('NoData')}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <div class="primeng-paging-container">
+                                <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                                    (onPageChange)="getUngViens($event)"
+                                    [totalRecords]="primengTableHelper.totalRecordsCount"
+                                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                                </p-paginator>
+                                <span class="total-records-count">
+                                    {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<style>
+    .dx-button-mode-text.dx-button-default {
+
+        color: #ffffff !important;
+    }
+
+    .dx-button-mode-text.dx-button-default .dx-icon {
+        color: #f3f6f9 !important;
+    }
+
+    tr.highlighted {
+        background-color: #639bb7 !important;
+        color: #ffffff !important;
+    }
+    tr:hover {
+        background-color: #639bb7 !important;
+        color: #ffffff !important;
+    }
+    .checkbox {
+        padding: 10px 0px;
+    }
+
+
+    .dx-button-has-text .dx-button-content {
+        padding: 7px 18px 8px;
+        background: #258cbe;
+
+    }
+
+    .dx-button-text {
+        line-height: normal;
+        color: white;
+    }
+
+
+</style>

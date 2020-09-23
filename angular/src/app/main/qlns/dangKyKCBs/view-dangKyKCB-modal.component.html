@@ -1,0 +1,46 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TenNoiKCB")}} :</h6>
+                        {{ item.dangKyKCB.tenNoiKCB }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MaNoiKCB")}} :</h6>
+                        {{ item.dangKyKCB.maNoiKCB }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DiaChi")}} :</h6>
+                        {{ item.dangKyKCB.diaChi }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TinhThanhID")}} :</h6>
+                        {{ item.dangKyKCB.tinhThanhID }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("GhiChu")}} :</h6>
+                        {{ item.dangKyKCB.ghiChu }}
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-action blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

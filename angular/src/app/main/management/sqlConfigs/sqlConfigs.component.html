@@ -1,0 +1,282 @@
+<div [@routerTransition]>
+  <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+      <div [class]="containerClass">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">
+                <span>{{l("SqlConfigs")}}</span>
+            </h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">
+                {{l("SqlConfigsHeaderInfo")}}
+            </span>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+				<button *ngIf="isGranted('Pages.SqlConfigs.Create')" (click)="createSqlConfig()" 
+			class="btn btn-action blue"><i class="fa fa-plus"></i> {{l("CreateNewSqlConfig")}}</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <form class="kt-form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="form-group m-form__group align-items-center">
+                                    <div class="input-group">
+                                        <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                                        <span class="input-group-btn">
+                                            <button (click)="getSqlConfigs()" class="btn btn-action" type="submit"><i class="flaticon-search-1"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         <div class="kt-separator kt-separator--border-dashed"></div>
+						     </div>
+
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="CodeFilter">{{l("Code")}}</label>
+									<input type="text" class="form-control" id="CodeFilter" name="codeFilter" [(ngModel)]="codeFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="NameFilter">{{l("Name")}}</label>
+									<input type="text" class="form-control" id="NameFilter" name="nameFilter" [(ngModel)]="nameFilter">
+								</div>
+                            </div>	
+							<div class="col-md-3">
+								<label for="IsRawQueryFilterSelect">{{l("IsRawQuery")}}</label>
+								<select class="form-control" name="IsRawQueryFilter" id="IsRawQueryFilterSelect" [(ngModel)]="isRawQueryFilter">
+								<option value="-1">{{l("All")}}</option>
+								<option value="0">{{l("False")}}</option>
+								<option value="1">{{l("True")}}</option>
+								</select>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="SqlContentFilter">{{l("SqlContent")}}</label>
+									<input type="text" class="form-control" id="SqlContentFilter" name="sqlContentFilter" [(ngModel)]="sqlContentFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinGroupLevelFilter">{{l("MinMax")}} {{l("GroupLevel")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinGroupLevelFilter" [(ngModel)]="minGroupLevelFilter" placeholder="{{l('MinValue')}}" name="minGroupLevelFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxGroupLevelFilter" placeholder="{{l('MaxValue')}}" name="maxGroupLevelFilter" />
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinDisplayTypeFilter">{{l("MinMax")}} {{l("DisplayType")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinDisplayTypeFilter" [(ngModel)]="minDisplayTypeFilter" placeholder="{{l('MinValue')}}" name="minDisplayTypeFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxDisplayTypeFilter" placeholder="{{l('MaxValue')}}" name="maxDisplayTypeFilter" />
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinVersionFilter">{{l("MinMax")}} {{l("Version")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinVersionFilter" [(ngModel)]="minVersionFilter" placeholder="{{l('MinValue')}}" name="minVersionFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxVersionFilter" placeholder="{{l('MaxValue')}}" name="maxVersionFilter" />
+									</div>
+                                </div>
+                            </div>	
+							<div class="col-md-3">
+								<label for="IsDynamicColumnFilterSelect">{{l("IsDynamicColumn")}}</label>
+								<select class="form-control" name="IsDynamicColumnFilter" id="IsDynamicColumnFilterSelect" [(ngModel)]="isDynamicColumnFilter">
+								<option value="-1">{{l("All")}}</option>
+								<option value="0">{{l("False")}}</option>
+								<option value="1">{{l("True")}}</option>
+								</select>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinTypeGetColumnFilter">{{l("MinMax")}} {{l("TypeGetColumn")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinTypeGetColumnFilter" [(ngModel)]="minTypeGetColumnFilter" placeholder="{{l('MinValue')}}" name="minTypeGetColumnFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxTypeGetColumnFilter" placeholder="{{l('MaxValue')}}" name="maxTypeGetColumnFilter" />
+									</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     scrollHeight="450px"
+                                     (onLazyLoad)="getSqlConfigs($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.SqlConfigs.Edit', 'Pages.SqlConfigs.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="code">
+                                        {{l('Code')}}
+                                        <p-sortIcon field="code"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="name"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="isRawQuery">
+                                        {{l('IsRawQuery')}}
+                                        <p-sortIcon field="isRawQuery"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="sqlContent">
+                                        {{l('SqlContent')}}
+                                        <p-sortIcon field="sqlContent"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="groupLevel">
+                                        {{l('GroupLevel')}}
+                                        <p-sortIcon field="groupLevel"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="displayType">
+                                        {{l('DisplayType')}}
+                                        <p-sortIcon field="displayType"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="version">
+                                        {{l('Version')}}
+                                        <p-sortIcon field="version"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="isDynamicColumn">
+                                        {{l('IsDynamicColumn')}}
+                                        <p-sortIcon field="isDynamicColumn"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="typeGetColumn">
+                                        {{l('TypeGetColumn')}}
+                                        <p-sortIcon field="typeGetColumn"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.SqlConfigs.Edit', 'Pages.SqlConfigs.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-action" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;"
+														(click)="viewSqlConfigModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+													<a href="javascript:;" *ngIf="permission.isGranted('Pages.SqlConfigs.Edit')"
+														(click)="createOrEditSqlConfigModal.show(record.sqlConfig.id)">{{l('Edit')}}</a>
+												</li>
+												<li>
+											        <a href="javascript:;" *ngIf="permission.isGranted('Pages.SqlConfigs.Delete')"
+														(click)="deleteSqlConfig(record.sqlConfig)">{{l('Delete')}}</a>
+                                                </li>
+                                                <li>
+											        <a href="javascript:;" *ngIf="permission.isGranted('Pages.SqlConfigs')"
+														(click)="navigateToConfig(record.sqlConfig.id)">Cấu hình</a>
+                                                </li>
+                                                <li *ngIf="!record.sqlConfig.isRawQuery">
+											        <a href="javascript:;" *ngIf="permission.isGranted('Pages.SqlConfigs')"
+														(click)="navigateToAddParam()">Thêm Param</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('Code')}}</span>
+											{{record.sqlConfig.code}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('Name')}}</span>
+											{{record.sqlConfig.name}}
+										</td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('IsRawQuery')}}</span>
+                                        <div *ngIf="record.sqlConfig.isRawQuery" class="text-center"><i class="fa fa-check-circle kt--font-success" title="True"></i></div>
+										<div *ngIf="!record.sqlConfig.isRawQuery" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('SqlContent')}}</span>
+											{{record.sqlConfig.sqlContent}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('GroupLevel')}}</span>
+											{{record.sqlConfig.groupLevel}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DisplayType')}}</span>
+											{{record.sqlConfig.displayType}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('Version')}}</span>
+											{{record.sqlConfig.version}}
+										</td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('IsDynamicColumn')}}</span>
+                                        <div *ngIf="record.sqlConfig.isDynamicColumn" class="text-center"><i class="fa fa-check-circle kt--font-success" title="True"></i></div>
+										<div *ngIf="!record.sqlConfig.isDynamicColumn" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TypeGetColumn')}}</span>
+											{{record.sqlConfig.typeGetColumn}}
+										</td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getSqlConfigs($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                            </p-paginator>
+                            <span class="total-records-count">
+                                {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <createOrEditSqlConfigModal #createOrEditSqlConfigModal (modalSave)="getSqlConfigs()"></createOrEditSqlConfigModal>
+    <viewSqlConfigModal #viewSqlConfigModal></viewSqlConfigModal>
+    
+  </div>
+</div>

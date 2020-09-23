@@ -1,0 +1,262 @@
+﻿<div [@routerTransition]>
+  <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+      <div [class]="containerClass">
+        <div class="kt-subheader__main">
+            <div class="col-xl-12" style="padding: 4px 17px 4px 1px;">
+                <dx-button #myButton text="Thêm mới" stylingMode="text" type="default" icon="fa fa-plus"
+                    (onClick)="createDangKyKCB()"> </dx-button>
+                &nbsp;
+            <!-- <h3 class="kt-subheader__title">
+                <span>{{l("DangKyKCBs")}}</span>
+            </h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">
+                Nơi đăng ký khám chữa bệnh
+            </span> -->
+            </div>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+				<button (click)="exportToExcel()" class="btn btn-outline-success"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                <!-- <button *ngIf="isGranted('Pages.DangKyKCBs.Create')" (click)="createDangKyKCB()" 
+			class="btn btn-action blue"><i class="fa fa-plus"></i> {{l("CreateNewDangKyKCB")}}</button> -->
+            </div>
+        </div>
+      </div>
+    </div>
+    <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">
+                        <span> <i class="fas fa-home"></i>  {{l("Trang chủ")}}   | {{l("Danh sách nơi khám bệnh")}} </span>
+                    </h3>
+                 
+                    </div>
+                    <br>
+                    <br> 
+                <form class="kt-form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="form-group m-form__group align-items-center">
+                                    <div class="input-group">
+                                        <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                                        <span class="input-group-btn">
+                                            <button (click)="getDangKyKCBs()" class="btn btn-action" type="submit"><i class="flaticon-search-1"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         <div class="kt-separator kt-separator--border-dashed"></div>
+						     </div>
+
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TenNoiKCBFilter">{{l("TenNoiKCB")}}</label>
+									<input type="text" class="form-control" id="TenNoiKCBFilter" name="tenNoiKCBFilter" [(ngModel)]="tenNoiKCBFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="MaNoiKCBFilter">{{l("MaNoiKCB")}}</label>
+									<input type="text" class="form-control" id="MaNoiKCBFilter" name="maNoiKCBFilter" [(ngModel)]="maNoiKCBFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DiaChiFilter">{{l("DiaChi")}}</label>
+									<input type="text" class="form-control" id="DiaChiFilter" name="diaChiFilter" [(ngModel)]="diaChiFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinTinhThanhIDFilter">{{l("MinMax")}} {{l("TinhThanhID")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinTinhThanhIDFilter" [(ngModel)]="minTinhThanhIDFilter" placeholder="{{l('MinValue')}}" name="minTinhThanhIDFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxTinhThanhIDFilter" placeholder="{{l('MaxValue')}}" name="maxTinhThanhIDFilter" />
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="GhiChuFilter">{{l("GhiChu")}}</label>
+									<input type="text" class="form-control" id="GhiChuFilter" name="ghiChuFilter" [(ngModel)]="ghiChuFilter">
+								</div>
+                            </div>
+
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     scrollHeight="450px"
+                                     (onLazyLoad)="getDangKyKCBs($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.DangKyKCBs.Edit', 'Pages.DangKyKCBs.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="tenNoiKCB">
+                                        {{l('TenNoiKCB')}}
+                                        <p-sortIcon field="dangKyKCB.tenNoiKCB"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="maNoiKCB">
+                                        {{l('MaNoiKCB')}}
+                                        <p-sortIcon field="dangKyKCB.maNoiKCB"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="diaChi">
+                                        {{l('DiaChi')}}
+                                        <p-sortIcon field="dangKyKCB.diaChi"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tinhThanhID">
+                                        {{l('TinhThanhID')}}
+                                        <p-sortIcon field="dangKyKCB.tinhThanhID"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ghiChu">
+                                        {{l('GhiChu')}}
+                                        <p-sortIcon field="dangKyKCB.ghiChu"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit">
+                                <tr  (mouseover)="highlightRow(record)"
+                                [ngClass] = "{'highlight' : record.dangKyKCB.id == selectedName}"  >
+
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.DangKyKCBs.Edit', 'Pages.DangKyKCBs.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-action" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;"
+														(click)="viewDangKyKCBModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+													<a href="javascript:;" *ngIf="permission.isGranted('Pages.DangKyKCBs.Edit')"
+														(click)="createOrEditDangKyKCBModal.show(record.dangKyKCB.id)">{{l('Edit')}}</a>
+												</li>
+												<li>
+											        <a href="javascript:;" *ngIf="permission.isGranted('Pages.DangKyKCBs.Delete')"
+														(click)="deleteDangKyKCB(record.dangKyKCB)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TenNoiKCB')}}</span>
+											{{record.dangKyKCB.tenNoiKCB}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('MaNoiKCB')}}</span>
+											{{record.dangKyKCB.maNoiKCB}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DiaChi')}}</span>
+											{{record.dangKyKCB.diaChi}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TinhThanhID')}}</span>
+											{{record.dangKyKCB.tinhThanhID}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('GhiChu')}}</span>
+											{{record.dangKyKCB.ghiChu}}
+										</td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getDangKyKCBs($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                            </p-paginator>
+                            <span class="total-records-count">
+                                {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <createOrEditDangKyKCBModal #createOrEditDangKyKCBModal (modalSave)="getDangKyKCBs()"></createOrEditDangKyKCBModal>
+    <viewDangKyKCBModal #viewDangKyKCBModal></viewDangKyKCBModal>
+    
+  </div>
+</div>
+
+<style>
+ 
+
+    #myButton  {  
+     color: white;  
+    
+ }
+  .dx-widget *:before {
+     -webkit-box-sizing: border-box;
+     box-sizing: border-box;
+     color: white;
+ }
+ .dx-button-content {
+     color: white;
+ }
+ .dx-row.dx-column-lines.dx-header-row
+ {
+     background-color:#248cbf ;
+ }
+ .dx-datagrid-borders > .dx-datagrid-headers, .dx-datagrid-borders > .dx-datagrid-filter-panel {
+     border-top: 1px solid #ddd;
+ }
+ .dx-checkbox-icon {
+     width: 22px;
+     height: 22px;
+     border-radius: 2px;
+     border: 1px solid #ddd;
+     background-color:#248cbf ;
+ }
+ tr.highlight {
+        background-color: #639bb7 !important;
+        color: #ffffff !important;
+    }
+     /* #gridContainer .dx-scrollable-scroll {  
+     height: 23px !important;  
+ }  
+     #gridContainer .dx-scrollable-scroll-content {  
+         background-color:#248cbf !important;
+         height: 23px !important;
+     }  */
+ </style>

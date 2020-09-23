@@ -1,0 +1,139 @@
+﻿<div [@routerTransition]>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title text-white">
+                        <span>{{l("Phân quyền")}}</span>
+                    </h3>
+                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                    <span class="kt-subheader__desc text-white">
+                {{l("Danh sách phân quyền")}}
+            </span>
+                </div>
+                <div class="kt-subheader__toolbar">
+                    <div class="kt-subheader__wrapper">
+                        <button *ngIf="isGranted('Pages.Administration.RoleMappers.Create')" (click)="createRoleMapper()" class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("Tạo mới")}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body">
+
+
+                    <div class="row align-items-center">
+                        <!--<Primeng-Datatable-Start>-->
+                            <div class="primeng-datatable-container col-12"
+                            [busyIf]="primengTableHelper.isLoading">
+                            <p-table #dataTable
+                                        scrollHeight="450px"
+                                        (onLazyLoad)="getRoleMappers($event)"
+                                        [value]="primengTableHelper.records"
+                                        rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                        [paginator]="false"
+                                        [lazy]="true"
+                                        [scrollable]="true"
+                                        ScrollWidth="100%"
+                                        [responsive]="primengTableHelper.isResponsive"
+                                        [resizableColumns]="primengTableHelper.resizableColumns">
+                               <ng-template pTemplate="header">
+                                   <tr>
+                                       <th style="width: 50px" [hidden]="!isGrantedAny('Pages.Administration.Roles.Edit', 'Pages.Administration.Roles.Delete')">{{l('Actions')}}</th>
+                                       <!-- <th style="width: 50px" pSortableColumn="id">
+                                           {{l('Role Id')}}
+                                           <p-sortIcon field="id"></p-sortIcon>
+                                       </th> -->
+                                       <th style="width: 100px" pSortableColumn="name">
+                                           {{l('Role Name')}}
+                                           <p-sortIcon field="name"></p-sortIcon>
+                                       </th>
+                                       <th style="width: 250px" pSortableColumn="labelId">
+                                           {{l('Label Name')}}
+                                           <p-sortIcon field="labelId"></p-sortIcon>
+                                       </th>
+
+
+                                   </tr>
+                               </ng-template>
+                               <ng-template pTemplate="body" let-record="$implicit">
+                                   <tr  (mouseover)="highlightRow(record)"
+                                       [ngClass] = "{'highlight' : record.roleMapper.id == selectedName}" >
+                                       <td style="width: 50px"
+                                           [hidden]="!isGrantedAny('Pages.Administration.Roles.Edit', 'Pages.Administration.Roles.Delete')">
+                                          <div class="btn-group dropdown" dropdown container="body">
+                                               <button class="dropdown-toggle btn btn-sm btn-action" dropdownToggle>
+                                                   <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                               </button>
+                                                   <ul class="dropdown-menu"  *dropdownMenu>
+                                                   <li>
+                                                       <a href="javascript:;"
+                                                           (click)="viewRoleMapperModal.show(record)">{{l('View')}}</a>
+                                                   </li>
+                                                   <li>
+                                                       <a href="javascript:;" *ngIf="permission.isGranted('Pages.Administration.Roles.Edit')"
+                                                           (click)="createOrEditRoleMapperModal.show(record.roleMapper.id)">{{l('Edit')}}</a>
+                                                   </li>
+                                                   <li>
+                                                       <a href="javascript:;" *ngIf="permission.isGranted('Pages.Administration.Roles.Delete')"
+                                                           (click)="deleteRoleMapper()">{{l('Delete')}}</a>
+                                                   </li>
+                                               </ul>
+                                           </div>
+                                       </td>
+                                       <!-- <td style="width:50px">
+                                               <span class="ui-column-title"> {{l('Role Id')}}</span>
+                                               {{record.roleMapper.Ro}}
+                                           </td> -->
+                                       <td style="width:100px">
+                                               <span class="ui-column-title"> {{l('Role Name')}}</span>
+                                               {{record.roleNameValue}}
+                                           </td>
+                                       <td style="width:250px">
+                                               <span class="ui-column-title"> {{l('Lable Name')}}</span>
+                                               {{record.labelNameValue}}
+                                           </td>
+
+
+                                   </tr>
+                               </ng-template>
+                            </p-table>
+                            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                               {{l('NoData')}}
+                            </div>
+                            <div class="primeng-paging-container">
+                               <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                            #paginator
+                                            (onPageChange)="getRoleMappers($event)"
+                                            [totalRecords]="primengTableHelper.totalRecordsCount"
+                                            [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                               </p-paginator>
+                               <span class="total-records-count">
+                                   {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                               </span>
+                            </div>
+                            </div>
+                        <!--<Primeng-Datatable-End>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <createOrEditRoleMapperModal #createOrEditRoleMapperModal (modalSave)="getRoleMappers()"></createOrEditRoleMapperModal>
+        <viewRoleMapperModal #viewRoleMapperModal></viewRoleMapperModal>
+
+    </div>
+</div>
+<style>
+    tr.highlight {
+        background-color: #639bb7 !important;
+        color: #ffffff !important;
+    }
+</style>
+<style>
+    tr.highlight {
+        background-color: #639bb7 !important;
+        color: #ffffff !important;
+    }
+</style>

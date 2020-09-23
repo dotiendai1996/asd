@@ -1,0 +1,113 @@
+﻿<div [@routerTransition] (window:resize)="onResize($event)">
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">
+                        <span>{{"Maintenance" | localize}}</span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet">
+                <div class="kt-portlet__body">
+                    <tabset>
+                        <tab heading=" {{'Caches' | localize}}">
+                            <div class="row mb-2">
+                                <div class="col-xl-6">
+                                    <p>{{"CachesHeaderInfo" | localize}}</p>
+                                </div>
+                                <div class="col-xl-6 text-right">
+                                    <button class="btn btn-action" (click)="clearAllCaches()"><i
+                                            class="fa fa-recycle"></i>
+                                        {{"ClearAll" | localize}}</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <table class="table table-striped table-hover table-bordered">
+                                        <tbody>
+                                            <tr *ngFor="let cache of caches">
+                                                <td>
+                                                    <span>{{cache.name}}</span>
+                                                    <button class="btn btn-action btn-sm pull-right"
+                                                        (click)="clearCache(cache.name);">
+                                                        {{"Clear" | localize}}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab heading="{{'WebSiteLogs' | localize}}">
+                            <div class="row mb-2">
+                                <div class="col-xl-6">
+                                    <p>{{"WebSiteLogsHeaderInfo" | localize}}</p>
+                                </div>
+                                <div class="col-xl-6 text-right">
+                                    <button class="btn btn-secondary" (click)="downloadWebLogs()"><i
+                                            class="fa fa-download"></i> {{"DownloadAll" | localize}}</button>
+                                    <button class="btn btn-action" (click)="getWebLogs()"><i class="fa fa-sync"></i>
+                                        {{"Refresh" | localize}}</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="web-log-view full-height">
+                                        <span class="log-line" *ngFor="let log of logs">
+                                            <span [class]="getLogClass(log)">{{getLogType(log)}}</span>
+                                            {{getRawLogContent(log)}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab heading="Chạy SQL">
+                            <div class="row">
+                                <div class="form-group" style="width: 100%">
+                                    <textarea class="form-control" rows="3" [(ngModel)]="rawSql" placeholder="Nhập câu lệnh SQL..."></textarea>
+                                    <button class="btn btn-action" (click)="getQueryResult()">Chạy</button>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+                                    <div class="kt-portlet">
+                                        <div class="kt-portlet__body">
+                                            <div class="row align-items-center">
+                                                <!--<Primeng-TurboTable-Start>-->
+                                                <div class="col primeng-datatable-container">
+                                                    <p-table [autoLayout]="true" [columnResizeMode] [value]="queryResult" [scrollable]="true"
+                                                        scrollHeight="30rem" [style]="{width:'100%'}"
+                                                    >
+                                                        <ng-template pTemplate="header">
+                                                            <tr>
+                                                                <th style="width: 150px;" *ngFor="let col of tableHeader">
+                                                                    {{col}}
+                                                                </th>
+                                                            </tr>
+                                                        </ng-template>
+                                                        <ng-template pTemplate="body" let-queryResult>
+                                                            <tr>
+                                                                <td style="width: 150px;" *ngFor="let col of tableHeader">
+                                                                        {{queryResult[col]}}
+                                                                </td>
+                                                            </tr>
+                                                        </ng-template>
+                                                    </p-table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

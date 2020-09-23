@@ -1,0 +1,519 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #viTriCongViecForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="viTriCongViec.id">{{l("EditViTriCongViec")}}</span>
+                        <span *ngIf="!viTriCongViec.id">{{l("CreateNewViTriCongViec")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="ViTriCongViec_TenCty">{{l("TenCty")}}</label>
+									<input type="text" id="ViTriCongViec_TenCty" class="form-control" [(ngModel)]="viTriCongViec.tenCty" name="TenCty"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_HopDongHienTai">{{l("HopDongHienTai")}}</label>
+									<input type="text" id="ViTriCongViec_HopDongHienTai" class="form-control" [(ngModel)]="viTriCongViec.hopDongHienTai" name="HopDongHienTai"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_SoHD">{{l("SoHD")}}</label>
+									<input type="text" id="ViTriCongViec_SoHD" class="form-control" [(ngModel)]="viTriCongViec.soHD" name="SoHD"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DonViCongTacName">{{l("DonViCongTacName")}}</label>
+									<input type="text" id="ViTriCongViec_DonViCongTacName" class="form-control" [(ngModel)]="viTriCongViec.donViCongTacName" name="DonViCongTacName"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_ChoNgoi">{{l("ChoNgoi")}}</label>
+									<input type="text" id="ViTriCongViec_ChoNgoi" class="form-control" [(ngModel)]="viTriCongViec.choNgoi" name="ChoNgoi"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NoiDaoTaoID">{{l("NoiDaoTaoID")}}</label>
+									<input type="number" id="ViTriCongViec_NoiDaoTaoID" class="form-control" [(ngModel)]="viTriCongViec.noiDaoTaoID" name="NoiDaoTaoID"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_LoaiHopDongID">{{l("LoaiHopDongID")}}</label>
+									<input type="number" id="ViTriCongViec_LoaiHopDongID" class="form-control" [(ngModel)]="viTriCongViec.loaiHopDongID" name="LoaiHopDongID"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_MaSoNoiKCB">{{l("MaSoNoiKCB")}}</label>
+									<input type="text" id="ViTriCongViec_MaSoNoiKCB" class="form-control" [(ngModel)]="viTriCongViec.maSoNoiKCB" name="MaSoNoiKCB"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NoiDangKyKCBID">{{l("NoiDangKyKCBID")}}</label>
+									<input type="number" id="ViTriCongViec_NoiDangKyKCBID" class="form-control" [(ngModel)]="viTriCongViec.noiDangKyKCBID" name="NoiDangKyKCBID"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayHetHanBHYT">{{l("NgayHetHanBHYT")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayHetHanBHYT._d" id="ViTriCongViec_NgayHetHanBHYT" name="ViTriCongViec_NgayHetHanBHYT">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_SoTheBHYT">{{l("SoTheBHYT")}}</label>
+									<input type="text" id="ViTriCongViec_SoTheBHYT" class="form-control" [(ngModel)]="viTriCongViec.soTheBHYT" name="SoTheBHYT"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_MaTinhCap">{{l("MaTinhCap")}}</label>
+									<input type="text" id="ViTriCongViec_MaTinhCap" class="form-control" [(ngModel)]="viTriCongViec.maTinhCap" name="MaTinhCap"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_MaSoBHXH">{{l("MaSoBHXH")}}</label>
+									<input type="text" id="ViTriCongViec_MaSoBHXH" class="form-control" [(ngModel)]="viTriCongViec.maSoBHXH" name="MaSoBHXH"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_SoSoBHXH">{{l("SoSoBHXH")}}</label>
+									<input type="text" id="ViTriCongViec_SoSoBHXH" class="form-control" [(ngModel)]="viTriCongViec.soSoBHXH" name="SoSoBHXH"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_TyLeDongBH">{{l("TyLeDongBH")}}</label>
+									<input type="number" id="ViTriCongViec_TyLeDongBH" class="form-control" [(ngModel)]="viTriCongViec.tyLeDongBH" name="TyLeDongBH"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayThamGiaBH">{{l("NgayThamGiaBH")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayThamGiaBH._d" id="ViTriCongViec_NgayThamGiaBH" name="ViTriCongViec_NgayThamGiaBH">
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="ViTriCongViec_ThamGiaCongDoan" class="kt-checkbox">
+										<input id="ViTriCongViec_ThamGiaCongDoan" type="checkbox" name="ThamGiaCongDoan" [(ngModel)]="viTriCongViec.thamGiaCongDoan"> 
+										{{l("ThamGiaCongDoan")}}
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NganHangCode">{{l("NganHangCode")}}</label>
+									<input type="text" id="ViTriCongViec_NganHangCode" class="form-control" [(ngModel)]="viTriCongViec.nganHangCode" name="NganHangCode"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_TkNganHang">{{l("TkNganHang")}}</label>
+									<input type="text" id="ViTriCongViec_TkNganHang" class="form-control" [(ngModel)]="viTriCongViec.tkNganHang" name="TkNganHang"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DonViSoCongChuanCode">{{l("DonViSoCongChuanCode")}}</label>
+									<input type="text" id="ViTriCongViec_DonViSoCongChuanCode" class="form-control" [(ngModel)]="viTriCongViec.donViSoCongChuanCode" name="DonViSoCongChuanCode"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_SoCongChuan">{{l("SoCongChuan")}}</label>
+									<input type="text" id="ViTriCongViec_SoCongChuan" class="form-control" [(ngModel)]="viTriCongViec.soCongChuan" name="SoCongChuan"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_LuongDongBH">{{l("LuongDongBH")}}</label>
+									<input type="text" id="ViTriCongViec_LuongDongBH" class="form-control" [(ngModel)]="viTriCongViec.luongDongBH" name="LuongDongBH"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_LuongCoBan">{{l("LuongCoBan")}}</label>
+									<input type="text" id="ViTriCongViec_LuongCoBan" class="form-control" [(ngModel)]="viTriCongViec.luongCoBan" name="LuongCoBan"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_BacLuongCode">{{l("BacLuongCode")}}</label>
+									<input type="text" id="ViTriCongViec_BacLuongCode" class="form-control" [(ngModel)]="viTriCongViec.bacLuongCode" name="BacLuongCode"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_SoNgayPhep">{{l("SoNgayPhep")}}</label>
+									<input type="number" id="ViTriCongViec_SoNgayPhep" class="form-control" [(ngModel)]="viTriCongViec.soNgayPhep" name="SoNgayPhep"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayChinhThuc">{{l("NgayChinhThuc")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayChinhThuc._d" id="ViTriCongViec_NgayChinhThuc" name="ViTriCongViec_NgayChinhThuc">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayThuViec">{{l("NgayThuViec")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayThuViec._d" id="ViTriCongViec_NgayThuViec" name="ViTriCongViec_NgayThuViec">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayTapSu">{{l("NgayTapSu")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayTapSu._d" id="ViTriCongViec_NgayTapSu" name="ViTriCongViec_NgayTapSu">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_SoSoQLLaoDong">{{l("SoSoQLLaoDong")}}</label>
+									<input type="text" id="ViTriCongViec_SoSoQLLaoDong" class="form-control" [(ngModel)]="viTriCongViec.soSoQLLaoDong" name="SoSoQLLaoDong"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DiaDiemLamViecCode">{{l("DiaDiemLamViecCode")}}</label>
+									<input type="text" id="ViTriCongViec_DiaDiemLamViecCode" class="form-control" [(ngModel)]="viTriCongViec.diaDiemLamViecCode" name="DiaDiemLamViecCode"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_QuanLyGianTiep">{{l("QuanLyGianTiep")}}</label>
+									<input type="text" id="ViTriCongViec_QuanLyGianTiep" class="form-control" [(ngModel)]="viTriCongViec.quanLyGianTiep" name="QuanLyGianTiep"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_QuanLyTrucTiep">{{l("QuanLyTrucTiep")}}</label>
+									<input type="text" id="ViTriCongViec_QuanLyTrucTiep" class="form-control" [(ngModel)]="viTriCongViec.quanLyTrucTiep" name="QuanLyTrucTiep"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_TrangThaiLamViecCode">{{l("TrangThaiLamViecCode")}}</label>
+									<input type="text" id="ViTriCongViec_TrangThaiLamViecCode" class="form-control" [(ngModel)]="viTriCongViec.trangThaiLamViecCode" name="TrangThaiLamViecCode"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_Bac">{{l("Bac")}}</label>
+									<input type="text" id="ViTriCongViec_Bac" class="form-control" [(ngModel)]="viTriCongViec.bac" name="Bac"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_Cap">{{l("Cap")}}</label>
+									<input type="text" id="ViTriCongViec_Cap" class="form-control" [(ngModel)]="viTriCongViec.cap" name="Cap"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_ChucDanh">{{l("ChucDanh")}}</label>
+									<input type="text" id="ViTriCongViec_ChucDanh" class="form-control" [(ngModel)]="viTriCongViec.chucDanh" name="ChucDanh"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_MaChamCong">{{l("MaChamCong")}}</label>
+									<input type="text" id="ViTriCongViec_MaChamCong" class="form-control" [(ngModel)]="viTriCongViec.maChamCong" name="MaChamCong"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DiaChiLHKC">{{l("DiaChiLHKC")}}</label>
+									<input type="text" id="ViTriCongViec_DiaChiLHKC" class="form-control" [(ngModel)]="viTriCongViec.diaChiLHKC" name="DiaChiLHKC"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_EmailLHKC">{{l("EmailLHKC")}}</label>
+									<input type="text" id="ViTriCongViec_EmailLHKC" class="form-control" [(ngModel)]="viTriCongViec.emailLHKC" name="EmailLHKC"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DtDiDongLHKC">{{l("DtDiDongLHKC")}}</label>
+									<input type="text" id="ViTriCongViec_DtDiDongLHKC" class="form-control" [(ngModel)]="viTriCongViec.dtDiDongLHKC" name="DtDiDongLHKC"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DtNhaRiengLHKC">{{l("DtNhaRiengLHKC")}}</label>
+									<input type="text" id="ViTriCongViec_DtNhaRiengLHKC" class="form-control" [(ngModel)]="viTriCongViec.dtNhaRiengLHKC" name="DtNhaRiengLHKC"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_QuanHeLHKC">{{l("QuanHeLHKC")}}</label>
+									<input type="text" id="ViTriCongViec_QuanHeLHKC" class="form-control" [(ngModel)]="viTriCongViec.quanHeLHKC" name="QuanHeLHKC"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_HoVaTenLHKC">{{l("HoVaTenLHKC")}}</label>
+									<input type="text" id="ViTriCongViec_HoVaTenLHKC" class="form-control" [(ngModel)]="viTriCongViec.hoVaTenLHKC" name="HoVaTenLHKC"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DiaChiHN">{{l("DiaChiHN")}}</label>
+									<input type="text" id="ViTriCongViec_DiaChiHN" class="form-control" [(ngModel)]="viTriCongViec.diaChiHN" name="DiaChiHN"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_TinhThanhIDHN">{{l("TinhThanhIDHN")}}</label>
+									<input type="number" id="ViTriCongViec_TinhThanhIDHN" class="form-control" [(ngModel)]="viTriCongViec.tinhThanhIDHN" name="TinhThanhIDHN"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_QuocGiaHN">{{l("QuocGiaHN")}}</label>
+									<input type="text" id="ViTriCongViec_QuocGiaHN" class="form-control" [(ngModel)]="viTriCongViec.quocGiaHN" name="QuocGiaHN"    />
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="ViTriCongViec_LaChuHo" class="kt-checkbox">
+										<input id="ViTriCongViec_LaChuHo" type="checkbox" name="LaChuHo" [(ngModel)]="viTriCongViec.laChuHo"> 
+										{{l("LaChuHo")}}
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_MaSoHoGiaDinh">{{l("MaSoHoGiaDinh")}}</label>
+									<input type="text" id="ViTriCongViec_MaSoHoGiaDinh" class="form-control" [(ngModel)]="viTriCongViec.maSoHoGiaDinh" name="MaSoHoGiaDinh"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_SoSoHoKhau">{{l("SoSoHoKhau")}}</label>
+									<input type="text" id="ViTriCongViec_SoSoHoKhau" class="form-control" [(ngModel)]="viTriCongViec.soSoHoKhau" name="SoSoHoKhau"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DiaChiHKTT">{{l("DiaChiHKTT")}}</label>
+									<input type="text" id="ViTriCongViec_DiaChiHKTT" class="form-control" [(ngModel)]="viTriCongViec.diaChiHKTT" name="DiaChiHKTT"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_TinhThanhIDHKTT">{{l("TinhThanhIDHKTT")}}</label>
+									<input type="number" id="ViTriCongViec_TinhThanhIDHKTT" class="form-control" [(ngModel)]="viTriCongViec.tinhThanhIDHKTT" name="TinhThanhIDHKTT"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_QuocGiaHKTT">{{l("QuocGiaHKTT")}}</label>
+									<input type="text" id="ViTriCongViec_QuocGiaHKTT" class="form-control" [(ngModel)]="viTriCongViec.quocGiaHKTT" name="QuocGiaHKTT"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_Facebook">{{l("Facebook")}}</label>
+									<input type="text" id="ViTriCongViec_Facebook" class="form-control" [(ngModel)]="viTriCongViec.facebook" name="Facebook"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_Skype">{{l("Skype")}}</label>
+									<input type="text" id="ViTriCongViec_Skype" class="form-control" [(ngModel)]="viTriCongViec.skype" name="Skype"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NoiSinh">{{l("NoiSinh")}}</label>
+									<input type="text" id="ViTriCongViec_NoiSinh" class="form-control" [(ngModel)]="viTriCongViec.noiSinh" name="NoiSinh"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_TinhThanhID">{{l("TinhThanhID")}}</label>
+									<input type="number" id="ViTriCongViec_TinhThanhID" class="form-control" [(ngModel)]="viTriCongViec.tinhThanhID" name="TinhThanhID"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NguyenQuan">{{l("NguyenQuan")}}</label>
+									<input type="text" id="ViTriCongViec_NguyenQuan" class="form-control" [(ngModel)]="viTriCongViec.nguyenQuan" name="NguyenQuan"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_EmailKhac">{{l("EmailKhac")}}</label>
+									<input type="text" id="ViTriCongViec_EmailKhac" class="form-control" [(ngModel)]="viTriCongViec.emailKhac" name="EmailKhac"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_EmailCoQuan">{{l("EmailCoQuan")}}</label>
+									<input type="text" id="ViTriCongViec_EmailCoQuan" class="form-control" [(ngModel)]="viTriCongViec.emailCoQuan" name="EmailCoQuan"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_EmailCaNhan">{{l("EmailCaNhan")}}</label>
+									<input type="text" id="ViTriCongViec_EmailCaNhan" class="form-control" [(ngModel)]="viTriCongViec.emailCaNhan" name="EmailCaNhan"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DtKhac">{{l("DtKhac")}}</label>
+									<input type="text" id="ViTriCongViec_DtKhac" class="form-control" [(ngModel)]="viTriCongViec.dtKhac" name="DtKhac"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DtNhaRieng">{{l("DtNhaRieng")}}</label>
+									<input type="text" id="ViTriCongViec_DtNhaRieng" class="form-control" [(ngModel)]="viTriCongViec.dtNhaRieng" name="DtNhaRieng"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DtCoQuan">{{l("DtCoQuan")}}</label>
+									<input type="text" id="ViTriCongViec_DtCoQuan" class="form-control" [(ngModel)]="viTriCongViec.dtCoQuan" name="DtCoQuan"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DtDiDong">{{l("DtDiDong")}}</label>
+									<input type="text" id="ViTriCongViec_DtDiDong" class="form-control" [(ngModel)]="viTriCongViec.dtDiDong" name="DtDiDong"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_TepDinhKem">{{l("TepDinhKem")}}</label>
+									<input type="text" id="ViTriCongViec_TepDinhKem" class="form-control" [(ngModel)]="viTriCongViec.tepDinhKem" name="TepDinhKem"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_TinhTrangHonNhanCode">{{l("TinhTrangHonNhanCode")}}</label>
+									<input type="text" id="ViTriCongViec_TinhTrangHonNhanCode" class="form-control" [(ngModel)]="viTriCongViec.tinhTrangHonNhanCode" name="TinhTrangHonNhanCode"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_XepLoaiCode">{{l("XepLoaiCode")}}</label>
+									<input type="text" id="ViTriCongViec_XepLoaiCode" class="form-control" [(ngModel)]="viTriCongViec.xepLoaiCode" name="XepLoaiCode"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NamTotNghiep">{{l("NamTotNghiep")}}</label>
+									<input type="number" id="ViTriCongViec_NamTotNghiep" class="form-control" [(ngModel)]="viTriCongViec.namTotNghiep" name="NamTotNghiep"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_ChuyenNganh">{{l("ChuyenNganh")}}</label>
+									<input type="text" id="ViTriCongViec_ChuyenNganh" class="form-control" [(ngModel)]="viTriCongViec.chuyenNganh" name="ChuyenNganh"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_Khoa">{{l("Khoa")}}</label>
+									<input type="text" id="ViTriCongViec_Khoa" class="form-control" [(ngModel)]="viTriCongViec.khoa" name="Khoa"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_TrinhDoDaoTaoCode">{{l("TrinhDoDaoTaoCode")}}</label>
+									<input type="text" id="ViTriCongViec_TrinhDoDaoTaoCode" class="form-control" [(ngModel)]="viTriCongViec.trinhDoDaoTaoCode" name="TrinhDoDaoTaoCode"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_TrinhDoVanHoa">{{l("TrinhDoVanHoa")}}</label>
+									<input type="text" id="ViTriCongViec_TrinhDoVanHoa" class="form-control" [(ngModel)]="viTriCongViec.trinhDoVanHoa" name="TrinhDoVanHoa"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayHetHan">{{l("NgayHetHan")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayHetHan._d" id="ViTriCongViec_NgayHetHan" name="ViTriCongViec_NgayHetHan">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NoiCap">{{l("NoiCap")}}</label>
+									<input type="text" id="ViTriCongViec_NoiCap" class="form-control" [(ngModel)]="viTriCongViec.noiCap" name="NoiCap"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayCap">{{l("NgayCap")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayCap._d" id="ViTriCongViec_NgayCap" name="ViTriCongViec_NgayCap">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_SoCMND">{{l("SoCMND")}}</label>
+									<input type="text" id="ViTriCongViec_SoCMND" class="form-control" [(ngModel)]="viTriCongViec.soCMND" name="SoCMND"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_QuocTich">{{l("QuocTich")}}</label>
+									<input type="text" id="ViTriCongViec_QuocTich" class="form-control" [(ngModel)]="viTriCongViec.quocTich" name="QuocTich"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_TonGiao">{{l("TonGiao")}}</label>
+									<input type="text" id="ViTriCongViec_TonGiao" class="form-control" [(ngModel)]="viTriCongViec.tonGiao" name="TonGiao"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DanToc">{{l("DanToc")}}</label>
+									<input type="text" id="ViTriCongViec_DanToc" class="form-control" [(ngModel)]="viTriCongViec.danToc" name="DanToc"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_ViTriCongViecCode">{{l("ViTriCongViecCode")}}</label>
+									<input type="text" id="ViTriCongViec_ViTriCongViecCode" class="form-control" [(ngModel)]="viTriCongViec.viTriCongViecCode" name="ViTriCongViecCode"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DonViCongTacID">{{l("DonViCongTacID")}}</label>
+									<input type="number" id="ViTriCongViec_DonViCongTacID" class="form-control" [(ngModel)]="viTriCongViec.donViCongTacID" name="DonViCongTacID"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_MSTCaNhan">{{l("MSTCaNhan")}}</label>
+									<input type="text" id="ViTriCongViec_MSTCaNhan" class="form-control" [(ngModel)]="viTriCongViec.mstCaNhan" name="MSTCaNhan"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgaySinh">{{l("NgaySinh")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngaySinh._d" id="ViTriCongViec_NgaySinh" name="ViTriCongViec_NgaySinh">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_GioiTinhCode">{{l("GioiTinhCode")}}</label>
+									<input type="text" id="ViTriCongViec_GioiTinhCode" class="form-control" [(ngModel)]="viTriCongViec.gioiTinhCode" name="GioiTinhCode"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_AnhDaiDien">{{l("AnhDaiDien")}}</label>
+									<input type="text" id="ViTriCongViec_AnhDaiDien" class="form-control" [(ngModel)]="viTriCongViec.anhDaiDien" name="AnhDaiDien"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_HoVaTen">{{l("HoVaTen")}}</label>
+									<input type="text" id="ViTriCongViec_HoVaTen" class="form-control" [(ngModel)]="viTriCongViec.hoVaTen" name="HoVaTen"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_MaNhanVien">{{l("MaNhanVien")}}</label>
+									<input type="text" id="ViTriCongViec_MaNhanVien" class="form-control" [(ngModel)]="viTriCongViec.maNhanVien" name="MaNhanVien"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_ChiNhanh">{{l("ChiNhanh")}}</label>
+									<input type="text" id="ViTriCongViec_ChiNhanh" class="form-control" [(ngModel)]="viTriCongViec.chiNhanh" name="ChiNhanh"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_DVT">{{l("DVT")}}</label>
+									<input type="text" id="ViTriCongViec_DVT" class="form-control" [(ngModel)]="viTriCongViec.dvt" name="DVT"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayKyHDKTH">{{l("NgayKyHDKTH")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayKyHDKTH._d" id="ViTriCongViec_NgayKyHDKTH" name="ViTriCongViec_NgayKyHDKTH">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayKyHD36TH">{{l("NgayKyHD36TH")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayKyHD36TH._d" id="ViTriCongViec_NgayKyHD36TH" name="ViTriCongViec_NgayKyHD36TH">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayKyHD12TH">{{l("NgayKyHD12TH")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayKyHD12TH._d" id="ViTriCongViec_NgayKyHD12TH" name="ViTriCongViec_NgayKyHD12TH">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayKyHDTV">{{l("NgayKyHDTV")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayKyHDTV._d" id="ViTriCongViec_NgayKyHDTV" name="ViTriCongViec_NgayKyHDTV">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayKYHDCTV">{{l("NgayKYHDCTV")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayKYHDCTV._d" id="ViTriCongViec_NgayKYHDCTV" name="ViTriCongViec_NgayKYHDCTV">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayKyHDKV">{{l("NgayKyHDKV")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayKyHDKV._d" id="ViTriCongViec_NgayKyHDKV" name="ViTriCongViec_NgayKyHDKV">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayKYHDTT">{{l("NgayKYHDTT")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayKYHDTT._d" id="ViTriCongViec_NgayKYHDTT" name="ViTriCongViec_NgayKYHDTT">
+								</div>
+					
+								<div class="form-group">
+									<label for="ViTriCongViec_NgayKyHD">{{l("NgayKyHD")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="viTriCongViec.ngayKyHD._d" id="ViTriCongViec_NgayKyHD" name="ViTriCongViec_NgayKyHD">
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!viTriCongViecForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

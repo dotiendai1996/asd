@@ -1,0 +1,27 @@
+﻿<style>
+	.tree-container{
+		min-height: 50px;
+		display: none;
+		border: 1px solid #e2e5ec !important;
+		border-top: unset !important;
+	}
+	#tree-container > p-tree > div {
+    	border: 1px solid #e2e5ec !important;
+	}
+	.ele-container{
+		width: 100%;
+	}
+</style>
+<div class="ele-container">
+	<input type="text" id="{{id}}" class="{{class}}" [(ngModel)]="nameSelected" name="{{name}}" (click)="openModal()">
+	<div (clickOutside)="closeModal($event)" id="tree-container" class="tree-container">
+		<p-tree #pTree [value]="treeData" selectionMode="checkbox" (onNodeSelect)="nodeSelect($event)" >
+			<ng-template let-node pTemplate="default">
+				<div>
+					<span>{{node.label}}</span>
+					<small style="font-size: .82em; opacity: .5;">{{node.memberCount}} {{'Members' | localize}}, {{node.roleCount}} {{'Roles' | localize}}</small>
+				</div>
+			</ng-template>
+		</p-tree>
+	</div>
+</div>

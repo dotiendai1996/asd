@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding color="primary">
+  <ion-item style="--inner-border-width: 0px;width: 300px;margin:30px auto">
+    <img width="70px" slot="start" src="../../../resources/logo.png">
+    <ion-label style="color: white;font-size: 40px;font-weight: 600;">GGROUP</ion-label>
+  </ion-item>
+<!-- <ion-label>Current tenant: {{tenantName != null ? tenantName : 'Not selected'}}</ion-label>
+<ion-button shape="round" color="primary" fill="outline" (click)="changeTenant()" block >Change</ion-button> -->
+<form #f="ngForm" (ngSubmit)="onLogin(f)">
+  <ion-list>
+    <ion-item>
+      <ion-label>Username</ion-label>
+      <ion-input type="email" ngModel name="username" required> 
+      </ion-input>
+    </ion-item> 
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input type="password" ngModel name="password" required>
+      </ion-input>
+    </ion-item>
+  </ion-list> 
+<ion-button shape="round" color="secondary" expand="block" type="submit" block [disabled]="!f.valid"><b style="color:white">Đăng nhập</b></ion-button>
+</form>
+</ion-content>

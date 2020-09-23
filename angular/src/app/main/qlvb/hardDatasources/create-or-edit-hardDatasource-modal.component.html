@@ -1,0 +1,59 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #hardDatasourceForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="hardDatasource.id">{{l("EditHardDatasource")}}</span>
+                        <span *ngIf="!hardDatasource.id">{{l("CreateNewHardDatasource")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="HardDatasource_Key">{{l("Key")}}</label>
+									<input type="text" id="HardDatasource_Key" class="form-control" [(ngModel)]="hardDatasource.key" name="Key"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="HardDatasource_Value">{{l("Value")}}</label>
+									<input type="text" id="HardDatasource_Value" class="form-control" [(ngModel)]="hardDatasource.value" name="Value"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="HardDatasource_DynamicDatasourceId">{{l("DynamicDatasourceId")}}</label>
+									<input type="number" id="HardDatasource_DynamicDatasourceId" class="form-control" [(ngModel)]="hardDatasource.dynamicDatasourceId" name="DynamicDatasourceId"  />
+									<select name="HardDatasource_DynamicDatasourceId_Cbb" class="form-control" [(ngModel)]="hardDatasource.dynamicDatasourceId">
+										<option *ngFor="let item of dynamicDatasource" [value]="item.id">{{item.dynamicFieldId}}</option>
+									</select>
+								</div>
+					
+								<div class="form-group">
+									<label for="HardDatasource_Order">{{l("Order")}}</label>
+									<input type="number" id="HardDatasource_Order" class="form-control" [(ngModel)]="hardDatasource.order" name="Order"  />
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="HardDatasource_IsActive" class="kt-checkbox">
+										<input id="HardDatasource_IsActive" type="checkbox" name="IsActive" [(ngModel)]="hardDatasource.isActive"> 
+										{{l("IsActive")}}
+										<span></span>
+									</label>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!hardDatasourceForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

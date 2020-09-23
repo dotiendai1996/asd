@@ -1,0 +1,70 @@
+<div [@routerTransition]>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">
+                        <span>{{ l("DynamicFields") }}</span>
+                    </h3>
+                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                    <span class="kt-subheader__desc">
+                        {{ l("DynamicFieldsHeaderInfo") }}
+                    </span>
+                </div>
+                <div class="kt-subheader__toolbar"></div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="dx-field">
+                            <div class="dx-field-label">Chọn màn hình</div>
+                            <div class="dx-field-value">
+                                <dx-select-box id="selectBox" dataSource="labels" displayExpr="name" valueExpr="id"
+                                    (onSelectionChanged)="
+                                        onValueChanged($event)
+                                    ">
+                                </dx-select-box>
+                            </div>
+                        </div>
+                        <dx-button icon="fa fa-plus" text="Thêm cột" (onClick)="plusClick()"></dx-button>
+                    </div>
+                    <div class="row align-items-center">
+                        <!--<Primeng-Datatable-Start>-->
+
+                        <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                            <dx-data-grid id="gridContainer" dataSource="dataSource" showRowLines="true"
+                                showBorders="true" showColumnLines="true"
+                                (onSelectionChanged)="selectionChanged($event)">
+                                <dxo-paging [enabled]="false"></dxo-paging>
+                                <dxo-editing mode="cell" refreshMode="reshape" [allowUpdating]="true"
+                                    [allowDeleting]="true" useIcons="true">
+                                </dxo-editing>
+                                <dxo-selection mode="multiple"></dxo-selection>
+
+                                <dxi-column dataField="name" caption="Name"></dxi-column>
+                                <dxi-column dataField="nameDescription" caption="NameDescription"></dxi-column>
+                                <dxi-column dataField="typeField" caption="Loại cột">
+                                    <dxo-lookup dataSource="states" displayExpr="name" valueExpr="id">
+                                    </dxo-lookup>
+                                </dxi-column>
+                                <dxi-column dataField="isActive" caption="Hoạt động" dataType="boolean" va></dxi-column>
+                                <dxi-column dataField="order" caption="Thứ tự" dataType="number"></dxi-column>
+                                <dxi-column dataField="classAttach" caption="Class Attach (Label và Element)" dataType="number"></dxi-column>
+                                <dxi-column dataField="widthDescription" caption="Độ rộng Label" dataType="number"></dxi-column>
+                                <dxi-column dataField="width" caption="Độ rộng Element"></dxi-column>
+                                <dxo-selection mode="multiple"> </dxo-selection>
+                                <dxo-paging [pageSize]="10"></dxo-paging>
+                                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]">
+                                </dxo-pager>
+                            </dx-data-grid>
+                        </div>
+                        <dx-button icon="fa fa-save" text="Lưu" (onClick)="save()"></dx-button>
+                        <!--<Primeng-Datatable-End>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

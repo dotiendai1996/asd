@@ -1,0 +1,43 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #syS_PREFIXForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="syS_PREFIX.id">{{l("EditSYS_PREFIX")}}</span>
+                        <span *ngIf="!syS_PREFIX.id">{{l("CreateNewSYS_PREFIX")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="SYS_PREFIX_Code">{{l("Code")}}</label>
+									<input type="text" id="SYS_PREFIX_Code" class="form-control" [(ngModel)]="syS_PREFIX.code" name="Code"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="SYS_PREFIX_Prefix">{{l("Prefix")}}</label>
+									<input type="text" id="SYS_PREFIX_Prefix" class="form-control" [(ngModel)]="syS_PREFIX.prefix" name="Prefix"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="SYS_PREFIX_Description">{{l("Description")}}</label>
+									<input type="text" id="SYS_PREFIX_Description" class="form-control" [(ngModel)]="syS_PREFIX.description" name="Description"    />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!syS_PREFIXForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

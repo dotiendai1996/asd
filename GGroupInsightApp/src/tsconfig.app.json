@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "./",
+    "module": "es2015"
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ],
+  "include": [
+    ".",
+    "../node_modules/abp-ng2-module/src/multi-tenancy/*.ts",
+    "../node_modules/abp-ng2-module/src/auth/*.ts",
+
+    // "../node_modules/abp-ng2-module/src/utils/*.ts",
+    "../node_modules/abp-ng2-module/src/**/*.ts"
+  ]
+}

@@ -1,0 +1,549 @@
+﻿<style>
+	.form-group {
+		margin-bottom: 0.7rem !important;
+	}
+
+	.comment-container {
+		margin-bottom: 4rem;
+	}
+
+	.avatar {
+		height: 40px;
+	}
+
+	.common-container {
+		display: flex;
+		margin-bottom: 1rem;
+	}
+
+	.content-container {
+		background-color: #f5f6f8;
+		border-radius: 0.75em;
+		width: 100%;
+		margin-left: 2rem;
+		padding: 1rem;
+	}
+
+	.content-container>div>span.username-content {
+		display: block;
+		font-weight: 500;
+		margin-bottom: 1rem;
+		color: blue;
+	}
+
+	.delete-cmt-icon {
+		color: black;
+		float: right;
+		background-color: white;
+		width: 15px;
+		text-align: center;
+	}
+
+	.delete-cmt-icon:hover {
+		color: black;
+		float: right;
+		background-color: #ccc9c0;
+		width: 15px;
+		text-align: center;
+	}
+
+	.dx-layout-manager .dx-field-item:not(.dx-last-col) {
+		padding-right: 0px;
+	}
+
+	.dx-fileuploader-wrapper {
+		padding: 0px;
+	}
+
+	.dx-fileuploader-input-wrapper {
+		padding-left: 0px !important;
+	}
+
+	.dx-fileuploader-input-wrapper:after {
+		margin-bottom: -2.5em;
+	}
+
+	.dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {
+		width: 100px;
+		min-width: 100px;
+		color: white;
+	}
+
+	.product {
+		background: white;
+		color: #1347a5;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+		box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+		padding: 10px 10px 10px 20px;
+		border-radius: 5px;
+	}
+
+	.dx-button-content {
+		background: black;
+		color: white;
+	}
+
+	.list-container {
+		position: static;
+		border: 5px solid #248cbf;
+		height: 400px;
+
+		border-radius: 10px;
+	}
+
+	.username-content {
+		width: 20%;
+	}
+
+	.user-comment {
+		width: 77%;
+		padding: 10px;
+		vertical-align: middle;
+		background-color: #afc2e6;
+		white-space: initial;
+		display: inline-block;
+		border-radius: 10px;
+	}
+
+	.btn-delele {
+		width: 3%;
+	}
+</style>
+<div>
+	<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+		<div class="kt-subheader kt-grid__item">
+			<div [class]="containerClass">
+				<div class="kt-subheader__main">
+					<div class="col-xl-12" style="padding-top: 5px;">
+						<dx-button text="Trở về" type="success" icon="arrowleft" type="success" (onClick)="troVe()"> </dx-button>
+						&nbsp;
+						<dx-button text="Lưu" type="success" icon="save" style="width: 127px;" (onClick)="save()">
+						</dx-button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+			<div class="kt-portlet kt-portlet--mobile">
+				<div class="modal-body">
+					<h3 class="kt-subheader__title">
+						<span style="font-family: Arial, Helvetica, sans-serif;
+						font-size: 76%;
+						font-weight: bold;
+						color: #246faf;"> <i class="fas fa-home"></i> {{l("Trang chủ")}} | {{l("Chỉnh sửa ứng viên")}} </span>
+					</h3>
+					<dx-form #documentForm [formData]="ungVien" [showValidationSummary]="true"
+						[showColonAfterLabel]="false" validationGroup="formValidateGroup">
+						<dxi-item itemType="group" colCount="12">
+
+							<dxi-item itemType="group" colCount="12" [colSpan]="12">
+								<dxi-item dataField="maUngVien" [editorOptions]="{ disabled: true }" [colSpan]="4">
+
+									<dxo-label text="Mã ứng viên"></dxo-label>
+								</dxi-item>
+
+
+								<dxi-item dataField="hoVaTen" [colSpan]="5">
+									<dxo-label text="Họ và tên" required> </dxo-label>
+									<dxi-validation-rule type="required" message=" Họ tên không được để trống">
+									</dxi-validation-rule>
+								</dxi-item>
+								<!-- (onValueChanged)="changeCTY($event)" -->
+								<dxi-item [colSpan]="3">
+									<dx-select-box dataField="tenCTY" id="publisherSelect" [items]="congty"
+										valueExpr="value" [searchEnabled]="true" [searchExpr]="['value']"
+										[readOnly]="true" displayExpr="value" [(value)]="ungVien.tenCTY">
+									</dx-select-box>
+									<dxo-label text="Công ty "></dxo-label>
+									<dxi-validation-rule type="required" message="Đơn vị không được để trống">
+									</dxi-validation-rule>
+								</dxi-item>
+
+
+								<dxi-item dataField="Đơn vị công tác" [colSpan]="5">
+									<dx-select-box dataField="donViCongTacID" [items]="danhSachDV" valueExpr="data.id"
+										[searchEnabled]="true" [searchExpr]="['label']" displayExpr="label"
+										(onValueChanged)="selectItem($event)" [(value)]="ungVien.donViCongTacID">
+									</dx-select-box>
+									<dxi-validation-rule type="required" message="Đơn vị không được để trống">
+									</dxi-validation-rule>
+
+								</dxi-item>
+
+								<dxi-item [colSpan]="3">
+									<dx-select-box dataField="gioiTinhCode" id="publisherSelect" [items]="gioiTinh"
+										valueExpr="cdName" [searchEnabled]="true" [searchExpr]="['value']"
+										displayExpr="value" [(value)]="ungVien.gioiTinhCode"></dx-select-box>
+									<dxi-validation-rule type="required" message=" Giới tính không được để trống">
+									</dxi-validation-rule>
+									<dxo-label text="Giới tính " required></dxo-label>
+								</dxi-item>
+
+								<dxi-item dataField="ngaySinh" [colSpan]="4">
+									<dx-date-box [(value)]="ungVien.ngaySinh" displayFormat="dd/MM/yyyy" type="date"
+										[showClearButton]="true" (valueChange)="validateNgaySinh($event)">
+									</dx-date-box>
+									<dxi-validation-rule type="required" message=" Ngày sinh không được để trống">
+									</dxi-validation-rule>
+									<dxo-label text="Ngày sinh" required></dxo-label>
+								</dxi-item>
+
+								<dxi-item [colSpan]="6">
+									<dx-select-box dataField="viTriCongViecCode" [items]="viTriCongViec"
+										valueExpr="cdName" [searchEnabled]="true" [searchExpr]="['value']"
+										displayExpr="value" [(value)]="ungVien.viTriUngTuyenCode">
+									</dx-select-box>
+									<dxi-validation-rule type="required"
+										message="Vị trí công việc  không được để trống">
+									</dxi-validation-rule>
+									<dxo-label text="Vị trí ứng tuyển " required></dxo-label>
+
+								</dxi-item>
+
+
+								<!-- <dxi-item [colSpan]="6">
+									<dx-select-box dataField="viTriCongViecCode" [items]="danhSachCV" valueExpr="code"
+										[searchEnabled]="true" [searchExpr]="['displayName']" displayExpr="displayName"
+										[(value)]="ungVien.viTriUngTuyenCode">
+									</dx-select-box>
+									<dxi-validation-rule type="required"
+										message="Vị trí công việc  không được để trống">
+									</dxi-validation-rule>
+									<dxo-label text="Vị trí ứng tuyển " required></dxo-label>
+
+								</dxi-item> -->
+
+
+
+								<dxi-item [colSpan]="6" dataField="kenhTuyenDung">
+									<dx-select-box dataField="kenhTuyenDungCode" id="publisherSelect"
+										[items]="kenhTuyenDung" displayExpr="value" valueExpr="cdName"
+										[searchEnabled]="true" [searchExpr]="['value']"
+										[(value)]="ungVien.kenhTuyenDungCode">
+									</dx-select-box>
+									<dxi-validation-rule type="required" message="Kênh tuyển dụng không được để trống">
+									</dxi-validation-rule>
+									<dxo-label text="Kênh tuyển dụng" required></dxo-label>
+								</dxi-item>
+								<dxi-item [colSpan]="6">
+									<dx-select-box dataField="trangThaiCode" id="publisherSelect" [items]="trangThai"
+										displayExpr="value" valueExpr="cdName" [searchEnabled]="true"
+										[searchExpr]="['value']" [(value)]="ungVien.trangThaiCode">
+									</dx-select-box>
+
+									<dxo-label text="Trạng thái"></dxo-label>
+								</dxi-item>
+
+								<dxi-item [colSpan]="6">
+									<dx-select-box dataField="tienDoTuyenDungCode" [items]="tienDoTuyenDung"
+										valueExpr="cdName" [searchEnabled]="true" [searchExpr]="['value']"
+										displayExpr="value" [(value)]="ungVien.tienDoTuyenDungCode">
+									</dx-select-box>
+									<dxo-label text="Tiến độ tuyển dụng"></dxo-label>
+								</dxi-item>
+
+
+								<dxi-item dataField="soCMND" [colSpan]="4">
+									<dx-text-box (onKeyDown)="isNumber($event)" [(value)]="ungVien.soCMND"></dx-text-box>
+									<dxo-label text=" Số CMND"></dxo-label>
+								</dxi-item>
+
+
+								<dxi-item dataField="ngayCap" [colSpan]="3">
+									<dx-date-box [(value)]="ungVien.ngayCap" displayFormat="dd/MM/yyyy" type="date">
+									</dx-date-box>
+									<dxo-label text="Ngày cấp"></dxo-label>
+								</dxi-item>
+
+
+								<dxi-item dataField="noiCap" [colSpan]="5">
+									<dxo-label text="Nơi cấp"></dxo-label>
+								</dxi-item>
+
+								<dxi-item dataField="trinhDoVanHoa" [colSpan]="3">
+									<dxo-label text="Trình độ văn hóa"></dxo-label>
+								</dxi-item>
+
+								<dxi-item dataField="email" [colSpan]="5">
+									<dxi-validation-rule type="email">
+									</dxi-validation-rule>
+									<dxi-validation-rule type="required" message=" Email không được để trống">
+									</dxi-validation-rule>
+									<dxo-label text="Email" required></dxo-label>
+								</dxi-item>
+
+
+								<dxi-item dataField="dienThoai" [colSpan]="4">
+									<dx-text-box (onKeyDown)="isNumber($event)" [(value)]="ungVien.dienThoai"></dx-text-box>
+									<dxi-validation-rule type="required" message=" Điện thoại không được để trống">
+									</dxi-validation-rule>
+									<dxo-label text="Điện thoại " required></dxo-label>
+								</dxi-item>
+
+								<dxi-item [colSpan]="8">
+									<dx-select-box dataField="noiDaoTaoID" id="publisherSelect" [items]="noiDaoTao"
+										displayExpr="tenNoiDaoTao" valueExpr="id" [searchEnabled]="true"
+										[searchExpr]="['tenNoiDaoTao']" [(value)]="ungVien.noiDaoTaoID">
+									</dx-select-box>
+									<dxo-label text=" Nơi đào tạo "></dxo-label>
+								</dxi-item>
+
+								<dxi-item [colSpan]="4">
+									<dx-select-box dataField="tinhThanhID" [items]="tinhThanh" valueExpr="id"
+										[searchEnabled]="true" [searchExpr]="['tenTinhThanh']"
+										displayExpr="tenTinhThanh" [(value)]="ungVien.tinhThanhID">
+									</dx-select-box>
+									<dxo-label text="Tỉnh thành"></dxo-label>
+								</dxi-item>
+
+								<dxi-item dataField="diaChi" [colSpan]="12" [editorOptions]="{
+								autoResizeEnabled: true
+							}">
+									<dxo-label text="Địa chỉ"></dxo-label>
+								</dxi-item>
+
+								<dxi-item dataField="khoa" [colSpan]="6">
+									<dxo-label text="Khoa"></dxo-label>
+								</dxi-item>
+
+								<dxi-item dataField="chuyenNganh" [colSpan]="6">
+									<dxo-label text="Chuyên nghành"></dxo-label>
+								</dxi-item>
+
+								<dxi-item [colSpan]="4">
+									<dx-select-box dataField="xepLoaiCode" id="publisherSelect" [items]="xepLoaiHocLuc"
+										valueExpr="cdName" [searchEnabled]="true" [searchExpr]="['value']"
+										displayExpr="value" [(value)]="ungVien.xepLoaiCode"></dx-select-box>
+
+									<dxo-label text="Xếp loại "></dxo-label>
+								</dxi-item>
+
+								<dxi-item [colSpan]="4">
+									<dx-select-box dataField="namTotNghiep" id="publisherSelect" [items]="listYear"
+										valueExpr="tennam" [searchEnabled]="true" [searchExpr]="['tennam']"
+										displayExpr="tennam" [(value)]="ungVien.namTotNghiep"></dx-select-box>
+
+									<dxo-label text="Năm tốt nghiệp"></dxo-label>
+								</dxi-item>
+
+								<dxi-item dataField="nvPhuTrach" [colSpan]="4">
+									<dxo-label text="Nhân viên phụ trách"></dxo-label>
+								</dxi-item>
+
+								<dxi-item dataField="day1" [colSpan]="4">
+									<dx-date-box [(value)]="dayTime1" displayFormat="dd/MM/yyyy HH:mm " type="datetime"
+										[showClearButton]="true" [inputAttr]="{ style:'text-overflow: unset !important;' }">
+									</dx-date-box>
+									<dxo-label text="Ngày PV vòng 1"></dxo-label>
+								</dxi-item>
+
+								<dxi-item dataField="day2" [colSpan]="4">
+									<dx-date-box [(value)]="dayTime2" displayFormat="dd/MM/yyyy HH:mm " type="datetime"
+										[showClearButton]="true" (valueChange)="validateNgayPV2($event)" [inputAttr]="{ style:'text-overflow: unset !important;' }">
+									</dx-date-box>
+									<dxo-label text="Ngày PV vòng 2"></dxo-label>
+								</dxi-item>
+
+								<dxi-item dataField="day3" [colSpan]="4">
+									<dx-date-box [(value)]="dayTime3" displayFormat="dd/MM/yyyy  HH:mm " type="datetime"
+										[showClearButton]="true" (valueChange)="validateNgayPV3($event)" [inputAttr]="{ style:'text-overflow: unset !important;' }">
+									</dx-date-box>
+									<dxo-label text="Ngày PV vòng 3"></dxo-label>
+								</dxi-item>
+
+
+								<dxi-item [colSpan]="2">
+									<dx-file-uploader uploadUrl="{{uploadUrl}}" accept="*"
+										[allowedFileExtensions]="['.jpg', '.png', '.doc', '.docx', '.xlsx', '.pdf']"
+										[maxFileSize]="1024 * 1024 * 25" [multiple]="true" selectButtonText="Chọn tệp"
+										labelText="" [(value)]="value" uploadMode="instantly"
+										(onUploaded)="setFullNameFile()">
+									</dx-file-uploader>
+
+								</dxi-item>
+								<dxi-item [colSpan]="10">
+								</dxi-item>
+
+
+								<dxi-item [colSpan]="12">
+									<dx-data-grid id="gridContainer" [(dataSource)]="selectedRows"
+										[allowColumnReordering]="true" [allowColumnResizing]="true"
+										[columnAutoWidth]="true" showBorders="true">
+										<dxo-paging [pageSize]="10"></dxo-paging>
+										<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"
+											[showInfo]="true">
+										</dxo-pager>
+										<dxo-editing mode="cell" [allowUpdating]="true"></dxo-editing>
+
+										<dxi-column dataField="stt" cellTemplate="sttTemplate" caption="STT"
+											alignment="center" allowUpdating="false">
+										</dxi-column>
+										<dxi-column dataField="tieuDe" caption="Tiêu đề" alignment="center"
+											[width]="300" cellTemplate="cellTemplate1" allowUpdating="true"
+											allowEditing="true" dataType="string"></dxi-column>
+										<dxi-column dataField="tenFile" alignment="center" caption="Tên tập tin"
+											allowUpdating="false" cellTemplate="cellTemplate"></dxi-column>
+										<dxi-column dataField="dungLuong" caption="Dung lượng" allowUpdating="false"
+											alignment="center"></dxi-column>
+
+										<div *dxTemplate="let d of 'cellTemplate1'">
+											<a>
+												<div style="float: left;">
+													{{d.value}}
+												</div>
+											</a>
+										</div>
+
+										<div *dxTemplate="let d of 'sttTemplate'">
+											{{d.rowIndex + 1}}
+										</div>
+										<div *dxTemplate="let d of 'cellTemplate'">
+											<a href="linkfile" target="_blank">
+												<div (click)="showDetail(d)" style="float: left;">
+													{{d.value}}
+												</div>
+											</a>
+										</div>
+
+
+									</dx-data-grid>
+								</dxi-item>
+
+								<dxi-item [colSpan]="12">
+									<div id="list-api-demo" class="options">
+										<div class="widget-container">
+											<div class="caption" style="font-weight: bold;
+										color: black;">Danh sách các bình luận</div>
+											<br>
+											<div class="list-container">
+												<dx-list [items]="listComment">
+													<div *dxTemplate="let item of 'item'">
+														<div class="product">
+
+															<div>
+																<span class="username-content "
+																	style="display: inline-block;font-weight: bold;">{{item.fullName}}</span>
+																<span class="user-comment"> {{item.noiDung}}</span>
+
+																<span class="btn-delete"
+																	(click)="deleteComment(item.id)"
+																	style="float: right;"
+																	*ngIf="item.creatorUserId == currentUserId">
+																	<i class="fas fa-window-close"></i></span>
+															</div>
+															<br>
+															<div>
+																<span class="username-content"
+																	style="display: inline-block;">{{item.creationTime | momentFormat:'DD-MM-YYYY HH:mm:ss A'}}</span><span></span>
+																<span class="user-comment"
+																	(click)="showDetailFile(item.tepDinhKem)"
+																	*ngIf="item.tepDinhKem"><i
+																		class="fas fa-paperclip"></i>
+																	{{item.tepDinhKem}}</span>
+															</div>
+															<br>
+
+														</div>
+													</div>
+												</dx-list>
+											</div>
+
+
+										</div>
+										<br>
+										<br>
+										<div class="caption" style="font-weight: bold;
+									color: black;">Khu vực gửi các bình luận</div>
+										<br>
+										<dx-form #commentForm [showValidationSummary]="true"
+											[showColonAfterLabel]="false" validationGroup="formValidateGroup">
+											<dxi-item itemType="group" colCount="12">
+
+
+												<dxi-item itemType="group" colCount="12" [colSpan]="12">
+
+													<dxi-item [colSpan]="2">
+													</dxi-item>
+
+													<dxi-item [colSpan]="10">
+														<textarea placeholder="Nhập bình luận..."
+															(keyup.enter)="sendComment()" class="form-control" rows="3"
+															[(ngModel)]="comment" name="Comment"></textarea>
+													</dxi-item>
+													<dxi-item #fileDinhKem [colSpan]="2">
+														<dxo-label alignment="right" location="right"
+															text=" File đính kèm"></dxo-label>
+													</dxi-item>
+													<dxi-item [colSpan]="2">
+														<dx-file-uploader [elementAttr]="{ id: 'inputId' }"
+															uploadUrl="{{uploadUrlImage}}" [multiple]="true"
+															selectButtonText="Chọn file" labelText="" accept="*"
+															[allowedFileExtensions]="['.jpg', '.png', '.doc', '.docx', '.xlsx', '.pdf','.exe']"
+															[(value)]="value" uploadMode="instantly"
+															(onUploaded)="uploadFileComment()" showFileList="false">
+														</dx-file-uploader>
+													</dxi-item>
+													<dxi-item [colSpan]="6">
+														<input type="text" class="form-control"
+															[(ngModel)]="fileDinhKemComment" name="FileDinhKem" />
+													</dxi-item>
+
+													<dxi-item [colSpan]="2">
+
+														<dx-button text="Gửi bình luận" type="success" icon="save"
+															style="width: 159px;" (onClick)="sendComment()">
+														</dx-button>
+													</dxi-item>
+
+												</dxi-item>
+											</dxi-item>
+
+
+										</dx-form>
+
+									</div>
+								</dxi-item>
+
+							</dxi-item>
+
+						</dxi-item>
+
+					</dx-form>
+
+
+				</div>
+
+			</div>
+			<!-- <div [busyIf]="stripeIsLoading" *ngIf="stripeIsLoading"></div> -->
+
+			<style>
+				.dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {
+					width: 100px;
+					min-width: 100px;
+					color: white;
+				}
+
+
+				.product {
+					background: #e4ebef;
+					color: black;
+					border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+					box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+					padding: 10px 10px 10px 20px;
+					border-radius: 5px;
+				}
+
+
+				.dx-button-content {
+					background: black;
+					color: white;
+				}
+
+				.list-container {
+
+					border: 5px solid #e4ebef;
+					/* height: 400px; */
+					/* width: 1060px; */
+					border-radius: 10px;
+				}
+			</style>

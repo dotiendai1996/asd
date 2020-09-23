@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web" ToolsVersion="Current">
+  <Import Project="..\..\common.props">
+  </Import>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AssemblyName>Hinnova.Web.Core</AssemblyName>
+    <PackageId>Hinnova.Web.Core</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
+    <RootNamespace>Hinnova.Web</RootNamespace>
+    <LangVersion>7.2</LangVersion>
+    <OutputType>Library</OutputType>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hinnova.GraphQL\Hinnova.GraphQL.csproj" />
+    <ProjectReference Include="..\Hinnova.Application\Hinnova.Application.csproj" />
+    <ProjectReference Include="..\Hinnova.EntityFrameworkCore\Hinnova.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Aspose.Cells" Version="20.3.0" />
+    <PackageReference Include="Aspose.Words" Version="20.4.0" />
+    <PackageReference Include="Abp.AspNetCore.SignalR" Version="5.0.0" />
+    <PackageReference Include="Abp.AspNetZeroCore.Web" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.6" />
+    <PackageReference Include="PaulMiami.AspNetCore.Mvc.Recaptcha" Version="1.2.1" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Abp.ZeroCore.IdentityServer4" Version="5.0.0" />
+    <PackageReference Include="Abp.AspNetCore" Version="5.0.0" />
+    <PackageReference Include="Abp.HangFire.AspNetCore" Version="5.0.0" />
+    <PackageReference Include="Abp.RedisCache" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UploadFiles\" />
+  </ItemGroup>
+</Project>

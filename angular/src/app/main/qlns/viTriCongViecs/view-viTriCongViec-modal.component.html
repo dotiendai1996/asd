@@ -1,0 +1,414 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TenCty")}} :</h6>
+                        {{ item.viTriCongViec.tenCty }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("HopDongHienTai")}} :</h6>
+                        {{ item.viTriCongViec.hopDongHienTai }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoHD")}} :</h6>
+                        {{ item.viTriCongViec.soHD }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DonViCongTacName")}} :</h6>
+                        {{ item.viTriCongViec.donViCongTacName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ChoNgoi")}} :</h6>
+                        {{ item.viTriCongViec.choNgoi }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NoiDaoTaoID")}} :</h6>
+                        {{ item.viTriCongViec.noiDaoTaoID }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LoaiHopDongID")}} :</h6>
+                        {{ item.viTriCongViec.loaiHopDongID }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MaSoNoiKCB")}} :</h6>
+                        {{ item.viTriCongViec.maSoNoiKCB }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NoiDangKyKCBID")}} :</h6>
+                        {{ item.viTriCongViec.noiDangKyKCBID }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayHetHanBHYT")}} :</h6>
+                        {{ item.viTriCongViec.ngayHetHanBHYT | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoTheBHYT")}} :</h6>
+                        {{ item.viTriCongViec.soTheBHYT }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MaTinhCap")}} :</h6>
+                        {{ item.viTriCongViec.maTinhCap }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MaSoBHXH")}} :</h6>
+                        {{ item.viTriCongViec.maSoBHXH }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoSoBHXH")}} :</h6>
+                        {{ item.viTriCongViec.soSoBHXH }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TyLeDongBH")}} :</h6>
+                        {{ item.viTriCongViec.tyLeDongBH }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayThamGiaBH")}} :</h6>
+                        {{ item.viTriCongViec.ngayThamGiaBH | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ThamGiaCongDoan")}} :</h6>
+                        {{ item.viTriCongViec.thamGiaCongDoan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NganHangCode")}} :</h6>
+                        {{ item.viTriCongViec.nganHangCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TkNganHang")}} :</h6>
+                        {{ item.viTriCongViec.tkNganHang }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DonViSoCongChuanCode")}} :</h6>
+                        {{ item.viTriCongViec.donViSoCongChuanCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoCongChuan")}} :</h6>
+                        {{ item.viTriCongViec.soCongChuan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LuongDongBH")}} :</h6>
+                        {{ item.viTriCongViec.luongDongBH }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LuongCoBan")}} :</h6>
+                        {{ item.viTriCongViec.luongCoBan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("BacLuongCode")}} :</h6>
+                        {{ item.viTriCongViec.bacLuongCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoNgayPhep")}} :</h6>
+                        {{ item.viTriCongViec.soNgayPhep }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayChinhThuc")}} :</h6>
+                        {{ item.viTriCongViec.ngayChinhThuc | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayThuViec")}} :</h6>
+                        {{ item.viTriCongViec.ngayThuViec | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayTapSu")}} :</h6>
+                        {{ item.viTriCongViec.ngayTapSu | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoSoQLLaoDong")}} :</h6>
+                        {{ item.viTriCongViec.soSoQLLaoDong }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DiaDiemLamViecCode")}} :</h6>
+                        {{ item.viTriCongViec.diaDiemLamViecCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("QuanLyGianTiep")}} :</h6>
+                        {{ item.viTriCongViec.quanLyGianTiep }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("QuanLyTrucTiep")}} :</h6>
+                        {{ item.viTriCongViec.quanLyTrucTiep }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TrangThaiLamViecCode")}} :</h6>
+                        {{ item.viTriCongViec.trangThaiLamViecCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Bac")}} :</h6>
+                        {{ item.viTriCongViec.bac }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Cap")}} :</h6>
+                        {{ item.viTriCongViec.cap }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ChucDanh")}} :</h6>
+                        {{ item.viTriCongViec.chucDanh }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MaChamCong")}} :</h6>
+                        {{ item.viTriCongViec.maChamCong }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DiaChiLHKC")}} :</h6>
+                        {{ item.viTriCongViec.diaChiLHKC }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EmailLHKC")}} :</h6>
+                        {{ item.viTriCongViec.emailLHKC }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DtDiDongLHKC")}} :</h6>
+                        {{ item.viTriCongViec.dtDiDongLHKC }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DtNhaRiengLHKC")}} :</h6>
+                        {{ item.viTriCongViec.dtNhaRiengLHKC }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("QuanHeLHKC")}} :</h6>
+                        {{ item.viTriCongViec.quanHeLHKC }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("HoVaTenLHKC")}} :</h6>
+                        {{ item.viTriCongViec.hoVaTenLHKC }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DiaChiHN")}} :</h6>
+                        {{ item.viTriCongViec.diaChiHN }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TinhThanhIDHN")}} :</h6>
+                        {{ item.viTriCongViec.tinhThanhIDHN }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("QuocGiaHN")}} :</h6>
+                        {{ item.viTriCongViec.quocGiaHN }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LaChuHo")}} :</h6>
+                        {{ item.viTriCongViec.laChuHo }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MaSoHoGiaDinh")}} :</h6>
+                        {{ item.viTriCongViec.maSoHoGiaDinh }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoSoHoKhau")}} :</h6>
+                        {{ item.viTriCongViec.soSoHoKhau }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DiaChiHKTT")}} :</h6>
+                        {{ item.viTriCongViec.diaChiHKTT }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TinhThanhIDHKTT")}} :</h6>
+                        {{ item.viTriCongViec.tinhThanhIDHKTT }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("QuocGiaHKTT")}} :</h6>
+                        {{ item.viTriCongViec.quocGiaHKTT }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Facebook")}} :</h6>
+                        {{ item.viTriCongViec.facebook }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Skype")}} :</h6>
+                        {{ item.viTriCongViec.skype }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NoiSinh")}} :</h6>
+                        {{ item.viTriCongViec.noiSinh }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TinhThanhID")}} :</h6>
+                        {{ item.viTriCongViec.tinhThanhID }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NguyenQuan")}} :</h6>
+                        {{ item.viTriCongViec.nguyenQuan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EmailKhac")}} :</h6>
+                        {{ item.viTriCongViec.emailKhac }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EmailCoQuan")}} :</h6>
+                        {{ item.viTriCongViec.emailCoQuan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EmailCaNhan")}} :</h6>
+                        {{ item.viTriCongViec.emailCaNhan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DtKhac")}} :</h6>
+                        {{ item.viTriCongViec.dtKhac }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DtNhaRieng")}} :</h6>
+                        {{ item.viTriCongViec.dtNhaRieng }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DtCoQuan")}} :</h6>
+                        {{ item.viTriCongViec.dtCoQuan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DtDiDong")}} :</h6>
+                        {{ item.viTriCongViec.dtDiDong }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TepDinhKem")}} :</h6>
+                        {{ item.viTriCongViec.tepDinhKem }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TinhTrangHonNhanCode")}} :</h6>
+                        {{ item.viTriCongViec.tinhTrangHonNhanCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("XepLoaiCode")}} :</h6>
+                        {{ item.viTriCongViec.xepLoaiCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NamTotNghiep")}} :</h6>
+                        {{ item.viTriCongViec.namTotNghiep }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ChuyenNganh")}} :</h6>
+                        {{ item.viTriCongViec.chuyenNganh }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Khoa")}} :</h6>
+                        {{ item.viTriCongViec.khoa }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TrinhDoDaoTaoCode")}} :</h6>
+                        {{ item.viTriCongViec.trinhDoDaoTaoCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TrinhDoVanHoa")}} :</h6>
+                        {{ item.viTriCongViec.trinhDoVanHoa }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayHetHan")}} :</h6>
+                        {{ item.viTriCongViec.ngayHetHan | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NoiCap")}} :</h6>
+                        {{ item.viTriCongViec.noiCap }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayCap")}} :</h6>
+                        {{ item.viTriCongViec.ngayCap | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SoCMND")}} :</h6>
+                        {{ item.viTriCongViec.soCMND }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("QuocTich")}} :</h6>
+                        {{ item.viTriCongViec.quocTich }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TonGiao")}} :</h6>
+                        {{ item.viTriCongViec.tonGiao }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DanToc")}} :</h6>
+                        {{ item.viTriCongViec.danToc }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ViTriCongViecCode")}} :</h6>
+                        {{ item.viTriCongViec.viTriCongViecCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DonViCongTacID")}} :</h6>
+                        {{ item.viTriCongViec.donViCongTacID }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MSTCaNhan")}} :</h6>
+                        {{ item.viTriCongViec.mstCaNhan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgaySinh")}} :</h6>
+                        {{ item.viTriCongViec.ngaySinh | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("GioiTinhCode")}} :</h6>
+                        {{ item.viTriCongViec.gioiTinhCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("AnhDaiDien")}} :</h6>
+                        {{ item.viTriCongViec.anhDaiDien }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("HoVaTen")}} :</h6>
+                        {{ item.viTriCongViec.hoVaTen }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MaNhanVien")}} :</h6>
+                        {{ item.viTriCongViec.maNhanVien }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ChiNhanh")}} :</h6>
+                        {{ item.viTriCongViec.chiNhanh }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DVT")}} :</h6>
+                        {{ item.viTriCongViec.dvt }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayKyHDKTH")}} :</h6>
+                        {{ item.viTriCongViec.ngayKyHDKTH | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayKyHD36TH")}} :</h6>
+                        {{ item.viTriCongViec.ngayKyHD36TH | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayKyHD12TH")}} :</h6>
+                        {{ item.viTriCongViec.ngayKyHD12TH | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayKyHDTV")}} :</h6>
+                        {{ item.viTriCongViec.ngayKyHDTV | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayKYHDCTV")}} :</h6>
+                        {{ item.viTriCongViec.ngayKYHDCTV | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayKyHDKV")}} :</h6>
+                        {{ item.viTriCongViec.ngayKyHDKV | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayKYHDTT")}} :</h6>
+                        {{ item.viTriCongViec.ngayKYHDTT | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NgayKyHD")}} :</h6>
+                        {{ item.viTriCongViec.ngayKyHD | momentFormat:'YYYY-MM-DD HH:mm:ss' }}
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

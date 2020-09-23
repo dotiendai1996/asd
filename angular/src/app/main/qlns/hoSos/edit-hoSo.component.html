@@ -1,0 +1,916 @@
+﻿<style>
+	.form-group {
+		margin-bottom: 0.7rem !important;
+	}
+
+	.dropdown-content inputDropdown:hover {
+		background-color: #f1f1f1
+	}
+</style>
+<div>
+	<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+		<div class="kt-subheader kt-grid__item">
+			<div [class]="containerClass">
+				<div class="kt-subheader__main">
+					<div class="col-xl-12" style="padding-top: 5px;">
+						<dx-button text="Trở về" type="success" icon="arrowleft" (onClick)="troVe()"> </dx-button>
+						&nbsp;
+						<dx-button text="Lưu" type="success" icon="save" style="width: 127px;" (onClick)="save()">
+						</dx-button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+			<div class="kt-portlet kt-portlet--mobile">
+				<div class="kt-portlet__body">
+					<div class="kt-subheader__main">
+						<h3 class="kt-subheader__title">
+							<span style="font-family: Arial, Helvetica, sans-serif;
+							font-size: 76%;
+							font-weight: bold;
+							color: #246faf;"> <i class="fas fa-home"></i> {{l("Trang chủ")}} | {{l("Chỉnh sửa thông tin hồ sơ ")}} </span>
+						</h3>
+
+					</div>
+					<br>
+
+
+					<form #hoSoForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+						<tabset>
+							<tab heading="Thông tin chung">
+
+								<dx-form #documentForm id="form" [formData]="hoSo">
+
+									<dxi-item itemType="group" colCount="12" [colSpan]="12">
+
+										<dxi-item itemType="group" [colSpan]="2">
+											<dxi-item itemType="group">
+												<div class="form-avatar" style="padding-left: 60px;">
+													<img class="center" [src]="profilePicture" alt="House" width="150"
+														height="150" />
+													<dx-file-uploader #uploadimage uploadUrl="{{uploadUrlImage}}"
+														[multiple]="true" selectButtonText="Chọn ảnh" labelText=""
+														accept="*" [(value)]="value" uploadMode="instantly"
+														(onUploaded)="uploadImage()" showFileList="false">
+													</dx-file-uploader>
+												</div>
+											</dxi-item>
+
+										</dxi-item>
+										<dxi-item itemType="group" [colSpan]="10"></dxi-item>
+										<dxi-item [colSpan]="12" style="color: #1069b5;"><span><i
+													class="fas fa-address-card"></i></span> Thông tin cá nhân</dxi-item>
+
+										<dxi-item dataField="maNhanVien" [editorOptions]="{ disabled: true }"
+											[colSpan]="4">
+
+											<dxo-label text="Mã nhân viên"></dxo-label>
+
+										</dxi-item>
+
+										<dxi-item dataField="maChamCong" [colSpan]="4">
+											<dxo-label text="Mã chấm công"></dxo-label>
+										</dxi-item>
+
+
+
+										<dxi-item dataField="danToc" [colSpan]="4">
+											<dxi-validation-rule type="required" message="Dân tộc không được để trống">
+											</dxi-validation-rule>
+											<dxo-label text="Dân tộc" required></dxo-label>
+										</dxi-item>
+
+										<dxi-item dataField="hoVaTen" [colSpan]="4">
+											<dxi-validation-rule type="required"
+												message="Đơn vị công tác không được để trống">
+											</dxi-validation-rule>
+											<dxo-label text="Họ và tên" required></dxo-label>
+										</dxi-item>
+
+										<dxi-item dataField="Giới tính" title="Giới tính " [colSpan]="4">
+											<dx-select-box dataField="gioiTinhCode" [items]="gioiTinh"
+												valueExpr="cdName" [searchEnabled]="true" [searchExpr]="['value']"
+												displayExpr="value" [(value)]="hoSo.gioiTinhCode">
+											</dx-select-box>
+											<dxi-validation-rule type="required"
+												message="Giới tính không được để trống">
+											</dxi-validation-rule>
+											<dxo-label text="Giới tính " required></dxo-label>
+										</dxi-item>
+
+
+										<dxi-item dataField="quocTich" [colSpan]="4">
+											<dxi-validation-rule type="required"
+												message="Đơn vị công tác không được để trống">
+											</dxi-validation-rule>
+											<dxo-label text="Quốc tịch" required></dxo-label>
+										</dxi-item>
+										<dxi-item dataField="ngaySinh" [colSpan]="4">
+											<dx-date-box [(value)]="hoSo.ngaySinh" displayFormat="dd/MM/yyyy"
+												type="date" [showClearButton]="true"
+												(valueChange)="validateNgaySinh($event)">
+											</dx-date-box>
+											<dxi-validation-rule type="required"
+												message="Ngày sinh không được để trống">
+											</dxi-validation-rule>
+											<dxo-label text="Ngày sinh " required></dxo-label>
+
+										</dxi-item>
+
+
+
+										<dxi-item dataField="tonGiao" [colSpan]="4">
+											<dxo-label text="Tôn giáo"></dxo-label>
+										</dxi-item>
+
+
+
+
+
+
+
+										<dxi-item [colSpan]="4">
+											<dx-select-box dataField="tinhTrangHonNhan" [items]="tinhTrangHonNhan"
+												valueExpr="cdName" [searchEnabled]="true" [searchExpr]="['value']"
+												displayExpr="value" [(value)]="hoSo.tinhTrangHonNhanCode">
+											</dx-select-box>
+
+											<dxo-label text="Tình trạng hôn nhân"></dxo-label>
+										</dxi-item>
+
+
+										<dxi-item [colSpan]="12" style="color: #1069b5;"><span><i
+													class="fas fa-address-book"></i></span> Thông tin CMND</dxi-item>
+
+										<dxi-item dataField="soCMND" [colSpan]="4">
+											<dx-text-box (onKeyDown)="isNumber($event)" [(value)]="hoSo.soCMND">
+											</dx-text-box>
+											<dxi-validation-rule type="required" message="Số CMND không được để trống">
+											</dxi-validation-rule>
+											<dxo-label text="Số CMND" required></dxo-label>
+										</dxi-item>
+
+										<dxi-item dataField="ngayCap" [colSpan]="4">
+											<dx-date-box [(value)]="hoSo.ngayCap" displayFormat="dd/MM/yyyy" type="date"
+												[showClearButton]="true">
+											</dx-date-box>
+											<dxo-label text="Ngày cấp"></dxo-label>
+										</dxi-item>
+
+										<dxi-item dataField="ngayHetHan" [colSpan]="4">
+											<dx-date-box [(value)]="hoSo.ngayHetHan" displayFormat="dd/MM/yyyy"
+												type="date" [showClearButton]="true">
+											</dx-date-box>
+											<dxo-label text="Ngày hết hạn"></dxo-label>
+
+										</dxi-item>
+
+										<dxi-item dataField="noiCap" [colSpan]="12">
+											<dxi-validation-rule type="required" message="Nơi cấp không được để trống">
+											</dxi-validation-rule>
+											<dxo-label text="Nơi cấp" required></dxo-label>
+										</dxi-item>
+
+
+
+										<dxi-item [colSpan]="12" style="color: #1069b5;"><span><i
+													class="fas fa-user-graduate"></i></span> Trình độ / bằng cấp
+										</dxi-item>
+
+										<dxi-item dataField="trinhDoVanHoa" [colSpan]="4">
+											<dxo-label text="Trình độ văn hóa"></dxo-label>
+										</dxi-item>
+
+										<dxi-item [colSpan]="4">
+											<dx-select-box dataField="trinhDoDaoTao" [items]="trinhDoDaoTao"
+												valueExpr="cdName" [searchEnabled]="true" [searchExpr]="['value']"
+												displayExpr="value" [(value)]="hoSo.trinhDoDaoTaoCode">
+											</dx-select-box>
+
+											<dxo-label text="Trình độ đào tạo"></dxo-label>
+										</dxi-item>
+
+
+
+										<dxi-item [colSpan]="4">
+											<dx-select-box dataField="namTotNghiep" id="publisherSelect"
+												[items]="listYear" valueExpr="tennam" [searchEnabled]="true"
+												[searchExpr]="['tennam']" displayExpr="tennam"
+												[(value)]="hoSo.namTotNghiep"></dx-select-box>
+
+											<dxo-label text="Năm tốt nghiệp"></dxo-label>
+										</dxi-item>
+
+										<dxi-item [colSpan]="6">
+											<dx-select-box dataField="noiDaoTaoID" [items]="noiDaoTaoList"
+												valueExpr="id" [searchEnabled]="true" [searchExpr]="['tenNoiDaoTao']"
+												displayExpr="tenNoiDaoTao" [(value)]="hoSo.noiDaoTaoID">
+											</dx-select-box>
+
+											<dxo-label text="Nơi đào tạo"></dxo-label>
+										</dxi-item>
+
+										<dxi-item dataField="khoa" [colSpan]="6">
+											<dxo-label text="Khoa"></dxo-label>
+										</dxi-item>
+
+										<dxi-item dataField="chuyenNganh" [colSpan]="8">
+											<dxo-label text="Chuyên nghành"></dxo-label>
+										</dxi-item>
+
+
+										<dxi-item [colSpan]="4">
+											<dx-select-box dataField="xepLoaiCode" [items]="xepLoaiHocLuc"
+												valueExpr="cdName" [searchEnabled]="true" [searchExpr]="['value']"
+												displayExpr="value" [(value)]="hoSo.xepLoaiCode">
+											</dx-select-box>
+
+											<dxo-label text="Xếp loại"></dxo-label>
+										</dxi-item>
+
+
+
+
+
+									</dxi-item>
+
+								</dx-form>
+							</tab>
+							<tab heading="Thông tin liên hệ">
+
+								<dx-form #documentForm id="form" [formData]="hoSo">
+
+									<dxi-item itemType="group" colCount="12">
+
+										<dxi-item itemType="group" colCount="12" [colSpan]="12">
+
+											<dxi-item dataField="sdt" [colSpan]="4">
+												<dx-text-box (onKeyDown)="isNumber($event)" [(value)]="hoSo.sdt">
+												</dx-text-box>
+												<dxo-label text="ĐT di động"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="dtCoQuan" [colSpan]="4">
+												<dx-text-box (onKeyDown)="isNumber($event)" [(value)]="hoSo.dtCoQuan">
+												</dx-text-box>
+												<dxo-label text="ĐT cơ quan"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="dtNhaRieng" [colSpan]="4">
+												<dx-text-box (onKeyDown)="isNumber($event)" [(value)]="hoSo.dtNhaRieng">
+												</dx-text-box>
+												<dxo-label text="ĐT nhà riêng"></dxo-label>
+											</dxi-item>
+											<dxi-item dataField="dtKhac" [colSpan]="4">
+												<dx-text-box (onKeyDown)="isNumber($event)" [(value)]="hoSo.dtKhac">
+												</dx-text-box>
+												<dxo-label text="ĐT khác"></dxo-label>
+											</dxi-item>
+
+
+
+											<dxi-item dataField="nguyenQuan" [colSpan]="8">
+												<dxo-label text="Nguyên quán"></dxo-label>
+											</dxi-item>
+
+											<dxi-item [colSpan]="4">
+												<dx-select-box dataField="tinhThanhID" [items]="tinhThanhList"
+													valueExpr="id" [searchEnabled]="true"
+													[searchExpr]="['tenTinhThanh']" displayExpr="tenTinhThanh"
+													[(value)]="hoSo.tinhThanhID">
+												</dx-select-box>
+
+												<dxo-label text="Tỉnh/Thành phố"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="noiSinh" [colSpan]="8">
+												<dxo-label text="Nơi sinh"></dxo-label>
+											</dxi-item>
+
+
+
+											<dxi-item dataField="skype" [colSpan]="6">
+												<dxo-label text="Skype"></dxo-label>
+											</dxi-item>
+
+
+
+											<dxi-item dataField="facebook" [colSpan]="6">
+
+												<dxo-label text=" Facebook"></dxo-label>
+											</dxi-item>
+											<dxi-item dataField="emailCaNhan" [colSpan]="6">
+												<dxi-validation-rule type="email"></dxi-validation-rule>
+												<dxo-label text="Email cá nhân"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="emailCoQuan" [colSpan]="6">
+												<dxi-validation-rule type="email"></dxi-validation-rule>
+												<dxo-label text="Email cơ quan"></dxo-label>
+											</dxi-item>
+
+											<!-- <dxi-item dataField="emailKhac" [colSpan]="4">
+												<dxo-label text="Email khác"></dxo-label>
+											</dxi-item> -->
+
+											<dxi-item [colSpan]="12" style="color: #1069b5;"><span><i
+														class="fas fa-house-damage"></i></span> Hộ khẩu thường trú
+											</dxi-item>
+
+
+											<dxi-item dataField="quocGiaHKTT" [colSpan]="4">
+												<dxo-label text="Quốc gia"></dxo-label>
+											</dxi-item>
+
+											<dxi-item [colSpan]="4">
+												<dx-select-box dataField="tinhThanhIDHKTT" [items]="tinhThanhList"
+													valueExpr="id" [searchEnabled]="true"
+													[searchExpr]="['tenTinhThanh']" displayExpr="tenTinhThanh"
+													[(value)]="hoSo.tinhThanhIDHKTT">
+												</dx-select-box>
+
+												<dxo-label text="Tỉnh thành"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="soSoHoKhau" [colSpan]="4">
+												<dxo-label text="Số sổ hộ khẩu"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="maSoHoGiaDinh" [colSpan]="4">
+												<dxo-label text="Mã số hộ gia đình"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="diaChiHKTT" [colSpan]="8">
+												<dxo-label text="Địa chỉ HKTT"></dxo-label>
+											</dxi-item>
+
+											<dxi-item [colSpan]="12" style="color: #1069b5;"><span><i
+														class="fas fa-home"></i></span> Chỗ ở hiện nay </dxi-item>
+
+											<dxi-item dataField="quocGiaHN" [colSpan]="5">
+												<dxo-label text="Quốc gia"></dxo-label>
+											</dxi-item>
+
+											<dxi-item [colSpan]="6">
+												<dx-select-box dataField="tinhThanhIDHN" [items]="tinhThanhList"
+													valueExpr="id" [searchEnabled]="true"
+													[searchExpr]="['tenTinhThanh']" displayExpr="tenTinhThanh"
+													[(value)]="hoSo.tinhThanhIDHN">
+												</dx-select-box>
+
+												<dxo-label text="Tỉnh thành"></dxo-label>
+											</dxi-item>
+
+											<dxi-item [colSpan]="1">
+												<dx-check-box [value]="giongHKTT" [width]="80"
+													(onValueChanged)="onChangeGiongHKTTCheckBox($event)">
+
+												</dx-check-box>
+												<dxo-label text="Giống hộ khẩu thường trú"></dxo-label>
+											</dxi-item>
+
+
+											<dxi-item dataField="diaChiHN" [colSpan]="12">
+												<dxo-label text="Địa chỉ "></dxo-label>
+											</dxi-item>
+
+											<dxi-item icon="card" [colSpan]="12" style="color: #1069b5;"><span><i
+														class="fas fa-users"></i></span> Thông tin người
+												liên hệ </dxi-item>
+
+
+
+
+											<dxi-item dataField="hoVaTenLHKC" [colSpan]="4">
+												<dxo-label text="Họ và tên LHKC"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="quanHeLHKC" [colSpan]="4">
+												<dxo-label text="Quan hệ LHKC"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="dtDiDongLHKC" [colSpan]="4">
+												<dx-text-box (onKeyDown)="isNumber($event)"
+													[(value)]="hoSo.dtDiDongLHKC"></dx-text-box>
+												<dxo-label text="ĐT di động LHKC"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="dtNhaRiengLHKC" [colSpan]="4">
+												<dx-text-box (onKeyDown)="isNumber($event)"
+													[(value)]="hoSo.dtNhaRiengLHKC"></dx-text-box>
+												<dxo-label text="Đt nhà riêng LHKC"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="emailLHKC" [colSpan]="4">
+												<dxi-validation-rule type="email"></dxi-validation-rule>
+												<dxo-label text="Email LHKC"></dxo-label>
+											</dxi-item>
+
+
+											<dxi-item [colSpan]="4">
+												<dx-check-box [(value)]="hoSo.laChuHo" [width]="80"></dx-check-box>
+												<dxo-label text="Là chủ hộ"></dxo-label>
+											</dxi-item>
+											<dxi-item dataField="diaChiLHKC" [colSpan]="12">
+												<dxo-label text="Địa chỉ LHKC"></dxo-label>
+											</dxi-item>
+
+										</dxi-item>
+									</dxi-item>
+								</dx-form>
+							</tab>
+							<tab heading="Thông tin công việc">
+								<dx-form #documentForm id="form" [formData]="hoSo">
+									<dxi-item itemType="group" colCount="12">
+
+										<dxi-item itemType="group" colCount="12" [colSpan]="12">
+											<dxi-item [colSpan]="6">
+												<dx-select-box dataField="tenCty" id="publisherSelect" [items]="congTy"
+													valueExpr="value" [searchEnabled]="true" [searchExpr]="['value']"
+													displayExpr="value" [(value)]="hoSo.tenCty"
+													(onValueChanged)="changeCTY($event)"></dx-select-box>
+												<dxo-label text="Công ty "></dxo-label>
+												<dxi-validation-rule type="required"
+													message="Công ty không được để trống">
+												</dxi-validation-rule>
+											</dxi-item>
+
+
+											<dxi-item dataField="Đơn vị công tác" [colSpan]="6">
+												<dx-select-box dataField="donViCongTacID" [items]="danhSachDV"
+													valueExpr="data.id" [searchEnabled]="true" [searchExpr]="['label']"
+													displayExpr="label" (onValueChanged)="selectItem($event)"
+													[(value)]="hoSo.donViCongTacID">
+												</dx-select-box>
+												<dxi-validation-rule type="required"
+													message="Đơn vị công tác  không được để trống">
+												</dxi-validation-rule>
+
+											</dxi-item>
+											<dxi-item [colSpan]="6">
+												<dx-select-box dataField="loaiHopDongID" [items]="loaiHopDong"
+													valueExpr="id" [searchEnabled]="true" [searchExpr]="['tenTemplate']"
+													displayExpr="tenTemplate" [(value)]="hoSo.loaiHopDongID">
+												</dx-select-box>
+
+												<dxi-validation-rule type="required"
+													message="Loại hợp đồng không được để trống">
+												</dxi-validation-rule>
+												<dxo-label text="Loai hợp đồng" required></dxo-label>
+											</dxi-item>
+											<dxi-item [colSpan]="6">
+												<dx-select-box dataField="viTriCongViecCode" [items]="danhSachCV"
+													valueExpr="code" [searchEnabled]="true"
+													[searchExpr]="['displayName']" displayExpr="displayName"
+													[(value)]="hoSo.viTriCongViecCode">
+												</dx-select-box>
+												<dxi-validation-rule type="required"
+													message="Vị trí công việc  không được để trống">
+												</dxi-validation-rule>
+												<dxo-label text="Vị trí công việc" required></dxo-label>
+											</dxi-item>
+
+
+											<dxi-item dataField="soSoQLLaoDong" [colSpan]="4">
+												<dxo-label text="Số sổ QL lao động"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="cap" [colSpan]="4">
+												<dxo-label text=" Cấp"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="bac" [colSpan]="4">
+												<dxo-label text="Bậc"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="chucDanh" [colSpan]="6">
+												<dxo-label text="Chức danh"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="nguoiNhapCV" [colSpan]="6">
+												<dxo-label text="Người nhập hồ sơ"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="ngayTapSu" [colSpan]="4">
+												<dx-date-box [(value)]="hoSo.ngayTapSu" displayFormat="dd/MM/yyyy"
+													type="date" [showClearButton]="true">
+												</dx-date-box>
+												<dxo-label text="Ngày thực tập"></dxo-label>
+
+											</dxi-item>
+
+											<dxi-item dataField="ngayThuViec" [colSpan]="4">
+												<dx-date-box [(value)]="hoSo.ngayThuViec" displayFormat="dd/MM/yyyy"
+													type="date" [showClearButton]="true">
+												</dx-date-box>
+												<dxo-label text="Ngày thử việc"></dxo-label>
+
+											</dxi-item>
+
+
+
+											<!-- trangThaiLamViecCode -->
+
+											<dxi-item dataField="ngayChinhThuc" [colSpan]="4">
+												<dx-date-box [(value)]="hoSo.ngayChinhThuc" displayFormat="dd/MM/yyyy"
+													type="date" [showClearButton]="true">
+												</dx-date-box>
+												<dxo-label text="Ngày chính thức"></dxo-label>
+
+											</dxi-item>
+
+											<dxi-item itemType="group" [colSpan]="4" colCount="20">
+												<dxi-item [colSpan]="20">
+													<dx-select-box dataField="trangThaiLamViecCode"
+														[items]="hinhThucLamViec" valueExpr="cdName"
+														[searchEnabled]="true" [searchExpr]="['value']"
+														displayExpr="value" [(value)]="hoSo.trangThaiLamViecCode">
+													</dx-select-box>
+													<dxo-label text=" Tình trạng nhân sự "></dxo-label>
+												</dxi-item>
+											</dxi-item>
+
+
+											<dxi-item dataField="diaDiemLamViecCode" [colSpan]="8">
+												<dxo-label text=" Địa điểm làm việc"></dxo-label>
+											</dxi-item>
+
+
+
+
+
+
+
+											<dxi-item dataField="mstCaNhan" [colSpan]="4">
+												<dxo-label text="MST cá nhân"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="quanLyGianTiep" [colSpan]="8">
+												<dxo-label text="Quản lý gián tiếp"></dxo-label>
+											</dxi-item>
+
+
+											<dxi-item [colSpan]="2">
+												<dx-file-uploader uploadUrl="{{uploadUrl}}" accept="*"
+													[allowedFileExtensions]="['.jpg', '.png', '.doc', '.docx', '.xlsx', '.pdf']"
+													[maxFileSize]="1024 * 1024 * 25" [multiple]="true"
+													selectButtonText="Chọn tệp" labelText="" [(value)]="value"
+													uploadMode="instantly" (onUploaded)="setFullNameFile()">
+												</dx-file-uploader>
+
+											</dxi-item>
+											<dxi-item [colSpan]="10">
+											</dxi-item>
+											<dxi-item [colSpan]="12">
+												<dx-data-grid id="gridContainer" [(dataSource)]="selectedRows"
+													[allowColumnReordering]="true" [allowColumnResizing]="true"
+													[columnAutoWidth]="true" showBorders="true">
+													<dxo-paging [pageSize]="10"></dxo-paging>
+													<dxo-pager [showPageSizeSelector]="true"
+														[allowedPageSizes]="[5, 10, 20]" [showInfo]="true">
+													</dxo-pager>
+													<dxo-editing mode="cell" [allowUpdating]="true"></dxo-editing>
+
+													<dxi-column dataField="stt" cellTemplate="sttTemplate" caption="STT"
+														alignment="center" allowUpdating="false">
+													</dxi-column>
+													<dxi-column dataField="tieuDe" caption="Tiêu đề" alignment="center"
+														[width]="300" cellTemplate="cellTemplate1" allowUpdating="true"
+														allowEditing="true" dataType="string"></dxi-column>
+													<dxi-column dataField="tenFile" alignment="center"
+														caption="Tên tập tin" allowUpdating="false"
+														cellTemplate="cellTemplate"></dxi-column>
+													<dxi-column dataField="dungLuong" caption="Dung lượng"
+														allowUpdating="false" alignment="center"></dxi-column>
+
+													<div *dxTemplate="let d of 'cellTemplate1'">
+														<a>
+															<div style="float: left;">
+																{{d.value}}
+															</div>
+														</a>
+													</div>
+
+													<div *dxTemplate="let d of 'sttTemplate'">
+														{{d.rowIndex + 1}}
+													</div>
+													<div *dxTemplate="let d of 'cellTemplate'">
+														<a href="linkfile" target="_blank">
+															<div (click)="showDetail(d)" style="float: left;">
+																{{d.value}}
+															</div>
+														</a>
+													</div>
+
+
+												</dx-data-grid>
+											</dxi-item>
+
+
+
+										</dxi-item>
+									</dxi-item>
+								</dx-form>
+							</tab>
+							<tab heading="Khám chữa bệnh và lương">
+
+								<dx-form #documentForm id="form" [formData]="hoSo">
+									<dxi-item itemType="group" colCount="12">
+
+										<dxi-item itemType="group" colCount="12" [colSpan]="12">
+
+
+											<dxi-item dataField="soSoBHXH" [colSpan]="4">
+												<dxo-label text="Số BHXH"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="noiDangKyKCBID" [colSpan]="7">
+												<dx-select-box dataField="noiDangKyKCBID" [items]="noiKhamBenhList"
+													valueExpr="id" [searchEnabled]="true" [searchExpr]="['tenNoiKCB']"
+													displayExpr="tenNoiKCB" [(value)]="hoSo.noiDangKyKCBID">
+												</dx-select-box>
+
+												<dxo-label text="Nơi đăng ký KCB"></dxo-label>
+											</dxi-item>
+
+											<dxi-item [colSpan]="1">
+												<dx-button icon="box" alignment="right" (onClick)="chonThongTinKCB()"
+													[elementAttr]="{class: 'btnAddPublisher'}"></dx-button>
+											</dxi-item>
+
+
+
+											<dxi-item dataField="soTheBHYT" [colSpan]="4">
+												<dxo-label text="Số thẻ BHYT"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="maSoBHXH" [colSpan]="4">
+												<dxo-label text="Mã số BHXH"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="maSoNoiKCB" [colSpan]="4">
+												<dxo-label text="Mã số nơi KCB"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="tyLeDongBH" [colSpan]="4">
+												<dxo-label text="Tỷ lệ đóng bảo hiểm"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="ngayThamGiaBH" [colSpan]="4">
+												<dx-date-box [(value)]="hoSo.ngayThamGiaBH" displayFormat="dd/MM/yyyy"
+													type="date">
+												</dx-date-box>
+												<dxo-label text="Ngày tham gia BH"></dxo-label>
+
+											</dxi-item>
+
+											<dxi-item dataField="ngayHetHanBHYT" [colSpan]="4">
+												<dx-date-box [(value)]="hoSo.ngayHetHanBHYT" displayFormat="dd/MM/yyyy"
+													type="date">
+												</dx-date-box>
+												<dxo-label text="Ngày hết hạn BHYT"></dxo-label>
+
+											</dxi-item>
+
+											<!-- <dxi-item dataField="maTinhCap" [colSpan]="4">
+												<dxo-label text="Mã tỉnh cấp"></dxo-label>
+
+											</dxi-item> -->
+											<!-- <dxi-item [colSpan]="8">
+											</dxi-item> -->
+
+											<dxi-item [colSpan]="12" style="color: #1069b5;"> <span><i
+														class="fas fa-calculator"></i></span> Thông tin lương
+											</dxi-item>
+
+											<dxi-item dataField="tkNganHang" [colSpan]="6">
+
+												<dxo-label text="Tài khoản ngân hàng"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="bacLuongCode" [colSpan]="3">
+												<dxo-label text=" Bậc lương"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="luongCoBan" [colSpan]="3">
+												<dx-number-box format="#,##0" [(value)]="hoSo.luongCoBan">
+												</dx-number-box>
+												<dxo-label text="Lương cơ bản"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="luongDongBH" [colSpan]="4">
+												<dx-number-box format="#,##0" [(value)]="hoSo.luongDongBH">
+												</dx-number-box>
+												<dxo-label text="Lương đóng bảo hiểm"></dxo-label>
+											</dxi-item>
+
+
+											<dxi-item dataField="soCongChuan" [colSpan]="4">
+												<dxo-label text="Số công chuẩn"></dxo-label>
+											</dxi-item>
+
+											<dxi-item dataField="donViSoCongChuanCode" [colSpan]="4">
+												<dxo-label text="Đơn vị số công chuẩn"></dxo-label>
+											</dxi-item>
+
+
+											<dxi-item dataField="nganHangCode" [colSpan]="12">
+												<dxo-label text="Ngân Hàng"></dxo-label>
+											</dxi-item>
+
+
+
+										</dxi-item>
+									</dxi-item>
+
+
+								</dx-form>
+							</tab>
+							<tab heading="Quá trình công tác">
+								<dx-button text="Thêm mới " type="success" icon="save" (onClick)="chonLoaiHD()" style="width: 154px;
+								float: right;">
+								</dx-button>
+								<br>
+								<br>
+								<dx-data-grid id="gridContainer" [dataSource]="quaTrinhCongTac"
+									[allowColumnReordering]="true" [allowColumnResizing]="true" [columnAutoWidth]="true"
+									[showBorders]="true" (onRowDblClick)="startEdit($event)">
+									<dxo-paging [pageSize]="10"></dxo-paging>
+									<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"
+										[showInfo]="true">
+
+									</dxo-pager>
+
+									<dxi-column dataField="tungay" cellTemplate="diffCellTemplate"
+										caption="Từ ngày đến ngày ">
+									</dxi-column>
+									<dxi-column dataField="quyTrinhCongTac.tenCty" caption="Công ty">
+									</dxi-column>
+									<dxi-column dataField="donViCongTacValue" caption="Đơn vị công tác">
+									</dxi-column>
+									<dxi-column dataField="viTriCongViecValue" caption="Vị trí công việc">
+									</dxi-column>
+									<dxi-column dataField="hinhThucLamViecValue" caption="Trạng thái">
+									</dxi-column>
+
+									<dxi-column type="buttons" cellTemplate="actionTemplate">
+									</dxi-column>
+
+									<div *dxTemplate="let d of 'diffCellTemplate'">
+										<div class="current-value">
+											{{d.data.quyTrinhCongTac.dateFrom | date: "dd/MM/yyyy "}} -
+											{{d.data.quyTrinhCongTac.dateTo | date: "dd/MM/yyyy "}}
+										</div>
+									</div>
+
+									<div *dxTemplate="let d of 'actionTemplate'">
+										<div class="row">
+											<div class="col-4" (click)="editQTCongTac(d)">
+												<span> <i class="fas fa-pencil-alt"></i></span>
+											</div>
+										</div>
+									</div>
+
+
+								</dx-data-grid>
+
+							</tab>
+
+
+						</tabset>
+					</form>
+
+
+					<dx-popup [width]="500" [height]="550" [showTitle]="true" title="Đơn vị công tác"
+						[dragEnabled]="false" [closeOnOutsideClick]="false" [(visible)]="popupVisible">
+						<dx-tree-view id="simple-treeview" [items]="treeData" (onItemClick)="selectItem($event)">
+						</dx-tree-view>
+
+					</dx-popup>
+
+					<dx-popup [width]="1100" [height]="550" [showTitle]="true" title=" Danh sách nơi khám chữa bệnh"
+						[dragEnabled]="false" [closeOnOutsideClick]="false" [(visible)]="popupVisibleKCB">
+
+
+
+						<dx-data-grid id="gridContainer" [dataSource]="noiKhamBenhList" [allowColumnReordering]="true"
+							[allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true"
+							(onRowDblClick)="startEdit($event)">
+							<dxo-paging [pageSize]="10"></dxo-paging>
+							<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]" [showInfo]="true">
+
+							</dxo-pager>
+
+							<dxo-header-filter [visible]="true"></dxo-header-filter>
+							<dxo-filter-row [visible]="false"></dxo-filter-row>
+							<dxo-search-panel [visible]="true" placeholder="Nhập nội dung..." width="250">
+							</dxo-search-panel>
+
+							<dxi-column dataField="maNoiKCB" [allowSearch]="true" caption="Mã nơi khám chữa bệnh ">
+							</dxi-column>
+							<dxi-column dataField="tenNoiKCB" [allowSearch]="true" caption="Tên nơi khám "></dxi-column>
+							<dxi-column dataField="diaChi" [allowSearch]="true" caption="Địa chỉ">
+							</dxi-column>
+							<!-- <dxi-column dataField="tinhThanhID" [allowSearch]="true" caption="Mã tỉnh thành">
+							</dxi-column> -->
+						</dx-data-grid>
+					</dx-popup>
+
+					<dx-popup [width]="1000" [height]="300" [showTitle]="true" [(title)]="tieuDe" [dragEnabled]="false"
+						[closeOnOutsideClick]="false" [(visible)]="popupVisibleLHD">
+						<dx-form id="form" [formData]="quytrinhcongtac">
+							<dxi-item itemType="group" colCount="12">
+
+								<dxi-item itemType="group" colCount="12" [colSpan]="12">
+									<dxi-item dataField="dateFrom" [colSpan]="4">
+										<dx-date-box [(value)]="dateFrom" displayFormat="dd/MM/yyyy" type="date">
+										</dx-date-box>
+										<dxo-label text="Từ ngày"></dxo-label>
+
+									</dxi-item>
+									<dxi-item dataField="dateTo" [colSpan]="4">
+										<dx-date-box [(value)]="dateTo" displayFormat="dd/MM/yyyy" type="date">
+										</dx-date-box>
+										<dxo-label text="Đến ngày"></dxo-label>
+
+									</dxi-item>
+									<dxi-item [colSpan]="4">
+										<dx-select-box dataField="tenCty" id="publisherSelect" [items]="congTy"
+											valueExpr="value" [searchEnabled]="true" [searchExpr]="['value']"
+											displayExpr="value" [(value)]="quytrinhcongtac.tenCty"
+											(onValueChanged)="changeCTY($event)"></dx-select-box>
+
+										<dxi-validation-rule type="required" message="Tên công ty  không được để trống">
+										</dxi-validation-rule>
+										<dxo-label text="Công ty" required></dxo-label>
+									</dxi-item>
+
+
+									<dxi-item dataField="Đơn vị công tác" [colSpan]="6">
+										<dx-select-box dataField="donViCongTacID" [items]="danhSachDV"
+											valueExpr="data.id" [searchEnabled]="true" [searchExpr]="['label']"
+											displayExpr="label" (onValueChanged)="selectItem($event)"
+											[(value)]="quytrinhcongtac.donViCongTacID">
+										</dx-select-box>
+										<dxi-validation-rule type="required"
+											message="Đơn vị công tác  không được để trống">
+										</dxi-validation-rule>
+
+									</dxi-item>
+									<dxi-item [colSpan]="6">
+										<dx-select-box dataField="viTriCongViecCode" [items]="danhSachCV"
+											valueExpr="code" [searchEnabled]="true" [searchExpr]="['displayName']"
+											displayExpr="displayName" [(value)]="quytrinhcongtac.viTriCongViecCode">
+										</dx-select-box>
+										<dxi-validation-rule type="required"
+											message="Vị trí công việc  không được để trống">
+										</dxi-validation-rule>
+										<dxo-label text="Vị trí công việc" required></dxo-label>
+									</dxi-item>
+
+									<dxi-item [colSpan]="4">
+										<dx-select-box dataField="trangThaiLamViecCode" [items]="hinhThucLamViec"
+											valueExpr="cdName" [searchEnabled]="true" [searchExpr]="['value']"
+											displayExpr="value" [(value)]="quytrinhcongtac.trangThaiCode">
+										</dx-select-box>
+										<dxo-label text=" Trạng thái làm việc "></dxo-label>
+									</dxi-item>
+
+
+									<dxi-item dataField="ghiChu" [colSpan]="8">
+										<dxo-label text="Ghi chú"></dxo-label>
+									</dxi-item>
+
+								</dxi-item>
+							</dxi-item>
+						</dx-form>
+						<br>
+						<br>
+						<div class="col-xl-12" style="padding-top: 5px;">
+
+							<dx-button text="Lưu lại" type="success" icon="save" style="width: 127px;"
+								(onClick)="saveQTCT()">
+							</dx-button>
+						</div>
+					</dx-popup>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<style>
+	.dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {
+		width: 100px;
+		min-width: 100px;
+		color: white;
+	}
+
+	.dx-overlay-wrapper .dx-popup-wrapper .dx-overlay-modal .dx-overlay-shader {
+		background: #347ab7;
+	}
+</style>

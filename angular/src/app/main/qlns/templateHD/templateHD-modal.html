@@ -1,0 +1,133 @@
+<div [@routerTransition]>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <div class="col-xl-12" style="padding-top: 5px;">
+                        <!-- <dx-button text="Lọc dữ liệu" type="success" icon="save" (onClick)="locDuLieu()"> </dx-button>                     
+                        &nbsp;
+                        <dx-button text="Xuất dữ liệu" type="success" icon="arrowdown" (onClick)="xuatDuLieu()"> </dx-button>
+                        &nbsp;
+                        <dx-button text="Làm tươi" type="success" icon="pulldown" (onClick)="restart()"> </dx-button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="modal-body">
+                    <div class="kt-subheader__main">
+                        <h3 class="kt-subheader__title">
+                            <span> <i class="fas fa-home"></i> {{l("Trang chủ")}} | {{l("Quản lý Template")}} </span>
+                        </h3>
+
+                    </div>
+                    <br>
+                    <br>
+  
+                    <div class="row align-items-center">
+                        <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                            <dx-form [showValidationSummary]="true" validationGroup="formValidateGroup">
+                                <dxi-item itemType="group" cssClass="item-bold">
+                                    <div class="row">
+                                        <div class="col-2" style="font-size: 15px;font-weight: bold;"> Chọn công ty:
+                                        </div>
+                                        <div class="col-10">
+                                            <dx-select-box #BGDSelectBox [dataSource]="congTY" displayExpr="value"
+                                                (onValueChanged)="onValueChanged($event)" valueExpr='cdName'>
+                                            </dx-select-box>
+                                        </div>
+                                    </div>
+                                </dxi-item>
+                            </dx-form>
+                            <br>
+                            <br>
+
+                            <dx-data-grid id="gridContainer"  [height]= "500" [dataSource]="loaiHopDong" [allowColumnReordering]="true"
+                                [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true"
+                                (onRowDblClick)="chonLoaiHopDong($event)"   >
+                                <dxo-paging [pageSize]="10"></dxo-paging>
+                                <dxo-selection mode="single"> </dxo-selection>
+                            
+                                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"
+                                    [showInfo]="true">
+                                </dxo-pager>
+                                <dxi-column dataField="stt" [allowSearch]="true" alignment="center" [width]="50"
+                                caption="STT"> </dxi-column>
+                                <!-- <dxi-column dataField="id" [allowSearch]="true" alignment="center" 
+                                    caption="ID"> </dxi-column> -->
+                                <dxi-column dataField="maTemplate" [allowSearch]="true" alignment="left" caption="Mã hợp đồng" >
+                                </dxi-column>
+                                <dxi-column dataField="tenTemplate" [allowSearch]="true" alignment="left" 
+                                    caption="Loại hợp đồng">
+                                </dxi-column>
+                                <dxi-column dataField="linkTemplate" [allowSearch]="true" alignment="left" 
+                                caption="Link">
+                            </dxi-column>
+                                <dxi-column type="buttons"   alignment="center" cellTemplate="actionTemplate"></dxi-column>
+											
+                                <dxi-column type="buttons"  cellTemplate="actionTemplate1"></dxi-column>
+                                <div *dxTemplate="let d of 'actionTemplate'">
+                                  
+                                        <dx-button   type="success" icon="download"  (onClick)="taiVe(d)"> </dx-button>
+
+                                   
+                                </div>
+                                <div *dxTemplate="let d of 'actionTemplate1'">
+                                    <div class="row">
+                                       
+                                          <div id="fileuploader-container">
+                                            <dx-file-uploader
+                                                selectButtonText="Tải lên" uploadUrl="{{uploadUrl}}"
+                                                labelText="" showFileList="false" 
+                                                accept="*"  uploadMode="instantly" (onUploaded)="uploadImage($event)"
+                                                >
+                                            </dx-file-uploader>
+                                        </div>
+                                    </div>
+                                </div>
+                            </dx-data-grid>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .dx-command-edit dx-focused {
+        text-align: center;
+    background: #78b1de;
+   
+    }
+    .dx-command-edit dx-cell-focus-disabled dx-datagrid-drag-action{
+        color: white ;
+    }
+    .dx-button-text {
+    line-height: normal;
+    color: white;
+
+
+}
+.dx-button-has-text .dx-button-content {
+    padding: 7px 18px 8px;
+    color: white;
+}
+.dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {
+    width: 100px;
+    min-width: 100px;
+	/* background-color: #258cbe; */
+}
+
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+    border-bottom: 1px solid #ddd;
+    color: white;
+}
+</style>
+
+<script type="text/javascript">  
+    window.history.forward(1);  
+</script>

@@ -1,0 +1,46 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #tinhThanhForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="tinhThanh.id">{{l("EditTinhThanh")}}</span>
+                        <span *ngIf="!tinhThanh.id">{{l("CreateNewTinhThanh")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label class="required" for="TinhThanh_TenTinhThanh">{{l("TenTinhThanh")}}</label>
+									<input #tenTinh="ngModel" type="text" id="TinhThanh_TenTinhThanh" class="form-control" [(ngModel)]="tinhThanh.tenTinhThanh" name="TenTinhThanh" required pattern="[^ ](.*|\n|\r|\r\n)*" />
+                                    <div *ngIf="tenTinh.invalid && (tenTinh.dirty || tenTinh.touched)" class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="tenTinh?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="tenTinh?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>                      
+                                    </div>
+                                </div>
+					
+								<div class="form-group">
+									<label for="TinhThanh_MaTinhThanh">{{l("MaTinhThanh")}}</label>
+									<input type="text" id="TinhThanh_MaTinhThanh" class="form-control" [(ngModel)]="tinhThanh.maTinhThanh" name="MaTinhThanh"    />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!tinhThanhForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

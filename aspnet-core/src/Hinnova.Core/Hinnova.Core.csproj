@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+  <Import Project="..\..\common.props">
+  </Import>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AssemblyName>Hinnova.Core</AssemblyName>
+    <PackageId>Hinnova.Core</PackageId>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <UserSecretsId>MyCompanyName-Hinnova-894FDFC1-6482-4A56-926A-3C46C9FE0329</UserSecretsId>
+    <RootNamespace>Hinnova</RootNamespace>
+    <LangVersion>7.2</LangVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\Hinnova\*.xml;Net\Emailing\EmailTemplates\default.html" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.0.0" />
+    <PackageReference Include="Castle.Windsor.MsDependencyInjection" Version="3.3.1" />
+    <PackageReference Include="Stripe.net" Version="27.16.1" />
+    <PackageReference Include="PayPalCheckoutSdk" Version="1.0.2" />
+    <PackageReference Include="TimeZoneConverter" Version="3.2.0" />
+    <PackageReference Include="Abp.AspNetZeroCore" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Abp.ZeroCore.IdentityServer4.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Abp.AutoMapper" Version="5.0.0" />
+    <PackageReference Include="Abp.MailKit" Version="5.0.0" />
+    <PackageReference Include="Abp.Zero.Ldap" Version="5.0.0" />
+    <PackageReference Include="Twilio" Version="5.35.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hinnova.Core.Shared\Hinnova.Core.Shared.csproj" />
+  </ItemGroup>
+  <!-- -->
+  <!-- <ItemGroup> -->
+  <!--   <Reference Include="Abp.AspNetZeroCore"> -->
+  <!--     <HintPath>..\..\..\..\QLVB_CATP_GIT\Abp.AspNetZeroCore.dll</HintPath> -->
+  <!--   </Reference> -->
+  <!-- </ItemGroup> -->
+</Project>

@@ -1,0 +1,112 @@
+<div [@routerTransition]>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">
+                        <span>{{header}}</span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet">
+                <!-- <buttonUI #buttonUI></buttonUI> -->
+                <div class="row align-items-center">
+                    <dx-button text="Chuyển" type="success" icon="download" (onClick)="transfer(transfer)" > </dx-button>
+                    &nbsp;
+
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row align-items-center">
+                        <!--<Primeng-TurboTable-Start>-->
+                        <div class="col primeng-datatable-container">
+                            <dx-data-grid #gridContainer
+                                id="gridContainer"
+                                [height] ="500"
+                                [(selectedRowKeys)]="selectedRowsData"
+                                (onSelectionChanged)="selectionChangedHandler()"
+                                [remoteOperations]="false"
+                                [allowColumnReordering]="true"
+                                [rowAlternationEnabled]="true"
+                                showBorders="true"
+                                [columnMinWidth]="40" 
+                                >
+                                <dxo-selection
+                                    mode="multiple">
+                                </dxo-selection>
+                                <dxo-paging [pageSize]="10"></dxo-paging>
+                                <dxo-pager
+                                    [showPageSizeSelector]="true"
+                                    [visible]="true"
+                                    [allowedPageSizes]="[10, 25, 50, 100]"
+                                ></dxo-pager>
+                            
+                                <!-- <dxi-column dataField="stt"  caption="STT" [width]= "40"></dxi-column>
+                                <dxi-column type="buttons" caption="#" >
+                                    <dxi-button id="delete" (onClick)="delete" icon="share"></dxi-button>
+                                    <dxi-button  id = "dl" (onClick)="instaff($event)" icon="favorites"></dxi-button>
+                                    <dxi-button  id= "ld" [onClick]="showListHistory" icon="exportpdf"></dxi-button>
+
+                                </dxi-column>
+                                <dxi-column dataField="number"   caption="Số kí hiệu" ></dxi-column>
+                                <dxi-column dataField="incommingDate" dataType="date" format="d/M/yyyy" caption="Ngày văn bản" ></dxi-column>
+                                <dxi-column dataField="startDate" dataType="date" format="d/M/yyyy"  caption="Ngày gửi" ></dxi-column>
+                                <dxi-column dataField="author"  caption="Tác giả" ></dxi-column>
+                            
+                                <dxi-column dataField="summary"  caption="Thông tin văn bản"  ></dxi-column>       -->
+                                
+                                <!-- <dxi-column [width]= "60" cellTemplate="progressBarTemplate" caption="Xử lý" alignment="left" ></dxi-column> -->
+                                
+                                
+                                <!-- <dxi-column *ngFor="let item of dataFieldKey" >
+
+                                </dx-column> -->
+                                
+                                
+                                <!-- <div *dxTemplate="let d of 'progressBarTemplate'">
+                                    <div class="btn-group dropdown" dropdown container="body">
+                                        <button class="dropdown-toggle btn btn-sm" dropdownToggle>
+                                            <i class="fa fa-cog"></i>
+                                        </button>
+                                            <ul class="dropdown-menu"  *dropdownMenu>
+                                            <li>
+                                                <a href="javascript:;" (click)="saveToBook(d)" >{{l('Vào sổ')}}</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" (click)="editRow(d)" >{{l('Xem')}}</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" (click)="deleteRow(d)" >{{l('Hủy bỏ')}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div> -->
+
+                            </dx-data-grid>
+
+                            <!-- <p-table [autoLayout]="true" [columnResizeMode] [value]="queryResult" [scrollable]="true"
+                                scrollHeight="30rem" [style]="{width:'100%'}"
+                            >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 150px;" *ngFor="let col of tableHeader">
+                                            {{col}}
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-queryResult>
+                                    <tr>
+                                        <td style="width: 150px;" *ngFor="let col of tableHeader">
+                                                {{queryResult[col]}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

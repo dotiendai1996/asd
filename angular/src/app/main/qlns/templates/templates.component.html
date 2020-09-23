@@ -1,0 +1,185 @@
+﻿<div [@routerTransition]>
+  <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+      <div [class]="containerClass">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">
+                <span>{{l("Templates")}}</span>
+            </h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">
+                {{l("TemplatesHeaderInfo")}}
+            </span>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+				<button *ngIf="isGranted('Pages.Templates.Create')" (click)="createTemplate()" 
+			class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewTemplate")}}</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <form class="kt-form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="form-group m-form__group align-items-center">
+                                    <div class="input-group">
+                                        <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                                        <span class="input-group-btn">
+                                            <button (click)="getTemplates()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         <div class="kt-separator kt-separator--border-dashed"></div>
+						     </div>
+
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="MaTemplateFilter">{{l("MaTemplate")}}</label>
+									<input type="text" class="form-control" id="MaTemplateFilter" name="maTemplateFilter" [(ngModel)]="maTemplateFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TenTemplateFilter">{{l("TenTemplate")}}</label>
+									<input type="text" class="form-control" id="TenTemplateFilter" name="tenTemplateFilter" [(ngModel)]="tenTemplateFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="LinkTemplateFilter">{{l("LinkTemplate")}}</label>
+									<input type="text" class="form-control" id="LinkTemplateFilter" name="linkTemplateFilter" [(ngModel)]="linkTemplateFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="GhiChuFilter">{{l("GhiChu")}}</label>
+									<input type="text" class="form-control" id="GhiChuFilter" name="ghiChuFilter" [(ngModel)]="ghiChuFilter">
+								</div>
+                            </div>
+
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getTemplates($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.Templates.Edit', 'Pages.Templates.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="maTemplate">
+                                        {{l('MaTemplate')}}
+                                        <p-sortIcon field="template.maTemplate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tenTemplate">
+                                        {{l('TenTemplate')}}
+                                        <p-sortIcon field="template.tenTemplate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="linkTemplate">
+                                        {{l('LinkTemplate')}}
+                                        <p-sortIcon field="template.linkTemplate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ghiChu">
+                                        {{l('GhiChu')}}
+                                        <p-sortIcon field="template.ghiChu"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Templates.Edit', 'Pages.Templates.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;"
+														(click)="viewTemplateModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+													<a href="javascript:;" *ngIf="permission.isGranted('Pages.Templates.Edit')"
+														(click)="createOrEditTemplateModal.show(record.template.id)">{{l('Edit')}}</a>
+												</li>
+												<li>
+											        <a href="javascript:;" *ngIf="permission.isGranted('Pages.Templates.Delete')"
+														(click)="deleteTemplate(record.template)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('MaTemplate')}}</span>
+											{{record.template.maTemplate}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TenTemplate')}}</span>
+											{{record.template.tenTemplate}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('LinkTemplate')}}</span>
+											{{record.template.linkTemplate}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('GhiChu')}}</span>
+											{{record.template.ghiChu}}
+										</td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getTemplates($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                            </p-paginator>
+                            <span class="total-records-count">
+                                {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <createOrEditTemplateModal #createOrEditTemplateModal (modalSave)="getTemplates()"></createOrEditTemplateModal>
+    <viewTemplateModal #viewTemplateModal></viewTemplateModal>
+    
+  </div>
+</div>

@@ -1,0 +1,142 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #sqlConfigDetailForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="sqlConfigDetail.id">{{l("EditSqlConfigDetail")}}</span>
+                        <span *ngIf="!sqlConfigDetail.id">{{l("CreateNewSqlConfigDetail")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+					<div class="form-group">
+						<label for="SqlConfigDetail_SqlConfigId">{{l("SqlConfigId")}}</label>
+						<input type="number" id="SqlConfigDetail_SqlConfigId" class="form-control" [(ngModel)]="sqlConfigDetail.sqlConfigId" name="SqlConfigId"  />
+					</div>
+		
+					<div class="form-group">
+						<label for="SqlConfigDetail_Code">{{l("Code")}}</label>
+						<input type="text" id="SqlConfigDetail_Code" class="form-control" [(ngModel)]="sqlConfigDetail.code" name="Code"    />
+					</div>
+		
+					<div class="form-group">
+						<label for="SqlConfigDetail_Name">{{l("Name")}}</label>
+						<input type="text" id="SqlConfigDetail_Name" class="form-control" [(ngModel)]="sqlConfigDetail.name" name="Name"    />
+					</div>
+		
+					<div class="form-group">
+						<label for="SqlConfigDetail_Format">{{l("Format")}}</label>
+						<input type="text" id="SqlConfigDetail_Format" class="form-control" [(ngModel)]="sqlConfigDetail.format" name="Format"    />
+					</div>
+		
+					<!-- <div class="form-group">
+						<label for="SqlConfigDetail_Type">{{l("Type")}}</label>
+						<input type="text" id="SqlConfigDetail_Type" class="form-control" [(ngModel)]="sqlConfigDetail.type" name="Type"    />
+					</div> -->
+
+					<div class="form-group">
+						<label for="SqlConfigDetail_Type">{{l("Type")}}</label>
+						<select id="SqlConfigDetail_Type" class="form-control" [(ngModel)]="sqlConfigDetail.type" name="Type" >
+							<option value="string">String</option>
+							<option value="number">Number</option>
+							<option value="date">Date</option>
+							<option value="boolean">Boolean</option>
+							<option value="datetime">DateTime</option>
+						</select>
+					</div>
+		
+		
+					<div class="form-group">
+						<label for="SqlConfigDetail_Width">{{l("Width")}}</label>
+						<input type="text" id="SqlConfigDetail_Width" class="form-control" [(ngModel)]="sqlConfigDetail.width" name="Width"    />
+					</div>
+		
+					<div class="form-group">
+						<label for="SqlConfigDetail_ColNum">{{l("ColNum")}}</label>
+						<input type="number" id="SqlConfigDetail_ColNum" class="form-control" [(ngModel)]="sqlConfigDetail.colNum" name="ColNum" min="1" />
+					</div>
+		
+					<div class="form-group">
+						<label for="SqlConfigDetail_GroupLevel">{{l("GroupLevel")}}</label>
+						<input type="number" id="SqlConfigDetail_GroupLevel" class="form-control" [(ngModel)]="sqlConfigDetail.groupLevel" name="GroupLevel"  />
+					</div>
+		
+					<br/><div class="m-checkbox-list">
+						<label for="SqlConfigDetail_IsDisplay" class="kt-checkbox">
+							<input id="SqlConfigDetail_IsDisplay" type="checkbox" name="IsDisplay" [(ngModel)]="sqlConfigDetail.isDisplay"> 
+							{{l("IsDisplay")}}
+							<span></span>
+						</label>
+					</div>
+		
+					<div class="form-group">
+						<label for="SqlConfigDetail_Order">{{l("Order")}}</label>
+						<input type="number" id="SqlConfigDetail_Order" class="form-control" [(ngModel)]="sqlConfigDetail.order" name="Order"  />
+					</div>
+		
+					<div class="form-group">
+						<label for="SqlConfigDetail_TextAlign">{{l("TextAlign")}}</label>
+						<!-- <input type="text" id="SqlConfigDetail_TextAlign" class="form-control" [(ngModel)]="sqlConfigDetail.textAlign" name="TextAlign"    /> -->
+						<select id="SqlConfigDetail_TextAlign" class="form-control" [(ngModel)]="sqlConfigDetail.textAlign" name="TextAlign">
+							<option value="Left">Left</option>
+							<option value="Center">Center</option>
+							<option value="Right">Right</option>
+						</select>
+					</div>
+		
+					<div class="form-group">
+						<label for="SqlConfigDetail_Version">{{l("Version")}}</label>
+						<input type="number" id="SqlConfigDetail_Version" class="form-control" [(ngModel)]="sqlConfigDetail.version" name="Version"  />
+					</div>
+		
+					<br/><div class="m-checkbox-list">
+						<label for="SqlConfigDetail_IsSum" class="kt-checkbox">
+							<input id="SqlConfigDetail_IsSum" type="checkbox" name="IsSum" [(ngModel)]="sqlConfigDetail.isSum"> 
+							{{l("IsSum")}}
+							<span></span>
+						</label>
+					</div>
+		
+					<br/><div class="m-checkbox-list">
+						<label for="SqlConfigDetail_IsFreePane" class="kt-checkbox">
+							<input id="SqlConfigDetail_IsFreePane" type="checkbox" name="IsFreePane" [(ngModel)]="sqlConfigDetail.isFreePane"> 
+							{{l("IsFreePane")}}
+							<span></span>
+						</label>
+					</div>
+		
+					<br/><div class="m-checkbox-list">
+						<label for="SqlConfigDetail_IsParent" class="kt-checkbox">
+							<input id="SqlConfigDetail_IsParent" type="checkbox" name="IsParent" [(ngModel)]="sqlConfigDetail.isParent"> 
+							{{l("IsParent")}}
+							<span></span>
+						</label>
+					</div>
+		
+					<div class="form-group">
+						<label for="SqlConfigDetail_ParentCode">{{l("ParentCode")}}</label>
+						<input type="text" id="SqlConfigDetail_ParentCode" class="form-control" [(ngModel)]="sqlConfigDetail.parentCode" name="ParentCode"    />
+					</div>
+		
+					<div class="form-group">
+						<label for="SqlConfigDetail_GroupSort">{{l("GroupSort")}}</label>
+						<input type="text" id="SqlConfigDetail_GroupSort" class="form-control" [(ngModel)]="sqlConfigDetail.groupSort" name="GroupSort"    />
+					</div>
+
+					<div class="form-group">
+						<label for="SqlConfigDetail_CellTemplate">{{l("CellTemplate")}}</label>
+						<input type="text" id="SqlConfigDetail_CellTemplate" class="form-control" [(ngModel)]="sqlConfigDetail.cellTemplate" name="CellTemplate"    />
+					</div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!sqlConfigDetailForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

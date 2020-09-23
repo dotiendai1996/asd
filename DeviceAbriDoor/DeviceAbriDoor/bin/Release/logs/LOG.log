@@ -1,0 +1,36 @@
+INFO  2020-07-29 09:08:24,915 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-29 09:09:04,445 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 56325
+DEBUG 2020-07-29 09:10:33,940 [1    ] DeviceAbriDoor.Utils.LogUtils            - Unexpected Error {"Code":0,"Message":"[Internal server error]","Details":null,"ValidationErrors":null}
+DEBUG 2020-07-29 09:10:33,943 [1    ] DeviceAbriDoor.Utils.LogUtils            - Unexpected Error
+DeviceAbriDoor.Exceptions.HandleException: Exception of type 'DeviceAbriDoor.Exceptions.HandleException' was thrown.
+   at DeviceAbriDoor.RestSharp.WebApiHelper.Post(String url, Object data) in D:\GSoft\QLNS_1\TestDeviceAbriDoor\DeviceAbriDoor\RestSharp\WebApiHelper.cs:line 161
+   at TestDeviceAbriDoor.FormMain.button1_Click(Object sender, EventArgs e) in D:\GSoft\QLNS_1\TestDeviceAbriDoor\DeviceAbriDoor\FormMain.cs:line 87
+   at System.Windows.Forms.Control.OnClick(EventArgs e)
+   at System.Windows.Forms.Button.OnClick(EventArgs e)
+   at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)
+   at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   at System.Windows.Forms.Control.WndProc(Message& m)
+   at System.Windows.Forms.ButtonBase.WndProc(Message& m)
+   at System.Windows.Forms.Button.WndProc(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+INFO  2020-07-29 09:14:29,329 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-29 09:15:08,702 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 56325
+DEBUG 2020-07-29 09:57:02,168 [1    ] DeviceAbriDoor.Utils.LogUtils            - Unexpected Error {"Code":0,"Message":"[Internal server error]","Details":null,"ValidationErrors":null}
+DEBUG 2020-07-29 09:57:02,203 [1    ] DeviceAbriDoor.Utils.LogUtils            - Unexpected Error
+DeviceAbriDoor.Exceptions.HandleException: Exception of type 'DeviceAbriDoor.Exceptions.HandleException' was thrown.
+   at DeviceAbriDoor.RestSharp.WebApiHelper.Post(String url, Object data) in D:\GSoft\QLNS_1\TestDeviceAbriDoor\DeviceAbriDoor\RestSharp\WebApiHelper.cs:line 161
+   at TestDeviceAbriDoor.FormMain.button1_Click(Object sender, EventArgs e) in D:\GSoft\QLNS_1\TestDeviceAbriDoor\DeviceAbriDoor\FormMain.cs:line 87
+   at System.Windows.Forms.Control.OnClick(EventArgs e)
+   at System.Windows.Forms.Button.OnClick(EventArgs e)
+   at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)
+   at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   at System.Windows.Forms.Control.WndProc(Message& m)
+   at System.Windows.Forms.ButtonBase.WndProc(Message& m)
+   at System.Windows.Forms.Button.WndProc(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+INFO  2020-07-29 10:02:02,178 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-29 10:02:41,522 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 56325

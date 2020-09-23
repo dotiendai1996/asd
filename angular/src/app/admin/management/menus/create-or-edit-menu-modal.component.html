@@ -1,0 +1,132 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #menuForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="menu.id">{{l("EditMenu")}}</span>
+                        <span *ngIf="!menu.id">{{l("CreateNewMenu")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="Menu_Name">{{l("Name")}} *</label>
+									<input type="text" id="Menu_Name" class="form-control" [(ngModel)]="menu.name" name="Name"     required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="Menu_Title">{{l("Title")}} *</label>
+									<input type="text" id="Menu_Title" class="form-control" [(ngModel)]="menu.title" name="Title"     required/>
+								</div>
+					
+								<div class="form-group">
+									<label for="Menu_Icon">{{l("Icon")}}</label>
+									<input type="text" id="Menu_Icon" class="form-control" [(ngModel)]="menu.icon" name="Icon"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Menu_Description">{{l("Description")}}</label>
+									<input type="text" id="Menu_Description" class="form-control" [(ngModel)]="menu.description" name="Description"    />
+								</div>
+					
+								<!-- <div class="form-group">
+									<label for="Menu_Parent">{{l("Parent")}}</label>
+									<input type="number" id="Menu_Parent" class="form-control" [(ngModel)]="menu.parent" name="Parent"  />
+								</div> -->
+
+								<!-- <div class="form-group">
+									<label for="Menu_Type">{{l("Type")}} *</label>
+									<select class="form-control" id="Menu_Type" [(ngModel)]="menu.type" name="type" required>
+										<option selected value="Top">Top Menu</option>
+										<option value="Side">Side Menu</option>
+									</select>
+								</div> -->
+
+								<div class="form-group">
+									<label for="Menu_Parent">{{l("Parent")}}</label>
+									<select class="form-control" id="Menu_Parent" [(ngModel)]="menu.parent" name="Parent">
+										<option selected value> </option>
+										<option *ngFor="let option of parentOptions" [value]="option.id">{{option.name}}</option>
+									</select>
+								</div>
+								<br/>
+								<!-- <div class="m-checkbox-list">
+									<label for="Menu_IsParent" class="kt-checkbox">
+										<input id="Menu_IsParent" type="checkbox" name="IsParent" [(ngModel)]="menu.isParent"> 
+										{{l("IsParent")}}
+										<span></span>
+									</label>
+								</div> -->
+					
+								<div class="form-group">
+									<label for="Menu_Link">{{l("Link")}}</label>
+									<input type="text" id="Menu_Link" class="form-control" [(ngModel)]="menu.link" name="Link"    />
+								</div>
+					
+								
+					
+								<!-- <div class="form-group">
+									<label for="Menu_CreationTime">{{l("CreationTime")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="menu.creationTime._d" id="Menu_CreationTime" name="Menu_CreationTime">
+								</div>
+					
+								<div class="form-group">
+									<label for="Menu_LastModificationTime">{{l("LastModificationTime")}}</label>
+									 <input class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="lastModificationTime" id="Menu_LastModificationTime" name="Menu_LastModificationTime">
+								</div> -->
+					
+								<br/>
+								<div class="m-checkbox-list">
+									<label for="Menu_IsDeleted" class="kt-checkbox">
+										<input id="Menu_IsDeleted" type="checkbox" name="IsDeleted" [(ngModel)]="menu.isDeleted"> 
+										{{l("IsDeleted")}}
+										<span></span>
+									</label>
+								</div>
+					
+								<!-- <div class="form-group">
+									<label for="Menu_DeletionTime">{{l("DeletionTime")}}</label>
+									 <input class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="deletionTime" id="Menu_DeletionTime" name="Menu_DeletionTime">
+								</div> -->
+					
+								<div class="form-group">
+									<label for="Menu_Index">{{l("Index")}}</label>
+									<input type="number" id="Menu_Index" class="form-control" [(ngModel)]="menu.index" name="Index" step="1" min="1" />
+								</div>
+					
+								<!-- <br/><div class="m-checkbox-list">
+									<label for="Menu_IsDelimiter" class="kt-checkbox">
+										<input id="Menu_IsDelimiter" type="checkbox" name="IsDelimiter" [(ngModel)]="menu.isDelimiter"> 
+										{{l("IsDelimiter")}}
+										<span></span>
+									</label>
+								</div> -->
+					
+								<div class="form-group">
+									<label for="Menu_RequiredPermissionName">{{l("RequiredPermissionName")}}</label>
+									<!-- <input type="text" id="Menu_RequiredPermissionName" class="form-control" [(ngModel)]="menu.requiredPermissionName" name="RequiredPermissionName"    /> -->
+									<select class="form-control" id="Menu_RequiredPermissionName" [(ngModel)]="menu.requiredPermissionName" name="requiredPermissionName">
+										<option selected value> </option>
+										<option *ngFor="let option of permissionOptions" [value]="option.name">{{option.displayName}}</option>
+									</select>
+								</div>
+								<!-- Dynamic Fields  -->
+								<dynamicModule #dynamicModule [(link)]="link" [(parameters)]="parameters"></dynamicModule>                          
+								<!-- End Dynamic Fields -->
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!menuForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+			</form>
+			<!-- <dynamicModule #dynamicModule [(link)]="link" [(parameters)]="parameters"></dynamicModule>  -->
+        </div>
+    </div>
+	<!-- <dynamicModule #dynamicModule [(link)]="link" [(parameters)]="parameters"></dynamicModule>   -->
+</div>

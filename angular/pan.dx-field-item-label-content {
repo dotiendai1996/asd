@@ -1,0 +1,381 @@
+[33mcommit db589276a6f18dcf6d3b1f4f2b43d2a8d14b6b8e[m[33m ([m[1;36mHEAD -> [m[1;32mTuVer2[m[33m)[m
+Author: Hoa Minh <hoa11a@outlook.com>
+Date:   Wed Jul 8 09:17:58 2020 +0700
+
+    Fix UI list comment
+
+[33mcommit ae294998081b2418c280c0b21fa0fc5682214c57[m[33m ([m[1;31morigin/VERSION2[m[33m, [m[1;31morigin/HoaVER2[m[33m, [m[1;32mVERSION2[m[33m, [m[1;32mHoaVER2[m[33m)[m
+Author: hungnm <hungnm1005it@gmail.com>
+Date:   Wed Jul 1 18:15:12 2020 +0700
+
+    comit_EditUngVien
+
+[33mcommit 030087e4a48b8bbd226413bc9e937a69a85142e1[m
+Merge: bce2c14 a887dbc
+Author: hungnm <hungnm1005it@gmail.com>
+Date:   Tue Jun 30 17:55:47 2020 +0700
+
+    Merge remote-tracking branch 'origin/thuonghnh' into VERSION2
+    
+    # Conflicts:
+    #       src/app/main/qlns/ungViens/ungViens.component.html
+
+[33mcommit bce2c145eb0444c6dd7e2854d5dcdaef0b4e2155[m
+Author: hungnm <hungnm1005it@gmail.com>
+Date:   Tue Jun 30 17:45:18 2020 +0700
+
+    EDIT UNG VIEN FIX
+
+[33mcommit e75a96bbc5e3c75cf40fb5dd1a52bc6fb513ede8[m
+Author: hungnm <hungnm1005it@gmail.com>
+Date:   Tue Jun 30 17:45:01 2020 +0700
+
+    EDIT UNG VIEN FIX
+
+[33mcommit 92b5a3e43db99d23ba60e471e5b2bc73aa25386f[m
+Merge: 44498ef eae6577
+Author: hungnm <hungnm1005it@gmail.com>
+Date:   Tue Jun 30 17:44:21 2020 +0700
+
+    Merge remote-tracking branch 'origin/VERSION2' into VERSION2
+
+[33mcommit 44498efb94195d5bc437c66111bfe0bb10eadb5b[m
+Author: hungnm <hungnm1005it@gmail.com>
+Date:   Tue Jun 30 17:43:50 2020 +0700
+
+    EDIT UNG VIEN
+
+[33mcommit eae657738e8c91baa4289a4f90b207f25ee71e63[m
+Author: Nguyễn Công Chính <chinhnc@ggroup.vn>
+Date:   Tue Jun 30 17:41:46 2020 +0700
+
+    fixed load label
+
+[33mcommit 03d51325abb9710100bdde7669332187844ce444[m
+Author: Nguyễn Công Chính <chinhnc@ggroup.vn>
+Date:   Tue Jun 30 13:42:33 2020 +0700
+
+    deleted height của grid DevExtream
+
+[33mcommit a887dbc9183c2b0df04b139d28736a3440107aaf[m[33m ([m[1;31morigin/thuonghnh[m[33m)[m
+Author: hoangthuongboz <hoangthuongboz@gmail.com>
+Date:   Mon Jun 29 16:50:52 2020 +0700
+
+    Temp
+
+[33mcommit 4be16803f782568d65c44d1cf31984c8a636b119[m
+Merge: 05d5310 a01af7e
+Author: chinhqn <chinhqn@ggroup.vn>
+Date:   Mon Jun 29 09:32:16 2020 +0000
+
+    Merged PR 3: Change style menu bar
+    
+    Change style menu bar
+
+[33mcommit a01af7e864687c7aec63fe412f9599693205f752[m
+Author: Nguyễn Công Chính <chinhnc@ggroup.vn>
+Date:   Mon Jun 29 16:30:56 2020 +0700
+
+    Change style menu bar
+
+[33mcommit b98836a83eda18dd3c0c521f714b24c9d72d56a9[m
+Author: hoangthuongboz <hoangthuongboz@gmail.com>
+Date:   Mon Jun 29 16:13:10 2020 +0700
+
+    Complete!!
+
+[33mcommit c1a828253f5e43485d48f49d0937c4e472ecf3db[m
+Author: hoangthuongboz <hoangthuongboz@gmail.com>
+Date:   Mon Jun 29 14:35:25 2020 +0700
+
+    Xong UI
+
+[33mcommit cf183a2f61d9148d4d062804b6f8cadc4329e9ae[m
+Author: hoangthuongboz <hoangthuongboz@gmail.com>
+Date:   Mon Jun 29 13:38:00 2020 +0700
+
+    Xong UI
+
+[33mcommit 05d531079e00fab2486f0790c1b0d3caba1e2545[m
+Author: Nguyễn Công Chính <chinhnc@ggroup.vn>
+Date:   Mon Jun 29 08:46:03 2020 +0700
+
+    Update giao dien login
+
+[33mcommit 7a8919fb5a244c0294ccb09c985d7618403e2291[m
+Merge: ba38bf6 0b7a6a8
+Author: Nguyễn Công Chính <chinhnc@ggroup.vn>
+Date:   Mon Jun 29 08:43:07 2020 +0700
+
+    Merge branch 'VERSION2' of https://dev.azure.com/GGROUPNOIBO/QLNS/_git/angular into VERSION2
+
+[33mcommit ba38bf6c5bb39a7633781bb70760525b1f291ce4[m
+Author: Nguyễn Công Chính <chinhnc@ggroup.vn>
+Date:   Mon Jun 29 08:41:23 2020 +0700
+
+    Revert "chỉnh sửa giao diện login"
+    
+    This reverts commit 54e68f117e769ee2bcef9b8721cb27cc578621a2.
+
+[33mcommit 2c180b0025a5a1dff6987b90f532c589a3ff366f[m
+Author: hoangthuongboz <hoangthuongboz@gmail.com>
+Date:   Mon Jun 29 08:41:09 2020 +0700
+
+    Check success
+
+[33mcommit e75c77aed6b060d541e79a28a6970c2f14a6fb98[m
+Merge: 215fe61 bf585de
+Author: hoangthuongboz <hoangthuongboz@gmail.com>
+Date:   Mon Jun 29 08:37:58 2020 +0700
+
+    Check success
+
+[33mcommit 215fe61e9066250c31d1e2b11ee326c25fb28ad6[m
+Author: hoangthuongboz <hoangthuongboz@gmail.com>
+Date:   Fri Jun 26 17:35:03 2020 +0700
+
+    Check success
+
+[33mcommit 0b7a6a88881b3cd483cadf33e8379daf68a1bf4a[m
+Merge: 57c1c5d 35d45d2
+Author: chinhqn <chinhqn@ggroup.vn>
+Date:   Mon Jun 29 01:17:49 2020 +0000
+
+    Merged PR 2: Update giao diện login
+
+[33mcommit 35d45d28168f7e0db318c13f2b3c8eea819ccb34[m
+Author: chinhqn <chinhqn@ggroup.vn>
+Date:   Mon Jun 29 01:16:00 2020 +0000
+
+    Revert "chỉnh sửa giao diện login"
+
+[33mcommit 1b94513737407fce8cd7c0fcbac5e518285e316c[m
+Author: chinhqn <chinhqn@ggroup.vn>
+Date:   Mon Jun 29 01:16:00 2020 +0000
+
+    Revert "Merged PR 1: chỉnh sửa giao diện login
+    
+    chỉnh sửa giao diện login"
+
+[33mcommit 230c31dd99dd905b6d0700dc6d66b74db6332ee7[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: cb1bf86 54e68f1
+Author: chinhqn <chinhqn@ggroup.vn>
+Date:   Mon Jun 29 01:06:51 2020 +0000
+
+    Merged PR 1: chỉnh sửa giao diện login
+    
+    chỉnh sửa giao diện login
+
+[33mcommit 54e68f117e769ee2bcef9b8721cb27cc578621a2[m[33m ([m[1;31morigin/ChangeLayoutLogin[m[33m)[m
+Author: Chính Nguyễn <congchinhqn@gmail.com>
+Date:   Mon Jun 29 08:01:19 2020 +0700
+
+    chỉnh sửa giao diện login
+
+[33mcommit bf585de1464006682a3b06bb552c484638df0333[m
+Author: hoangthuongboz <hoangthuongboz@gmail.com>
+Date:   Fri Jun 26 17:35:03 2020 +0700
+
+    Temp.26-6
+
+[33mcommit 57c1c5dc580b32361bf53aa35d40ebdb1849afc2[m
+Author: hungnm <hungnm1005it@gmail.com>
+Date:   Fri Jun 26 17:34:43 2020 +0700
+
+    comit26/6
+
+[33mcommit 55d404173748e2860a5d173182730c06e59467c8[m
+Merge: b7c9db9 bbd0ca2
+Author: hoangthuongboz <hoangthuongboz@gmail.com>
+Date:   Fri Jun 26 15:48:24 2020 +0700
+
+    Merge remote-tracking branch 'origin/HoaVER2' into thuonghnh
+    
+    # Conflicts:
+    #       src/app/main/qlns/ungViens/ungViens.component.html
+
+[33mcommit b7c9db912359a3aee2ac70f52f3c05d862371f39[m
+Author: hoangthuongboz <hoangthuongboz@gmail.com>
+Date:   Fri Jun 26 15:47:49 2020 +0700
+
+    Temp
+
+[33mcommit bbd0ca23d67ee41b6f3f9bc77b104577678b811e[m
+Author: Hoa Minh <hoa11a@outlook.com>
+Date:   Fri Jun 26 15:44:54 2020 +0700
+
+    update lọc theo ngày
+
+[33mcommit 069bd0c9554cf97bc6e4fd70a47eb02b818d6449[m
+Author: hungnm <hungnm1005it@gmail.com>
+Date:   Thu Jun 25 17:16:33 2020 +0700
+
+    commit_ungVien_25_6
+
+[33mcommit 5d9c733e618cbc036a930b150a1f4c731fdf6544[m
+Author: hungnm <hungnm1005it@gmail.com>
+Date:   Wed Jun 24 10:44:46 2020 +0700
+
+    coomit
+
+[33mcommit cb1bf86c9be7192f1cacd5f4a343bad0bd03e4dd[m[33m ([m[1;32mmaster[m[33m)[m
+Author: hungnm <hungnm1005it@gmail.com>
+Date:   Thu Jun 18 17:11:00 2020 +0700
+
+    coomit
+
+[33mcommit 6af5558ecb2c340c7842839f56b377674956a008[m
+Author: hungnm <hungnm1005it@gmail.com>
+Date:   Wed Jun 10 17:30:45 2020 +0700
+
+    coomit
+
+[33mcommit 3fdd61821a7b6efd1296672bec83562c1b904949[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Tue Jun 9 17:46:59 2020 +0700
+
+    coomit
+
+[33mcommit 617c7ca7ee2b62d98e2bdf2b9e3bf73d8b82fa1b[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Wed Jun 3 14:50:08 2020 +0700
+
+    coomit
+
+[33mcommit 7923cf1bd0ec23db9a6ff867d9a6b4cd6d501187[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Fri May 29 17:34:34 2020 +0700
+
+    comit
+
+[33mcommit d175e04a03b0fe12e7ce2a2c49c5445cfa0a10af[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Fri May 29 16:49:20 2020 +0700
+
+    coomit
+
+[33mcommit 5c8d4fe361739ef7fa4926d9280258a546a597bc[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Fri May 22 17:24:01 2020 +0700
+
+    coomit
+
+[33mcommit eb84223095716f8c1db1c27e9191faa5b617019e[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Thu May 14 17:27:33 2020 +0700
+
+    comit
+
+[33mcommit e0cd0a6f7e1deb1305a9a6097e11254cf87acb8b[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Wed May 13 15:23:44 2020 +0700
+
+    comit_13_05
+
+[33mcommit e6843e284c289451fae51bcc08d261831d582ef9[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Mon May 4 17:41:40 2020 +0700
+
+    coomit
+
+[33mcommit e3d011540361ad3f53547d663bfa1d699cfec458[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Wed Apr 29 17:29:16 2020 +0700
+
+    commit
+
+[33mcommit af12dfd6e8f7f0be4e8fe52d393b600171d73b84[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Thu Apr 23 17:43:52 2020 +0700
+
+    COOMIT
+
+[33mcommit 5df7bd88e031256e764a48d4d09cd01e7bf1521e[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Mon Apr 20 23:39:11 2020 +0700
+
+    20/04
+
+[33mcommit 1b7fdff1a33a532d9c7f1c6ecd74484a5d8c4c77[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Sun Apr 19 20:54:00 2020 +0700
+
+    coomit
+
+[33mcommit 6373b9e3a71f650ee6f412a51d5b4a5fc4f010dc[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Tue Apr 14 10:00:32 2020 +0700
+
+    comit
+
+[33mcommit f206ceb886ac592ec86facd29ef274a445905791[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Tue Apr 14 03:32:38 2020 +0700
+
+    comit
+
+[33mcommit 168595ca72e0aa6fa121c781bec45fefba0c003e[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Sun Apr 12 18:33:06 2020 +0700
+
+    comit
+
+[33mcommit ab3aca1b07f5813510f5afe8fa62d2246d116c23[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Sat Apr 11 22:40:10 2020 +0700
+
+    comit
+
+[33mcommit 31e9578a44b2b7f7fc62fc37432cefc70c06511c[m
+Author: hungnm <hungnm@gmail.com>
+Date:   Thu Apr 9 23:04:03 2020 +0700
+
+    comit
+
+[33mcommit efc88ab42d069b360e486eaa5f78b5c29e6b091b[m
+Author: datnp <ndat0811@gmail.com>
+Date:   Wed Apr 8 17:41:05 2020 +0700
+
+    comit
+
+[33mcommit 14ee89bd25e2ea725caeaa1e7e149318cec4ed3e[m
+Author: datnp <ndat0811@gmail.com>
+Date:   Sun Apr 5 23:41:13 2020 +0700
+
+    commit
+
+[33mcommit bf029524485835578e81992a25f4cc158d5f6908[m
+Author: datnp <ndat0811@gmail.com>
+Date:   Sat Apr 4 01:13:29 2020 +0700
+
+    jhhhh
+
+[33mcommit 715a87b1128636d232e62b8fe220d7816c5e3de2[m
+Author: datnp <ndat0811@gmail.com>
+Date:   Fri Apr 3 20:56:36 2020 +0700
+
+    commit
+
+[33mcommit 362a562b1ecd3766a30bed8a3a8f6d123251d2c5[m
+Author: datnp <ndat0811@gmail.com>
+Date:   Fri Apr 3 19:19:19 2020 +0700
+
+    cômit
+
+[33mcommit 9a531d15a6c5970defa18084ecc56555c291a84a[m
+Author: datnp <ndat0811@gmail.com>
+Date:   Fri Apr 3 16:43:30 2020 +0700
+
+    cômit
+
+[33mcommit b5249bd2a9d100b86c1ca3c6f62bbb91f48101ae[m
+Author: datnp <ndat0811@gmail.com>
+Date:   Thu Apr 2 19:24:21 2020 +0700
+
+    coomit
+
+[33mcommit 23f8abcc480f82de87f859d6b4dee66f8f326050[m
+Author: Thức Phạm <trithucpmuit@gmail.com>
+Date:   Wed Apr 1 11:23:20 2020 +0000
+
+    Added README.md

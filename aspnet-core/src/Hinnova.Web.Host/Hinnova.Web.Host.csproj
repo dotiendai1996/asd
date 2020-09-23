@@ -1,0 +1,93 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web" ToolsVersion="Current">
+  <Import Project="..\..\common.props">
+  </Import>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <AssemblyName>Hinnova.Web.Host</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Hinnova.Web.Host</PackageId>
+    <UserSecretsId>MyCompanyName-Hinnova-894FDFC1-6482-4A56-926A-3C46C9FE0329</UserSecretsId>
+    <RootNamespace>Hinnova.Web</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <LangVersion>7.2</LangVersion>
+    <FileUpgradeFlags>40</FileUpgradeFlags>
+    <UpgradeBackupLocation>D:\GSoft\QLNS_1\aspnet-core\Backup\src\Hinnova.Web.Host\</UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="App_Data\**" />
+    <Compile Remove="wwwroot\fileman\aspnet_client\**" />
+    <Compile Remove="wwwroot\fileman\asp_net\**" />
+    <Compile Remove="wwwroot\fileman\js\**" />
+    <Compile Remove="wwwroot\fileman\tmp\**" />
+    <Compile Remove="wwwroot\fileman\Uploads\**" />
+    <Content Remove="App_Data\**" />
+    <Content Remove="wwwroot\fileman\aspnet_client\**" />
+    <Content Remove="wwwroot\fileman\asp_net\**" />
+    <Content Remove="wwwroot\fileman\js\**" />
+    <Content Remove="wwwroot\fileman\tmp\**" />
+    <Content Remove="wwwroot\fileman\Uploads\**" />
+    <EmbeddedResource Remove="App_Data\**" />
+    <EmbeddedResource Remove="wwwroot\fileman\aspnet_client\**" />
+    <EmbeddedResource Remove="wwwroot\fileman\asp_net\**" />
+    <EmbeddedResource Remove="wwwroot\fileman\js\**" />
+    <EmbeddedResource Remove="wwwroot\fileman\tmp\**" />
+    <EmbeddedResource Remove="wwwroot\fileman\Uploads\**" />
+    <EntityDeploy Remove="wwwroot\fileman\aspnet_client\**" />
+    <EntityDeploy Remove="wwwroot\fileman\asp_net\**" />
+    <EntityDeploy Remove="wwwroot\fileman\js\**" />
+    <EntityDeploy Remove="wwwroot\fileman\tmp\**" />
+    <EntityDeploy Remove="wwwroot\fileman\Uploads\**" />
+    <None Remove="App_Data\**" />
+    <None Remove="wwwroot\fileman\aspnet_client\**" />
+    <None Remove="wwwroot\fileman\asp_net\**" />
+    <None Remove="wwwroot\fileman\js\**" />
+    <None Remove="wwwroot\fileman\tmp\**" />
+    <None Remove="wwwroot\fileman\Uploads\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\Common\Images\SampleProfilePics\sample-profile-02.jpg" />
+    <Content Remove="wwwroot\swagger\ui\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\95b76ab4e1b841ddacde2aae3ba2e12e_Screenshot_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="wwwroot\Plugins\.gitkeep" />
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+    <None Update="wwwroot\**\*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hinnova.Web.Core\Hinnova.Web.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Abp.AspNetZeroCore" Version="2.0.0" />
+    <PackageReference Include="Abp.Castle.Log4Net" Version="5.0.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\swagger\ui\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\14-05-2020\" />
+    <Folder Include="wwwroot\Template\BieuMau\GOBRANDING\" />
+    <Folder Include="wwwroot\Template\ChamCong\" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties appsettings_1json__JsonSchema="" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,79 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #sqlConfigForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="sqlConfig.id">{{l("EditSqlConfig")}}</span>
+                        <span *ngIf="!sqlConfig.id">{{l("CreateNewSqlConfig")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="SqlConfig_Code">{{l("Code")}}</label>
+									<input type="text" id="SqlConfig_Code" class="form-control" [(ngModel)]="sqlConfig.code" name="Code"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="SqlConfig_Name">{{l("Name")}}</label>
+									<input type="text" id="SqlConfig_Name" class="form-control" [(ngModel)]="sqlConfig.name" name="Name"    />
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="SqlConfig_IsRawQuery" class="kt-checkbox">
+										<input id="SqlConfig_IsRawQuery" type="checkbox" name="IsRawQuery" [(ngModel)]="sqlConfig.isRawQuery"> 
+										{{l("IsRawQuery")}} (Bỏ chọn nếu là Stored)
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="form-group">
+									<label for="SqlConfig_SqlContent">{{l("SqlContent")}}</label>
+									<input type="text" id="SqlConfig_SqlContent" class="form-control" [(ngModel)]="sqlConfig.sqlContent" name="SqlContent"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="SqlConfig_GroupLevel">{{l("GroupLevel")}}</label>
+									<input type="number" id="SqlConfig_GroupLevel" class="form-control" [(ngModel)]="sqlConfig.groupLevel" name="GroupLevel"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="SqlConfig_DisplayType">{{l("DisplayType")}}</label>
+									<input type="number" id="SqlConfig_DisplayType" class="form-control" [(ngModel)]="sqlConfig.displayType" name="DisplayType"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="SqlConfig_Version">{{l("Version")}}</label>
+									<input type="number" id="SqlConfig_Version" class="form-control" [(ngModel)]="sqlConfig.version" name="Version"  />
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="SqlConfig_IsDynamicColumn" class="kt-checkbox">
+										<input id="SqlConfig_IsDynamicColumn" type="checkbox" name="IsDynamicColumn" [(ngModel)]="sqlConfig.isDynamicColumn"> 
+										{{l("IsDynamicColumn")}}
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="form-group">
+									<label for="SqlConfig_TypeGetColumn">{{l("TypeGetColumn")}}</label>
+									<input type="number" id="SqlConfig_TypeGetColumn" class="form-control" [(ngModel)]="sqlConfig.typeGetColumn" name="TypeGetColumn"  />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!sqlConfigForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

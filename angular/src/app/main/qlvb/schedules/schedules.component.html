@@ -1,0 +1,245 @@
+<div [@routerTransition]>
+  <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+      <div [class]="containerClass">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">
+                <span>{{l("Schedules")}}</span>
+            </h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">
+                {{l("SchedulesHeaderInfo")}}
+            </span>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+				<button (click)="exportToExcel()" class="btn btn-outline-success"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                <button *ngIf="isGranted('Pages.Schedules.Create')" (click)="createSchedule()" 
+			class="btn btn-action blue"><i class="fa fa-plus"></i> {{l("CreateNewSchedule")}}</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <form class="kt-form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="form-group m-form__group align-items-center">
+                                    <div class="input-group">
+                                        <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                                        <span class="input-group-btn">
+                                            <button (click)="getSchedules()" class="btn btn-action" type="submit"><i class="flaticon-search-1"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         <div class="kt-separator kt-separator--border-dashed"></div>
+						     </div>
+
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinScheduleTypeIDFilter">{{l("MinMax")}} {{l("ScheduleTypeID")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinScheduleTypeIDFilter" [(ngModel)]="minScheduleTypeIDFilter" placeholder="{{l('MinValue')}}" name="minScheduleTypeIDFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxScheduleTypeIDFilter" placeholder="{{l('MaxValue')}}" name="maxScheduleTypeIDFilter" />
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinDateCreatedFilter">{{l("DateCreatedRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinDateCreatedFilter" name="MinDateCreatedFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minDateCreatedFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxDateCreatedFilter" name="MaxDateCreatedFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxDateCreatedFilter">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinDateOccurFilter">{{l("DateOccurRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinDateOccurFilter" name="MinDateOccurFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minDateOccurFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxDateOccurFilter" name="MaxDateOccurFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxDateOccurFilter">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="FromTimeFilter">{{l("FromTime")}}</label>
+									<input type="text" class="form-control" id="FromTimeFilter" name="fromTimeFilter" [(ngModel)]="fromTimeFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="ToTimeFilter">{{l("ToTime")}}</label>
+									<input type="text" class="form-control" id="ToTimeFilter" name="toTimeFilter" [(ngModel)]="toTimeFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="ContentFilter">{{l("Content")}}</label>
+									<input type="text" class="form-control" id="ContentFilter" name="contentFilter" [(ngModel)]="contentFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="NotesFilter">{{l("Notes")}}</label>
+									<input type="text" class="form-control" id="NotesFilter" name="notesFilter" [(ngModel)]="notesFilter">
+								</div>
+                            </div>
+
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getSchedules($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.Schedules.Edit', 'Pages.Schedules.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="scheduleTypeID">
+                                        {{l('ScheduleTypeID')}}
+                                        <p-sortIcon field="schedule.scheduleTypeID"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dateCreated">
+                                        {{l('DateCreated')}}
+                                        <p-sortIcon field="schedule.dateCreated"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dateOccur">
+                                        {{l('DateOccur')}}
+                                        <p-sortIcon field="schedule.dateOccur"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="fromTime">
+                                        {{l('FromTime')}}
+                                        <p-sortIcon field="schedule.fromTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="toTime">
+                                        {{l('ToTime')}}
+                                        <p-sortIcon field="schedule.toTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="content">
+                                        {{l('Content')}}
+                                        <p-sortIcon field="schedule.content"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="notes">
+                                        {{l('Notes')}}
+                                        <p-sortIcon field="schedule.notes"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Schedules.Edit', 'Pages.Schedules.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-action" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;"
+														(click)="viewScheduleModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+													<a href="javascript:;" *ngIf="permission.isGranted('Pages.Schedules.Edit')"
+														(click)="createOrEditScheduleModal.show(record.schedule.id)">{{l('Edit')}}</a>
+												</li>
+												<li>
+											        <a href="javascript:;" *ngIf="permission.isGranted('Pages.Schedules.Delete')"
+														(click)="deleteSchedule(record.schedule)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('ScheduleTypeID')}}</span>
+											{{record.schedule.scheduleTypeID}}
+										</td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('DateCreated')}}</span>
+                                        <span *ngIf="record.schedule.dateCreated">
+											{{record.schedule.dateCreated | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.schedule.dateCreated">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('DateOccur')}}</span>
+                                        <span *ngIf="record.schedule.dateOccur">
+											{{record.schedule.dateOccur | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.schedule.dateOccur">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('FromTime')}}</span>
+											{{record.schedule.fromTime}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('ToTime')}}</span>
+											{{record.schedule.toTime}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('Content')}}</span>
+											{{record.schedule.content}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('Notes')}}</span>
+											{{record.schedule.notes}}
+										</td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getSchedules($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                            </p-paginator>
+                            <span class="total-records-count">
+                                {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <createOrEditScheduleModal #createOrEditScheduleModal (modalSave)="getSchedules()"></createOrEditScheduleModal>
+    <viewScheduleModal #viewScheduleModal></viewScheduleModal>
+    
+  </div>
+</div>

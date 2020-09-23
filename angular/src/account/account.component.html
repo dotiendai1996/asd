@@ -1,0 +1,38 @@
+﻿<div [ngClass]="{'kt-grid kt-grid--ver kt-grid--root': !useFullWidthLayout(), 'kt-content': useFullWidthLayout() }" [style.text-align]="useFullWidthLayout() ? 'center' : 'left'">
+    <div [ngClass]="{'kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v1': !useFullWidthLayout(), 'row':useFullWidthLayout()}" id="kt_login">
+        <div [ngClass]="{'kt-grid__item kt-grid__item--fluid kt-grid kt-grid--desktop kt-grid--ver-desktop kt-grid--hor-tablet-and-mobile': !useFullWidthLayout(), 'col-md-12': useFullWidthLayout()}"  [style.background-image]="'url('+ appRootUrl() +'assets/common/images/hinh-tuyen-dung-new-gobranding-2.jpg)'" style=" height: 80%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;">
+            <div class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside" *ngIf="!useFullWidthLayout()">
+                <!-- <div class="kt-grid__item">
+                    <a (click)="goToHome()" href="">
+                        <img *ngIf="!appSession.tenant || !appSession.tenant.logoId" [src]="appRootUrl() + 'assets/common/images/app-logo-on-light.png'" alt="logo" height="1000" />
+                        <img *ngIf="appSession.tenant && appSession.tenant.logoId" [src]="remoteServiceBaseUrl + '/TenantCustomization/GetTenantLogo?skin=light&tenantId=' + appSession.tenant.id + '&id=' + appSession.tenant.logoId" alt="logo" height="38" />
+                    </a>
+                </div> -->
+                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver">
+                    <!-- / -->
+                    <!-- <div class="kt-grid__item kt-grid__item--middle">
+                        <img  [src]="appRootUrl() + 'assets/common/images/app-logo-on-light.png'" alt="logo" />
+                        <h4 class="kt-login__subtitle">Base solution for your next web application.</h4>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="kt-grid__item kt-grid__item--fluid  kt-grid__item--order-tablet-and-mobile-1  kt-login__wrapper d-block" style="background-color: transparent;">
+                <!-- <div class="kt-login__head d-block mt-3 mr-auto ml-auto text-right">
+                    <language-switch></language-switch>
+                </div> -->
+             
+
+                <div class="kt-login__body d-block mt-3 mr-auto ml-auto" style="background: linear-gradient(180deg, #67a9f7 0%, #2c779c 100%, #133c44 100%);">
+                    <!-- <div *ngIf="showTenantChange()" class="kt-login__signup-label tenant-change-box text-center">
+                        <tenant-change></tenant-change>
+                    </div> -->
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #lichSuUploadForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="lichSuUpload.id">{{l("EditLichSuUpload")}}</span>
+                        <span *ngIf="!lichSuUpload.id">{{l("CreateNewLichSuUpload")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="LichSuUpload_TenFile">{{l("TenFile")}}</label>
+									<input type="text" id="LichSuUpload_TenFile" class="form-control" [(ngModel)]="lichSuUpload.tenFile" name="TenFile"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="LichSuUpload_DungLuong">{{l("DungLuong")}}</label>
+									<input type="text" id="LichSuUpload_DungLuong" class="form-control" [(ngModel)]="lichSuUpload.dungLuong" name="DungLuong"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="LichSuUpload_TieuDe">{{l("TieuDe")}}</label>
+									<input type="text" id="LichSuUpload_TieuDe" class="form-control" [(ngModel)]="lichSuUpload.tieuDe" name="TieuDe"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="LichSuUpload_Type">{{l("Type")}}</label>
+									<input type="text" id="LichSuUpload_Type" class="form-control" [(ngModel)]="lichSuUpload.type" name="Type"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="LichSuUpload_TypeID">{{l("TypeID")}}</label>
+									<input type="text" id="LichSuUpload_TypeID" class="form-control" [(ngModel)]="lichSuUpload.typeID" name="TypeID"    />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!lichSuUploadForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

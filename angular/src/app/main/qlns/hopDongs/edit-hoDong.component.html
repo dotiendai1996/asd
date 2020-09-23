@@ -1,0 +1,540 @@
+<div>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div [class]="containerClass">
+                    <div class="kt-subheader__main">
+                        <div class="col-xl-12" style="padding-top: 5px;">
+                            <dx-button text="Trở về" type="success" icon="arrowleft" (onClick)="troVe()"> </dx-button>
+                            &nbsp;
+                            <dx-button text="Lưu" type="success" icon="save" style="width: 127px;" (onClick)="save()">
+                            </dx-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body">
+                    <div class="kt-subheader__main">
+                        <h3 class="kt-subheader__title">
+                            <span style="font-family: Arial, Helvetica, sans-serif;
+							font-size: 76%;
+							font-weight: bold;
+							color: #246faf;"> <i class="fas fa-home"></i> {{l("Trang chủ")}} | {{l("Chỉnh sửa thông tin ")}} </span>
+                        </h3>
+
+                    </div>
+                    <br>
+
+                    <dx-form #documentForm [formData]="hopDong" [showValidationSummary]="true"
+                        [showColonAfterLabel]="false" validationGroup="formValidateGroup">
+                        <dxi-item itemType="group" colCount="12">
+
+
+
+                            <dxi-item dataField="nhanVienId" [colSpan]="5">
+
+                                <dxo-label text="Mã nhân viên" required></dxo-label>
+                                <dxi-validation-rule type="required" message=" Mã nhân viên không được để trống">
+                                </dxi-validation-rule>
+                            </dxi-item>
+
+                            <dxi-item [colSpan]="1">
+                                <dx-button icon="card" alignment="right" (onClick)="showPublisherPopup()"
+                                    [elementAttr]="{class: 'btnAddPublisher'}"></dx-button>
+                            </dxi-item>
+
+
+                            <dxi-item dataField="hoTenNhanVien" [colSpan]="5">
+
+                                <dxo-label text="Họ tên nhân viên"></dxo-label>
+                                <dxi-validation-rule type="required" message="Họ tên không được để trống">
+                                </dxi-validation-rule>
+                            </dxi-item>
+                            <dxi-item [colSpan]="1">
+                                <dx-button icon="user" alignment="right" (onClick)="showPublisherPopup()"
+                                    [elementAttr]="{class: 'btnAddPublisher'}"></dx-button>
+                            </dxi-item>
+
+                            <dxi-item dataField="tenHopDong" [colSpan]="12">
+
+                                <dxo-label text="Tên hợp đồng" required></dxo-label>
+                                <dxi-validation-rule type="required" message="Tên hợp đồng không được để trống">
+                                </dxi-validation-rule>
+                            </dxi-item>
+
+
+
+
+
+
+                            <dxi-item [colSpan]="5">
+                                <dx-select-box [items]="congty" valueExpr="cdName" [searchEnabled]="true"
+                                    [searchExpr]="['value']" displayExpr="value" [(value)]="hopDong.tenCTY"
+                                    (onValueChanged)="changeCTY($event)">
+                                </dx-select-box>
+
+                                <dxi-validation-rule type="required" message="Tên công ty  không được để trống">
+                                </dxi-validation-rule>
+                                <dxo-label text="Tên công ty" required></dxo-label>
+                            </dxi-item>
+                            <dxi-item dataField="Đơn vị công tác" [colSpan]="7">
+                                <dx-select-box dataField="donViCongTacID" [items]="danhSachDV" valueExpr="data.id"
+                                    [searchEnabled]="true" [searchExpr]="['label']" displayExpr="label"
+                                    (onValueChanged)="selectItem($event)" [(value)]="hopDong.donViCongTacID">
+                                </dx-select-box>
+                                <dxi-validation-rule type="required" message="Đơn vị công tác  không được để trống">
+                                </dxi-validation-rule>
+
+                            </dxi-item>
+                            <dxi-item [colSpan]="5">
+                                <dx-select-box dataField="loaiHopDongID" [items]="loaiHopDong" valueExpr="id"
+                                    [searchEnabled]="true" [searchExpr]="['tenTemplate']" displayExpr="tenTemplate"
+                                    [(value)]="hopDong.loaiHopDongID" (onValueChanged)="chonLoaiHopDong($event)">
+                                </dx-select-box>
+
+                                <dxi-validation-rule type="required" message="Loại hợp đồng không được để trống">
+                                </dxi-validation-rule>
+                                <dxo-label text="Loại hợp đồng" required></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item [colSpan]="7">
+                                <dx-select-box dataField="" [items]="danhSachCV" valueExpr="code" [searchEnabled]="true"
+                                    [searchExpr]="['displayName']" displayExpr="displayName"
+                                    [(value)]="hopDong.viTriCongViecCode">
+                                </dx-select-box>
+                                <dxi-validation-rule type="required" message="Vị trí công việc  không được để trống">
+                                </dxi-validation-rule>
+                                <dxo-label text="Vị trí công việc" required></dxo-label>
+                            </dxi-item>
+                            <dxi-item dataField="luongCoBan" [colSpan]="6">
+                                <dx-number-box format="#,##0" [(value)]="hopDong.luongCoBan"></dx-number-box>
+                                <dxi-validation-rule type="required" message="Lương cơ bản không được để trống">
+                                </dxi-validation-rule>
+                                <dxo-label text=" Lương cơ bản " required></dxo-label>
+                            </dxi-item>
+
+
+                            <dxi-item dataField="luongDongBaoHiem" [colSpan]="6">
+                                <dx-number-box format="#,##0" [(value)]="hopDong.luongDongBaoHiem"></dx-number-box>
+                                <dxi-validation-rule type="required" message="Lương đóng bảo hiểm không được để trống">
+                                </dxi-validation-rule>
+                                <dxo-label text=" Lương đóng bảo hiểm " required></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item [colSpan]="6">
+                                <dx-select-box dataField="thoiHanHopDong" [items]="thoiHanHopDong"
+                                    valueExpr="cdName" [searchEnabled]="true" [searchExpr]="['value']"
+                                    displayExpr="value" [(value)]="hopDong.thoiHanHopDong">
+                                </dx-select-box>
+                                <dxo-label text="Thời hạn hợp đồng"></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item itemType="group" [colSpan]="6">
+                                <dxi-item>
+                                    <dx-select-box dataField="hinhThucLamViecCode" [items]="hinhThucLamViec"
+                                        valueExpr="cdName" [searchEnabled]="true" [searchExpr]="['value']"
+                                        displayExpr="value" [(value)]="hopDong.hinhThucLamViecCode">
+                                    </dx-select-box>
+                                    <dxo-label text="Hình thức làm việc"></dxo-label>
+                                </dxi-item>
+                            </dxi-item>
+                                <dxi-item dataField="tyLeHuongLuong" [colSpan]="4">
+                                    <dx-number-box [(value)]="hopDong.tyLeHuongLuong"></dx-number-box>
+                                    <dxo-label text="Tỷ lệ hưởng lương"></dxo-label>
+                                </dxi-item>
+
+                            <dxi-item dataField="ngayKy" [colSpan]="4">
+                                <dx-date-box [(value)]="hopDong.ngayKy" displayFormat="dd/MM/yyyy" type="date">
+                                </dx-date-box>
+                                <dxi-validation-rule type="required" message="Ngày ký không được để trống">
+                                </dxi-validation-rule>
+                                <dxo-label text="Ngày ký" required></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item dataField="ngayCoHieuLuc" [colSpan]="4">
+                                <dx-date-box [(value)]="hopDong.ngayCoHieuLuc" displayFormat="dd/MM/yyyy" type="date">
+                                </dx-date-box>
+                                <dxi-validation-rule type="required" message="Ngày có hiệu lực không được để trống">
+                                </dxi-validation-rule>
+                                <dxo-label text="Ngày có hiệu lực" required></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item dataField="ngayHetHan" [colSpan]="4">
+                                <dx-date-box [(value)]="hopDong.ngayHetHan" displayFormat="dd/MM/yyyy" type="date">
+                                </dx-date-box>
+                                <dxi-validation-rule type="required" message="Ngày hết hạn không được để trống">
+                                </dxi-validation-rule>
+                                <dxo-label text="Ngày hết hạn" required></dxo-label>
+                            </dxi-item>
+
+
+                            <dxi-item dataField="trichYeu" [colSpan]="8">
+                                <dxo-label text="Trích yếu"></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item dataField="nguoiDaiDienCongTy" [colSpan]="6">
+                                <dxo-label text="Người đại diện CT ký"></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item dataField="chucDanh" [colSpan]="6">
+                                <dxo-label text="Chức danh"></dxo-label>
+                            </dxi-item>
+
+
+                                <dxi-item dataField="ghiChu" [colSpan]="12" editorType="dxTextArea"
+                                    [editorOptions]="{ height: 80 }">
+                                    <dxo-label text="Ghi chú "></dxo-label>
+                                </dxi-item>
+
+
+                            <dxi-item [colSpan]="2">
+                                <dx-file-uploader uploadUrl="{{uploadUrl}}" accept="*"
+                                    [allowedFileExtensions]="['.jpg', '.png', '.doc', '.docx', '.xlsx', '.pdf']"
+                                    [maxFileSize]="1024 * 1024 * 25" [multiple]="true" selectButtonText="Chọn tệp"
+                                    labelText="" [(value)]="value" uploadMode="instantly"
+                                    (onUploaded)="setFullNameFile()">
+                                </dx-file-uploader>
+
+                            </dxi-item>
+                            <dxi-item [colSpan]="10">
+                            </dxi-item>
+
+                            <dxi-item [colSpan]="12">
+                                <dx-data-grid id="gridContainer" [(dataSource)]="selectedRows"
+                                    [allowColumnReordering]="true" [allowColumnResizing]="true" [columnAutoWidth]="true"
+                                    showBorders="true">
+                                    <dxo-paging [pageSize]="10"></dxo-paging>
+                                    <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"
+                                        [showInfo]="true">
+                                    </dxo-pager>
+                                    <dxo-editing mode="cell" [allowUpdating]="true"></dxo-editing>
+
+                                    <dxi-column dataField="stt" cellTemplate="sttTemplate" caption="STT"
+                                        alignment="center" allowUpdating="false">
+                                    </dxi-column>
+                                    <dxi-column dataField="tieuDe" caption="Tiêu đề" alignment="center" [width]="300"
+                                        cellTemplate="cellTemplate1" allowUpdating="true" allowEditing="true"
+                                        dataType="string"></dxi-column>
+                                    <dxi-column dataField="tenFile" alignment="center" caption="Tên tập tin"
+                                        allowUpdating="false" cellTemplate="cellTemplate"></dxi-column>
+                                    <dxi-column dataField="dungLuong" caption="Dung lượng" allowUpdating="false"
+                                        alignment="center"></dxi-column>
+
+                                    <div *dxTemplate="let d of 'cellTemplate1'">
+                                        <a>
+                                            <div style="float: left;">
+                                                {{d.value}}
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div *dxTemplate="let d of 'sttTemplate'">
+                                        {{d.rowIndex + 1}}
+                                    </div>
+                                    <div *dxTemplate="let d of 'cellTemplate'">
+                                        <a href="linkfile" target="_blank">
+                                            <div (click)="showDetail(d)" style="float: left;">
+                                                {{d.value}}
+                                            </div>
+                                        </a>
+                                    </div>
+
+
+                                </dx-data-grid>
+                            </dxi-item>
+
+
+
+                        </dxi-item>
+
+                    </dx-form>
+
+                    <br>
+
+
+                    <dx-popup [width]="670" [height]="500" [showTitle]="true" title="Danh sách  loại hợp đồng "
+                        [dragEnabled]="false" [closeOnOutsideClick]="false" [(visible)]="popupVisibleLHD">
+
+                        <dx-form [showValidationSummary]="true" validationGroup="formValidateGroup">
+                            <dxi-item itemType="group" cssClass="item-bold">
+                                <div class="row">
+                                    <div class="col-2" style="font-size: 15px;font-weight: bold;"> Công ty:
+                                    </div>
+                                    <div class="col-10">
+                                        <dx-select-box #BGDSelectBox [dataSource]="congTY" displayExpr="value"
+                                            (onValueChanged)="onValueChanged($event)" valueExpr='cdName'>
+                                        </dx-select-box>
+                                    </div>
+                                </div>
+                            </dxi-item>
+                        </dx-form>
+                        <br>
+                        <br>
+
+                        <dx-data-grid id="gridContainer" [height]="500" [dataSource]="loaiHopDong"
+                            [allowColumnReordering]="true" [allowColumnResizing]="true" [columnAutoWidth]="true"
+                            [showBorders]="true" (onRowDblClick)="chonLoaiHopDong($event)">
+                            <dxo-paging [pageSize]="10"></dxo-paging>
+                            <dxo-selection mode="single"> </dxo-selection>
+
+                            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]" [showInfo]="true">
+                            </dxo-pager>
+                            <dxi-column dataField="stt" [allowSearch]="true" alignment="center" [width]="50"
+                                caption="STT"> </dxi-column>
+
+                            <dxi-column dataField="maTemplate" [allowSearch]="true" alignment="left"
+                                caption="Mã hợp đồng">
+                            </dxi-column>
+                            <dxi-column dataField="tenTemplate" [allowSearch]="true" alignment="left"
+                                caption="Loại hợp đồng">
+                            </dxi-column>
+
+                        </dx-data-grid>
+                    </dx-popup>
+
+                    <dx-popup [width]="1100" [height]="600" [showTitle]="true" title=" Danh sách nhân viên"
+                        [dragEnabled]="false" [closeOnOutsideClick]="false" [(visible)]="popupVisibleHoSo">
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="filterText">{{l("Tìm kiếm")}}</label>
+                                    <input [(ngModel)]="filterText" name="filterText" autoFocus
+                                        class="form-control m-input" [placeholder]="l('Nhập nội dung tìm kiếm.....')"
+                                        type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <dx-button text="Tìm kiếm" stylingMode="contained" type="default" icon="fa fa-search"
+                                    (onClick)="getHoSos($event)">
+                                </dx-button>
+                            </div>
+
+                            <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                                <dx-scroll-view [height]="380" direction="both">
+                                    <p-table #dataTable (onLazyLoad)="getHoSos($event)"
+                                        [value]="primengTableHelper.records"
+                                        rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false"
+                                        [lazy]="false" [scrollable]="true" ScrollWidth="100%"
+                                        [responsive]="primengTableHelper.isResponsive"
+                                        [resizableColumns]="primengTableHelper.resizableColumns">
+
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th style="width: 70px">
+                                                    {{l('STT')}}</th>
+
+                                                <th style="width: 200px" pSortableColumn="maChamCong">
+                                                    {{l('Mã chấm công')}}
+                                                    <p-sortIcon field="maChamCong"></p-sortIcon>
+                                                </th>
+                                                <th style="width: 200px" pSortableColumn="maNhanVien">
+                                                    {{l('Mã nhân viên')}}
+                                                    <p-sortIcon field="maNhanVien"></p-sortIcon>
+                                                </th>
+                                                <th style="width: 250px">
+                                                    {{l('Họ và tên')}}
+                                                </th>
+                                                <th style="width: 200px">
+                                                    {{l('Chức vụ')}}
+                                                </th>
+                                                <th style="width: 250px">
+                                                    {{l('Đơn vị công tác')}}
+                                                </th>
+                                                <th style="width: 200px">
+                                                    {{l('Loại hợp đồng')}}
+                                                </th>
+
+                                                <th style="width: 150px" pSortableColumn="ngaySinh">
+                                                    {{l('Ngày sinh')}}
+                                                    <p-sortIcon field="ngaySinh"></p-sortIcon>
+                                                </th>
+                                                <th style="width: 150px" pSortableColumn="creationTime">
+                                                    {{l('Giới tính')}}
+                                                    <p-sortIcon field="creationTime"></p-sortIcon>
+                                                </th>
+                                                <th style="width: 200px" pSortableColumn="lastModificationTime">
+                                                    {{l('Số CMND')}}
+                                                    <p-sortIcon field="lastModificationTime"></p-sortIcon>
+                                                </th>
+                                                <th style="width: 200px" pSortableColumn="day1">
+                                                    {{l('Ngày cấp')}}
+                                                    <p-sortIcon field="day1"></p-sortIcon>
+                                                </th>
+                                                <th style="width: 250px">
+                                                    {{l('Nơi cấp')}}
+                                                </th>
+                                                <th style="width: 150px">
+                                                    {{l('MST cá nhân')}}
+                                                </th>
+                                                <th style="width: 200px">
+                                                    {{l('Nguyên quán')}}
+                                                </th>
+                                                <th style="width: 200px">
+                                                    {{l('Địa chỉ HKTT')}}
+                                                </th>
+                                                <th style="width: 200px" pSortableColumn="ngayThuViec">
+                                                    {{l('Ngày vào cty')}}
+                                                    <p-sortIcon field="ngayThuViec"></p-sortIcon>
+                                                </th>
+                                                <th style="width: 200px" pSortableColumn="ngayHethan">
+                                                    {{l('Ngày hết hạn')}}
+                                                    <p-sortIcon field="ngayHethan"></p-sortIcon>
+                                                </th>
+                                                <th style="width: 200px">
+                                                    {{l('Số tài khoản')}}
+                                                </th>
+                                                <th style="width: 200px">
+                                                    {{l('Ngân hàng')}}
+                                                </th>
+                                                <th style="width: 200px">
+                                                    {{l('Chi nhánh')}}
+                                                </th>
+                                                <th style="width: 200px">
+                                                    {{l('Só hợp đồng')}}
+                                                </th>
+                                                <th style="width: 200px">
+                                                    {{l('Tên công ty')}}
+                                                </th>
+                                                <th style="width: 200px">
+                                                    {{l('Tình trạng')}}
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-record="$implicit">
+                                            <tr (click)="startEdit(record.hoSo)">
+                                                <td style="width: 70px">
+                                                    <span class="ui-column-title">{{l('STT')}}</span>
+                                                    {{record.stt}}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Mã chấm công')}}</span>
+                                                    {{record.hoSo.maChamCong}}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Mã nhân viên')}}</span>
+                                                    {{record.hoSo.maNhanVien}}
+                                                </td>
+                                                <td style="width: 250px">
+                                                    <span class="ui-column-title"> {{l('Họ và tên')}}</span>
+                                                    {{record.hoSo.hoVaTen}}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Chức vụ')}}</span>
+                                                    {{record.hoSo.chucVu}}
+                                                </td>
+                                                <td style="width: 250px">
+                                                    <span class="ui-column-title">
+                                                        {{l('Đơn vị công tác')}}</span>
+                                                    {{record.donViCongTacValue}}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Loại hợp đồng')}}</span>
+                                                    {{record.loaiHopDongValue}}
+                                                </td>
+                                                <td style="width: 150px">
+                                                    <span class="ui-column-title"> {{l('Ngày sinh')}}</span>
+                                                    {{record.hoSo.ngaySinh | date: 'dd/MM/yyyy' }}
+                                                </td>
+                                                <td style="width: 150px">
+                                                    <span class="ui-column-title"> {{l('Giới tính')}}</span>
+                                                    {{record.gioiTinhValue }}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Số CMND')}}</span>
+                                                    {{record.hoSo.soCMND }}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Ngày cấp')}}</span>
+                                                    {{record.hoSo.ngayCap | date: 'dd/MM/yyyy'}}
+                                                </td>
+                                                <td style="width: 250px">
+                                                    <span class="ui-column-title"> {{l('Nơi cấp')}}</span>
+                                                    {{record.hoSo.noiCap }}
+                                                </td>
+                                                <td style="width: 150px">
+                                                    <span class="ui-column-title">
+                                                        {{l('MST cá nhân')}}</span>
+                                                    {{record.hoSo.mSTCaNhan }}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Nguyên quán')}}</span>
+                                                    {{record.hoSo.nguyenQuan}}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title">
+                                                        {{l('Địa chỉ HKTT')}}</span>
+                                                    {{record.hoSo.diaChiHKTT }}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Ngày vào cty')}}</span>
+                                                    {{record.hoSo.ngayThuViec | date: 'dd/MM/yyyy'}}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Ngày hết hạn')}}</span>
+                                                    {{record.hoSo.ngayHetHan | date: 'dd/MM/yyyy'}}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Số tài khoản')}}</span>
+                                                    {{record.hoSo.tkNganHang}}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Ngân hàng')}}</span>
+                                                    {{record.hoSo.nganHangCode }}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Chi nhánh')}}</span>
+                                                    {{record.hoSo.chiNhanh}}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Số hợp đồng')}}</span>
+                                                    {{record.hoSo.soSoQLLaoDong }}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Tên công ty')}}</span>
+                                                    {{record.hoSo.tenCty}}
+                                                </td>
+                                                <td style="width: 200px">
+                                                    <span class="ui-column-title"> {{l('Tình trạng')}}</span>
+                                                    {{record.tinhTrangNhanSuValue }}
+                                                </td>
+                                            </tr>                                        
+                                        </ng-template>
+                                    </p-table>
+                                </dx-scroll-view>
+                                <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                                    {{l('NoData')}}
+                                </div>
+                                <div class="primeng-paging-container">
+                                    <p-paginator [rows]="5" #paginator
+                                        (onPageChange)="getHoSos($event)"
+                                        [totalRecords]="primengTableHelper.totalRecordsCount"
+                                        [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                                    </p-paginator>
+                                    <span class="total-records-count">
+                                        {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </dx-popup>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {
+        width: 100px;
+        min-width: 100px;
+        color: white;
+    }
+
+    .dx-button-text {
+        line-height: normal;
+        color: white;
+    }
+</style>

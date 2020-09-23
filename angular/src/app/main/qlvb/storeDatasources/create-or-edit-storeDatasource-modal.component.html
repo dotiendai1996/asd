@@ -1,0 +1,64 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeDatasourceForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeDatasource.id">{{l("EditStoreDatasource")}}</span>
+                        <span *ngIf="!storeDatasource.id">{{l("CreateNewStoreDatasource")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="StoreDatasource_NameStore">{{l("NameStore")}}</label>
+									<input type="text" id="StoreDatasource_NameStore" class="form-control" [(ngModel)]="storeDatasource.nameStore" name="NameStore"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="StoreDatasource_Key">{{l("Key")}}</label>
+									<input type="text" id="StoreDatasource_Key" class="form-control" [(ngModel)]="storeDatasource.key" name="Key"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="StoreDatasource_Value">{{l("Value")}}</label>
+									<input type="text" id="StoreDatasource_Value" class="form-control" [(ngModel)]="storeDatasource.value" name="Value"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="StoreDatasource_DynamicDatasourceId">{{l("DynamicDatasourceId")}}</label>
+									<input type="number" id="StoreDatasource_DynamicDatasourceId" class="form-control" [(ngModel)]="storeDatasource.dynamicDatasourceId" name="DynamicDatasourceId"  />
+									<select name="StoreDatasource_DynamicDatasourceId_Cbb" class="form-control" [(ngModel)]="storeDatasource.dynamicDatasourceId">
+										<option *ngFor="let item of dynamicDatasource" [value]="item.id">{{item.dynamicFieldId}}</option>
+									</select>
+								</div>
+					
+								<div class="form-group">
+									<label for="StoreDatasource_Order">{{l("Order")}}</label>
+									<input type="number" id="StoreDatasource_Order" class="form-control" [(ngModel)]="storeDatasource.order" name="Order"  />
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="StoreDatasource_IsActive" class="kt-checkbox">
+										<input id="StoreDatasource_IsActive" type="checkbox" name="IsActive" [(ngModel)]="storeDatasource.isActive"> 
+										{{l("IsActive")}}
+										<span></span>
+									</label>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!storeDatasourceForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

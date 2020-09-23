@@ -1,0 +1,301 @@
+﻿<style>
+    .form-group {
+        margin-bottom: 0.7rem !important;
+    }
+</style>
+<div>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <div class="col-xl-12" style="padding-top: 5px;">
+                        <dx-button text="Trở về" type="success" icon="arrowleft" (onClick)="troVe()"> </dx-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body">
+                    <div class="kt-subheader__main">
+                        <h3 class="kt-subheader__title">
+                            <span style="font-family: Arial, Helvetica, sans-serif;
+							font-size: 76%;
+							font-weight: bold;
+							color: black;"> <i class="fas fa-home"></i> {{l("Trang chủ")}} | {{l("Xem chi tiết ")}} </span>
+                        </h3>
+
+                    </div>
+                    <br>
+                    <br>
+
+
+                    <dx-form #documentForm [formData]="ungVien" [showValidationSummary]="true"
+                        [showColonAfterLabel]="false" validationGroup="formValidateGroup" [readOnly]="true">
+                        <dxi-item itemType="group" colCount="12">
+
+                            <dxi-item itemType="group" colCount="12" [colSpan]="12">
+
+
+                                <dxi-item itemType="group" colCount="12" [colSpan]="12">
+
+                                    <dxi-item dataField="maUngVien" readonly disabled [colSpan]="3">
+
+                                        <dxo-label text="Mã ứng viên"></dxo-label>
+
+                                    </dxi-item>
+
+                                    <dxi-item dataField="hoVaTen" [colSpan]="6">
+                                        <dxo-label text="Họ và tên" required> </dxo-label>
+                                    </dxi-item>
+                                    <dxi-item dataField="tenCTY" [colSpan]="3">
+                                        <dxo-label text="Công ty" required> </dxo-label>
+                                    </dxi-item>
+                                </dxi-item>
+
+                                <dxi-item itemType="group" colCount="12" [colSpan]="12">
+                                    <dxi-item dataField="Đơn vị công tác" [colSpan]="6">
+                                        <dx-select-box dataField="donViCongTacID" [items]="danhSachDV"
+                                            valueExpr="data.id" [searchEnabled]="true" [searchExpr]="['label']"
+                                            displayExpr="label" [readOnly]="true" (onValueChanged)="selectItem($event)"
+                                            [(value)]="ungVien.donViCongTacID">
+                                        </dx-select-box>
+
+                                    </dxi-item>
+
+                                    <dxi-item [editorOptions]="{ disabled: true }" [colSpan]="3">
+                                        <dx-select-box dataField="gioiTinhCode" id="publisherSelect" [items]="gioiTinh"
+                                            valueExpr="cdName" [searchEnabled]="true" [searchExpr]="['value']"
+                                            [readOnly]="true" displayExpr="value" [(value)]="ungVien.gioiTinhCode">
+                                        </dx-select-box>
+                                        <dxo-label text="Giới tính " required></dxo-label>
+                                    </dxi-item>
+
+                                    <dxi-item dataField="ngaySinh" [colSpan]="3" editorType="dxDateBox"
+                                        [editorOptions]="{displayFormat:'dd/MM/yyyy'}">
+                                        <dxo-label text="Ngày sinh" required></dxo-label>
+                                    </dxi-item>
+                                </dxi-item>
+                                <dxi-item itemType="group" colCount="12" [colSpan]="12">
+                                    <dxi-item [colSpan]="6">
+                                        <dx-select-box dataField="viTriCongViecCode" [items]="danhSachCV"
+                                            valueExpr="code" [searchEnabled]="true" [searchExpr]="['displayName']"
+                                            displayExpr="displayName" [readOnly]="true"
+                                            [(value)]="ungVien.viTriUngTuyenCode">
+                                        </dx-select-box>
+                                        <dxo-label text="Vị trí ứng tuyển" required></dxo-label>
+                                    </dxi-item>
+
+
+                                    <dxi-item [colSpan]="6" dataField="kenhTuyenDungCode">
+                                        <dx-select-box dataField="kenhTuyenDungCode" id="publisherSelect"
+                                            [items]="kenhTuyenDung" displayExpr="value" valueExpr="cdName"
+                                            [searchEnabled]="true" [searchExpr]="['value']" [readOnly]="true"
+                                            [(value)]="ungVien.kenhTuyenDungCode">
+                                        </dx-select-box>
+                                        <dxo-label text="Kênh tuyển dụng" required></dxo-label>
+                                    </dxi-item>
+
+                                </dxi-item>
+
+
+                                <dxi-item itemType="group" colCount="12" [colSpan]="12">
+
+
+                                    <dxi-item [colSpan]="5">
+                                        <dx-select-box dataField="trangThaiCode" id="publisherSelect"
+                                            [items]="trangThai" displayExpr="value" valueExpr="cdName"
+                                            [searchEnabled]="true" [searchExpr]="['value']" [readOnly]="true"
+                                            [(value)]="ungVien.trangThaiCode">
+                                        </dx-select-box>
+
+                                        <dxo-label text="Trạng thái"></dxo-label>
+                                    </dxi-item>
+
+
+                                    <dxi-item dataField="tienDoTuyenDungCode" [colSpan]="5">
+                                        <dx-select-box dataField="tienDoTuyenDungCode" [items]="tienDoTuyenDung"
+                                            valueExpr="cdName" [searchEnabled]="true" [searchExpr]="['value']"
+                                            [readOnly]="true" displayExpr="value"
+                                            [(value)]="ungVien.tienDoTuyenDungCode">
+                                        </dx-select-box>
+                                        <dxo-label text="Tiến độ tuyển dụng"></dxo-label>
+                                    </dxi-item>
+
+
+                                    <dxi-item dataField="soCMND" [colSpan]="2">
+                                        <dxo-label text=" Số CMND"></dxo-label>
+                                    </dxi-item>
+
+                                </dxi-item>
+
+
+                                <dxi-item itemType="group" colCount="12" [colSpan]="12">
+
+                                    <dxi-item dataField="ngayCap" [colSpan]="4" editorType="dxDateBox"
+                                        [editorOptions]="{displayFormat:'dd/MM/yyyy'}">
+                                        <dxo-label text="Ngày cấp"></dxo-label>
+                                    </dxi-item>
+
+                                    <dxi-item dataField="noiCap" [colSpan]="4">
+                                        <dxo-label text="Nơi cấp"></dxo-label>
+                                    </dxi-item>
+
+
+
+                                    <dxi-item dataField="trinhDoVanHoa" [colSpan]="4">
+                                        <dxo-label text="Trình độ văn hóa"></dxo-label>
+                                    </dxi-item>
+
+
+                                </dxi-item>
+
+                                <dxi-item itemType="group" colCount="12" [colSpan]="12">
+
+                                    <dxi-item dataField="email" [colSpan]="4">
+                                        <dxo-label text="Email" required></dxo-label>
+                                    </dxi-item>
+
+                                    <dxi-item dataField="dienThoai" [colSpan]="3">
+                                        <dxo-label text="Điện thoại " required></dxo-label>
+                                    </dxi-item>
+
+                                    <dxi-item dataField="noiDaoTaoID" [colSpan]="5">
+                                        <dx-select-box dataField="noiDaoTaoID" id="publisherSelect" [items]="noiDaoTao"
+                                            displayExpr="tenNoiDaoTao" valueExpr="id" [searchEnabled]="true"
+                                            [readOnly]="true" [searchExpr]="['tenNoiDaoTao']"
+                                            [(value)]="ungVien.noiDaoTaoID">
+                                        </dx-select-box>
+                                        <dxo-label text=" Nơi đào tạo "></dxo-label>
+                                    </dxi-item>
+
+                                </dxi-item>
+
+                                <dxi-item itemType="group" colCount="12" [colSpan]="12">
+
+                                    <dxi-item dataField="tinhThanhID" [colSpan]="3">
+                                        <dx-select-box dataField="tinhThanhID" [items]="tinhThanh" valueExpr="id"
+                                            [searchEnabled]="true" [searchExpr]="['tenTinhThanh']" [readOnly]="true"
+                                            displayExpr="tenTinhThanh" [(value)]="ungVien.tinhThanhID">
+                                        </dx-select-box>
+                                        <dxo-label text="Tỉnh thành"></dxo-label>
+                                    </dxi-item>
+
+
+                                    <dxi-item dataField="diaChi" [colSpan]="5">
+                                        <dxo-label text="Địa chỉ"></dxo-label>
+                                    </dxi-item>
+
+                                    <dxi-item dataField="khoa" [colSpan]="4">
+                                        <dxo-label text="Khoa"></dxo-label>
+                                    </dxi-item>
+
+                                </dxi-item>
+
+
+                                <dxi-item itemType="group" colCount="12" [colSpan]="12">
+
+
+                                    <dxi-item dataField="chuyenNganh" [colSpan]="4">
+                                        <dxo-label text="Chuyên nghành"></dxo-label>
+                                    </dxi-item>
+
+                                    <dxi-item dataField="xepLoaiCode" [colSpan]="4">
+                                        <dx-select-box dataField="xepLoaiCode" id="publisherSelect"
+                                            [items]="xepLoaiHocLuc" valueExpr="cdName" [searchEnabled]="true"
+                                            [searchExpr]="['value']" displayExpr="value" [readOnly]="true"
+                                            [(value)]="ungVien.xepLoaiCode"></dx-select-box>
+
+                                        <dxo-label text="Xếp loại "></dxo-label>
+                                    </dxi-item>
+                                    <dxi-item dataField="namTotNghiep" [colSpan]="4">
+                                        <dx-select-box dataField="namTotNghiep" id="publisherSelect" [items]="listYear"
+                                            valueExpr="tennam" [searchEnabled]="true" [searchExpr]="['tennam']"
+                                            [readOnly]="true" displayExpr="tennam" [(value)]="ungVien.namTotNghiep">
+                                        </dx-select-box>
+
+                                        <dxo-label text="Năm tốt nghiệp"></dxo-label>
+                                    </dxi-item>
+                                </dxi-item>
+                            </dxi-item>
+                        </dxi-item>
+                    </dx-form>
+                </div>
+            </div>
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            <i class="fas fa-address-card"></i> {{l("Lịch sử tương tác ứng viên")}}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body" style="max-height: 400px;overflow: auto;">
+                    <ng-template ngFor let-item [ngForOf]="lichsu">
+                        <div class="timeline-item" style="border-bottom: 5px solid #e0e0e0;">
+                            <span class="time"> {{item.fullName}} - <i class="fa fa-clock-o"></i> {{ item.creationTime  | momentFormat:'DD-MM-YYYY HH:mm:ss A' }}</span>
+                            <h3 class="timeline-header"><a href="javascript:;">{{item.chuDe || '-'}}</a></h3>
+                            <div class="timeline-body" [innerHTML]="item.noiDung | safeHtml">
+                            </div>
+                            <div class="timeline-footer" *ngIf="item.tepDinhKem">
+                                {{l("Tập tin đính kèm: ")}}
+                                <a [href]="linkDownloadFile(item.tepDinhKem)" target="_blank">{{item.tepDinhKem}}</a>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            <i class="fas fa-address-card"></i> {{l("Tương tác ứng viên")}}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <dx-button text="Gửi mail " type="success" icon="message" (onClick)="sendEmail()">
+                        </dx-button>
+                        <dx-button text="Làm tươi" icon="refresh" style="width: 127px;margin-left: 5px;"
+                            (onClick)="trangChuUngVien()">
+                        </dx-button>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <form #ungVien1Form="ngForm" novalidate autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="ViTriUngTuyenCodeFilter">Chọn chủ đề mẫu</label>
+                                    <dx-select-box [items]="chude" valueExpr="id" [(value)]="value"
+                                        displayExpr="tenTemplate" placeholder="Chọn chủ đề" showFileList="true"
+                                        (onValueChanged)="getDaTa($event)">
+                                    </dx-select-box>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Tên chủ đề</label>
+                                    <div id="action-description">
+                                        <dx-text-box [(value)]="tenChuDe"></dx-text-box>
+                                    </div>
+                                    <div class="control-section">
+                                        <ckeditor [(ngModel)]="noiDungCD" name="NoiDung1" [config]="editorConfig"></ckeditor>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <dx-file-uploader selectButtonText="Tập tin đính kèm" [multiple]="true" labelText=""
+                                    uploadUrl="{{uploadUrl}}" accept="*" (onUploaded)="uploadTDK($event)"
+                                    uploadMode="instantly">
+                                </dx-file-uploader>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div [busyIf]="viewIsLoading" *ngIf="viewIsLoading"></div>

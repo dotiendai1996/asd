@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+  <Import Project="..\..\common.props">
+  </Import>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AssemblyName>Hinnova.Application</AssemblyName>
+    <PackageId>Hinnova.Application</PackageId>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>Hinnova</RootNamespace>
+    <LangVersion>7.2</LangVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="JobSchedules\**" />
+    <EmbeddedResource Remove="JobSchedules\**" />
+    <EntityDeploy Remove="JobSchedules\**" />
+    <None Remove="JobSchedules\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Aspose.Cells" Version="20.3.0" />
+    <PackageReference Include="Dapper" Version="2.0.30" />
+    <PackageReference Include="EPPlus" Version="4.5.3.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.0" />
+    <PackageReference Include="Z.EntityFramework.Extensions" Version="4.0.67" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hinnova.Application.Shared\Hinnova.Application.Shared.csproj" />
+    <ProjectReference Include="..\Hinnova.Core\Hinnova.Core.csproj" />
+    <ProjectReference Include="..\Hinnova.EntityFrameworkCore\Hinnova.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Abp.AspNetZeroCore">
+      <HintPath>..\..\..\..\QLVB_CATP_GIT\Abp.AspNetZeroCore.dll</HintPath>
+    </Reference>
+    <Reference Include="GemBox.Spreadsheet">
+      <HintPath>..\..\DLL\GemBox.Spreadsheet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,54 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SqlConfigId")}} :</h6>
+                        {{ item.sqlStoreParam.sqlConfigId }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Code")}} :</h6>
+                        {{ item.sqlStoreParam.code }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Format")}} :</h6>
+                        {{ item.sqlStoreParam.format }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Name")}} :</h6>
+                        {{ item.sqlStoreParam.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("IsActive")}} :</h6>
+                        {{ item.sqlStoreParam.isActive }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ValueString")}} :</h6>
+                        {{ item.sqlStoreParam.valueString }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ValueInt")}} :</h6>
+                        {{ item.sqlStoreParam.valueInt }}
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-action blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="app/main/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Đăng kí nghỉ phép</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="dark">
+        <ion-icon name="notifications" slot="end"></ion-icon>
+      </ion-button>        
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-row>
+    <ion-col col-3> 
+      <ion-button expand="block" href="app/nghiphep" size="small" color="warning">
+        Nhiều ngày
+      </ion-button>
+    </ion-col>
+    <ion-col col-3>
+      <ion-button expand="block" href="app/nghiphep" size="small" color="light">
+        Một ngày
+      </ion-button>
+    </ion-col>
+    <ion-col col-3> 
+      <ion-button expand="block" href="app/nghiphep" size="small" color="light">
+        Buổi sáng
+      </ion-button>
+    </ion-col>
+    <ion-col col-3>
+      <ion-button expand="block" href="app/nghiphep" size="small" color="light">
+        Buổi chiều
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+<form #f="ngForm" (ngSubmit)="onCreateOrEdit(f)">
+  <ion-list>
+    <ion-row>
+      <ion-col col-6> 
+        <ion-item style="--padding-start: 0px;--border-width:0px;">
+          <ion-label position="stacked"><ion-icon name="calendar" slot="start"></ion-icon>Từ ngày:</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="startDate" name="startDate" style="border: 1px solid lightgray;border-radius: 5px;padding: 0 10px;" required></ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col col-6>
+        <ion-item style="--padding-start: 0px;--border-width:0px;">
+          <ion-label position="stacked"><ion-icon name="calendar" slot="start"></ion-icon>Đến ngày:</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="endDate" name="endDate" style="border: 1px solid lightgray;border-radius: 5px;padding: 0 10px;" required></ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-item style="--padding-start: 0px;--inner-border-width:0px;">
+      <ion-label position="stacked">
+        <ion-icon name="chatbubbles" slot="start"></ion-icon>
+        Lý do:
+      </ion-label>
+      <ion-textarea type="text" rows="6" ngModel name="lydo" style="border: 1px solid lightgray;border-radius: 10px;padding: 0 10px;" required> 
+      </ion-textarea>
+    </ion-item> 
+    <ion-item style="--padding-start: 0px;--border-width:0px;">
+      <ion-label position="stacked">
+        <ion-icon name="people" slot="start"></ion-icon>
+        Thông báo đến:
+      </ion-label>
+      <ion-input ngModel name="truongBoPhanID" style="border: 1px solid lightgray;border-radius: 10px;" required>
+      </ion-input>
+    </ion-item>
+  </ion-list> 
+<ion-button shape="round" color="primary" fill="outline" type="submit" block [disabled]="!f.valid">Gửi phiếu yêu cầu</ion-button>
+</form>
+</ion-content>

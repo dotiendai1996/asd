@@ -1,0 +1,92 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #documentHandlingDetailForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="documentHandlingDetail.id">{{l("EditDocumentHandlingDetail")}}</span>
+                        <span *ngIf="!documentHandlingDetail.id">{{l("CreateNewDocumentHandlingDetail")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="DocumentHandlingDetail_Group">{{l("Group")}}</label>
+									<input type="text" id="DocumentHandlingDetail_Group" class="form-control" [(ngModel)]="documentHandlingDetail.group" name="Group"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="DocumentHandlingDetail_Person">{{l("Person")}}</label>
+									<input type="text" id="DocumentHandlingDetail_Person" class="form-control" [(ngModel)]="documentHandlingDetail.person" name="Person"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="DocumentHandlingDetail_Type">{{l("Type")}}</label>
+									<input type="text" id="DocumentHandlingDetail_Type" class="form-control" [(ngModel)]="documentHandlingDetail.type" name="Type"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="DocumentHandlingDetail_Superios">{{l("Superios")}}</label>
+									<input type="text" id="DocumentHandlingDetail_Superios" class="form-control" [(ngModel)]="documentHandlingDetail.superios" name="Superios"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="DocumentHandlingDetail_PersonalComment">{{l("PersonalComment")}}</label>
+									<input type="text" id="DocumentHandlingDetail_PersonalComment" class="form-control" [(ngModel)]="documentHandlingDetail.personalComment" name="PersonalComment"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="DocumentHandlingDetail_StartDate">{{l("StartDate")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="documentHandlingDetail.startDate._d" id="DocumentHandlingDetail_StartDate" name="DocumentHandlingDetail_StartDate">
+								</div>
+					
+								<div class="form-group">
+									<label for="DocumentHandlingDetail_EndDate">{{l("EndDate")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="documentHandlingDetail.endDate._d" id="DocumentHandlingDetail_EndDate" name="DocumentHandlingDetail_EndDate">
+								</div>
+					
+								<div class="form-group">
+									<label for="DocumentHandlingDetail_DocumentHandlingId">{{l("DocumentHandlingId")}}</label>
+									<input type="number" id="DocumentHandlingDetail_DocumentHandlingId" class="form-control" [(ngModel)]="documentHandlingDetail.documentHandlingId" name="DocumentHandlingId"  />
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="DocumentHandlingDetail_MainHandling" class="kt-checkbox">
+										<input id="DocumentHandlingDetail_MainHandling" type="checkbox" name="MainHandling" [(ngModel)]="documentHandlingDetail.mainHandling"> 
+										{{l("MainHandling")}}
+										<span></span>
+									</label>
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="DocumentHandlingDetail_CoHandling" class="kt-checkbox">
+										<input id="DocumentHandlingDetail_CoHandling" type="checkbox" name="CoHandling" [(ngModel)]="documentHandlingDetail.coHandling"> 
+										{{l("CoHandling")}}
+										<span></span>
+									</label>
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="DocumentHandlingDetail_ToKnow" class="kt-checkbox">
+										<input id="DocumentHandlingDetail_ToKnow" type="checkbox" name="ToKnow" [(ngModel)]="documentHandlingDetail.toKnow"> 
+										{{l("ToKnow")}}
+										<span></span>
+									</label>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!documentHandlingDetailForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

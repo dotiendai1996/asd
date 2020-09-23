@@ -1,0 +1,143 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Chi tiết hợp đồng")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+
+                <dx-form id="form" [formData]="item.hopDong" [readOnly]="true">
+
+                    <dxi-item itemType="group" cssClass="second-group" [colCount]="2">
+                        <dxi-item itemType="group">
+
+                            <dxi-item dataField="nhanVienId" [colSpan]="5">
+
+                                <dxo-label text="Mã nhân viên" required></dxo-label>
+
+                            </dxi-item>
+
+                            <dxi-item dataField="hoTenNhanVien" [colSpan]="19">
+
+                                <dxo-label text="Họ tên nhân viên"></dxo-label>
+
+                            </dxi-item>
+
+                            <dxi-item dataField="donViCongTac" [colSpan]="5">
+
+                                <dxo-label text="Đơn vị công tác"></dxo-label>
+
+                            </dxi-item>
+
+                            <dxi-item dataField="viTriCongViecCode" [colSpan]="20">
+
+                                <dxo-label text="Vị trí công việc"></dxo-label>
+
+                            </dxi-item>
+
+                            <dxi-item dataField="tenCTY" [colSpan]="6">
+                                <dxo-label text="Tên công ty " required></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item dataField="tenHopDong" [colSpan]="12">
+
+                                <dxo-label text="Tên hợp đồng" required></dxo-label>
+
+                            </dxi-item>
+                            
+                            <dxi-item dataField="loaiHopDongCode" [colSpan]="5">
+
+
+                                <dxo-label text=" Loại hợp đồng " required></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item dataField="thoiHanHopDong" [colSpan]="20">
+
+                                <dxo-label text="Thời hạn hợp đồng"></dxo-label>
+                            </dxi-item>
+                        
+                            <dxi-item dataField="hinhThucLamViecCode" [colSpan]="20">
+
+                                <dxo-label text="Hình thức làm việc"></dxo-label>
+                            </dxi-item>
+
+
+                        </dxi-item>
+
+                        <dxi-item itemType="group">
+
+                            <dxi-item dataField="luongCoBan" [colSpan]="6">
+                                <dx-text-box [readOnly]="true" [hoverStateEnabled]="false"
+                                    value="{{item.hopDong.luongCoBan | number}}"></dx-text-box>
+
+                                <dxo-label text=" Lương cơ bản " required></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item dataField="luongDongBaoHiem" [colSpan]="6" >
+                                <dx-text-box [readOnly]="true" [hoverStateEnabled]="false"
+                                    value="{{item.hopDong.luongDongBaoHiem | number}}"></dx-text-box>
+
+                                <dxo-label text=" Lương đóng bảo hiểm " required></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item dataField="tyLeHuongLuong" [colSpan]="20">
+                                <dx-text-box [readOnly]="true" [hoverStateEnabled]="false"
+                                    value="{{item.hopDong.tyLeHuongLuong | number}}"></dx-text-box>
+                                <dxo-label text="Tỷ lệ hưởng lương"></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item dataField="ngayKy" [colSpan]="4" editorType="dxDateBox"
+                                [editorOptions]="{displayFormat:'dd/MM/yyyy'}">
+
+                                <dxo-label text="Ngày ký" required></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item dataField="ngayCoHieuLuc" [colSpan]="4" editorType="dxDateBox"
+                                [editorOptions]="{displayFormat:'dd/MM/yyyy'}">
+
+                                <dxo-label text="Ngày có hiệu lực" required></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item dataField="ngayHetHan" editorType="dxDateBox"
+                                [editorOptions]="{displayFormat:'dd/MM/yyyy'}">
+
+                                <dxo-label text="Ngày hết hạn" required></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item dataField="trichYeu" [colSpan]="4">
+                                <dxo-label text="Trích yếu"></dxo-label>
+                            </dxi-item>
+
+
+                            <dxi-item dataField="nguoiDaiDienCongTy" [colSpan]="4">
+                                <dxo-label text="Người đại diện CT ký"></dxo-label>
+                            </dxi-item>
+
+                            <dxi-item dataField="chucDanh" [colSpan]="4">
+                                <dxo-label text="Chức danh"></dxo-label>
+                            </dxi-item>
+
+
+                        </dxi-item>
+
+                    </dxi-item>
+                </dx-form>
+
+            </div>
+            <div class="modal-footer">
+                <dx-button text="Đóng" type="success" icon="close" style="width: 127px;" (onClick)="close()">
+                </dx-button>
+
+            </div>
+        </div>
+    </div>
+
+</div>

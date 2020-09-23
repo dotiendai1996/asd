@@ -1,0 +1,78 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #roleMapperForm="ngForm" name="roleMapperForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="roleMapper.id">{{l("Chỉnh sửa")}}</span>
+                        <span *ngIf="!roleMapper.id">{{l("Tạo mới phân quyền")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="RoleMapper_RoleId">{{l("Role")}}</label>
+                        <select id="RoleMapper_RoleId" class="form-control" [(ngModel)]="roleMapper.roleId" name="RolelId" >
+                            <option *ngFor="let role of roleOptions" [value]="role.id">{{role.displayName}}</option>
+                        </select>
+                    </div>
+        
+
+                    <div class="form-group" id="menuForm">
+                        <label for="RoleMapper_MenuId">{{l(" Chọn Menu")}}</label>
+                        <select id="RoleMapper_MenuId" class="form-control" [(ngModel)]="roleMapper.menuId" name="MenuId" (click)="mouseClick(roleMapper.menuId)">
+                            <option *ngFor="let menu of list_menu" [value]="menu.id">{{menu.name}}</option>
+                        </select>
+                    </div>
+
+                    <div class="dx-field">
+                        <div class="dx-field-label">Chọn Label </div>
+                        <div class="dx-field-value">
+                          
+                            <dx-tag-box
+                                [dataSource]="listlabel"
+                                dataStructure="plain"
+                                keyExpr="id"
+                                [(selectedItems)]="selectedItems"
+                                displayExpr="name"
+                                
+                            >
+                            </dx-tag-box>
+                       
+                        </div>
+                    </div>
+                   
+        
+                    <br/><div class="m-checkbox-list">
+                        <label for="RoleMapper_IsActive" class="kt-checkbox">
+                            <input id="RoleMapper_IsActive" type="checkbox" name="IsActive" [(ngModel)]="roleMapper.isActive"> 
+                            {{l("Xác nhận ")}}
+                            <span></span>
+                        </label>
+                    </div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!roleMapperForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"  (click)="save() "><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .dx-widget *:before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: white;
+    /* background-color: black; */
+    background-color: #258cbe;
+}
+</style>

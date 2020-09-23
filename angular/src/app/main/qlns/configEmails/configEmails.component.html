@@ -1,0 +1,287 @@
+﻿<div [@routerTransition]>
+  <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+      <div [class]="containerClass">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">
+                <span>{{l("ConfigEmails")}}</span>
+            </h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">
+                {{l("ConfigEmailsHeaderInfo")}}
+            </span>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+				<button (click)="exportToExcel()" class="btn btn-outline-success"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                <button *ngIf="isGranted('Pages.ConfigEmails.Create')" (click)="createConfigEmail()" 
+			class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewConfigEmail")}}</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <form class="kt-form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="form-group m-form__group align-items-center">
+                                    <div class="input-group">
+                                        <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                                        <span class="input-group-btn">
+                                            <button (click)="getConfigEmails()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         <div class="kt-separator kt-separator--border-dashed"></div>
+						     </div>
+
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DiaChiEmailFilter">{{l("DiaChiEmail")}}</label>
+									<input type="text" class="form-control" id="DiaChiEmailFilter" name="diaChiEmailFilter" [(ngModel)]="diaChiEmailFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TenHienThiFilter">{{l("TenHienThi")}}</label>
+									<input type="text" class="form-control" id="TenHienThiFilter" name="tenHienThiFilter" [(ngModel)]="tenHienThiFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DiaChiIPFilter">{{l("DiaChiIP")}}</label>
+									<input type="text" class="form-control" id="DiaChiIPFilter" name="diaChiIPFilter" [(ngModel)]="diaChiIPFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinCongSMTPFilter">{{l("MinMax")}} {{l("CongSMTP")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinCongSMTPFilter" [(ngModel)]="minCongSMTPFilter" placeholder="{{l('MinValue')}}" name="minCongSMTPFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxCongSMTPFilter" placeholder="{{l('MaxValue')}}" name="maxCongSMTPFilter" />
+									</div>
+                                </div>
+                            </div>	
+							<div class="col-md-3">
+								<label for="CheckSSLFilterSelect">{{l("CheckSSL")}}</label>
+								<select class="form-control" name="CheckSSLFilter" id="CheckSSLFilterSelect" [(ngModel)]="checkSSLFilter">
+								<option value="-1">{{l("All")}}</option>
+								<option value="0">{{l("False")}}</option>
+								<option value="1">{{l("True")}}</option>
+								</select>
+                            </div>	
+							<div class="col-md-3">
+								<label for="CheckThongTinFilterSelect">{{l("CheckThongTin")}}</label>
+								<select class="form-control" name="CheckThongTinFilter" id="CheckThongTinFilterSelect" [(ngModel)]="checkThongTinFilter">
+								<option value="-1">{{l("All")}}</option>
+								<option value="0">{{l("False")}}</option>
+								<option value="1">{{l("True")}}</option>
+								</select>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TenMienFilter">{{l("TenMien")}}</label>
+									<input type="text" class="form-control" id="TenMienFilter" name="tenMienFilter" [(ngModel)]="tenMienFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TenTruyCapFilter">{{l("TenTruyCap")}}</label>
+									<input type="text" class="form-control" id="TenTruyCapFilter" name="tenTruyCapFilter" [(ngModel)]="tenTruyCapFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="MatKhauFilter">{{l("MatKhau")}}</label>
+									<input type="text" class="form-control" id="MatKhauFilter" name="matKhauFilter" [(ngModel)]="matKhauFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TenCTYFilter">{{l("TenCTY")}}</label>
+									<input type="text" class="form-control" id="TenCTYFilter" name="tenCTYFilter" [(ngModel)]="tenCTYFilter">
+								</div>
+                            </div>
+
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getConfigEmails($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.ConfigEmails.Edit', 'Pages.ConfigEmails.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="diaChiEmail">
+                                        {{l('DiaChiEmail')}}
+                                        <p-sortIcon field="configEmail.diaChiEmail"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tenHienThi">
+                                        {{l('TenHienThi')}}
+                                        <p-sortIcon field="configEmail.tenHienThi"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="diaChiIP">
+                                        {{l('DiaChiIP')}}
+                                        <p-sortIcon field="configEmail.diaChiIP"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="congSMTP">
+                                        {{l('CongSMTP')}}
+                                        <p-sortIcon field="configEmail.congSMTP"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="checkSSL">
+                                        {{l('CheckSSL')}}
+                                        <p-sortIcon field="configEmail.checkSSL"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="checkThongTin">
+                                        {{l('CheckThongTin')}}
+                                        <p-sortIcon field="configEmail.checkThongTin"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tenMien">
+                                        {{l('TenMien')}}
+                                        <p-sortIcon field="configEmail.tenMien"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tenTruyCap">
+                                        {{l('TenTruyCap')}}
+                                        <p-sortIcon field="configEmail.tenTruyCap"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="matKhau">
+                                        {{l('MatKhau')}}
+                                        <p-sortIcon field="configEmail.matKhau"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tenCTY">
+                                        {{l('TenCTY')}}
+                                        <p-sortIcon field="configEmail.tenCTY"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit">
+                                <tr  (mouseover)="highlightRow(record)"
+                                        [ngClass] = "{'highlight' : record.configEmail.id == selectedName}">
+
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.ConfigEmails.Edit', 'Pages.ConfigEmails.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;"
+														(click)="viewConfigEmailModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+													<a href="javascript:;" *ngIf="permission.isGranted('Pages.ConfigEmails.Edit')"
+														(click)="createOrEditConfigEmailModal.show(record.configEmail.id)">{{l('Edit')}}</a>
+												</li>
+												<li>
+											        <a href="javascript:;" *ngIf="permission.isGranted('Pages.ConfigEmails.Delete')"
+														(click)="deleteConfigEmail(record.configEmail)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DiaChiEmail')}}</span>
+											{{record.configEmail.diaChiEmail}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TenHienThi')}}</span>
+											{{record.configEmail.tenHienThi}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DiaChiIP')}}</span>
+											{{record.configEmail.diaChiIP}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('CongSMTP')}}</span>
+											{{record.configEmail.congSMTP}}
+										</td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('CheckSSL')}}</span>
+                                        <div *ngIf="record.configEmail.checkSSL" class="text-center"><i class="fa fa-check-circle kt--font-success" title="True"></i></div>
+										<div *ngIf="!record.configEmail.checkSSL" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('CheckThongTin')}}</span>
+                                        <div *ngIf="record.configEmail.checkThongTin" class="text-center"><i class="fa fa-check-circle kt--font-success" title="True"></i></div>
+										<div *ngIf="!record.configEmail.checkThongTin" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TenMien')}}</span>
+											{{record.configEmail.tenMien}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TenTruyCap')}}</span>
+											{{record.configEmail.tenTruyCap}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('MatKhau')}}</span>
+											{{record.configEmail.matKhau}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TenCTY')}}</span>
+											{{record.configEmail.tenCTY}}
+										</td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getConfigEmails($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                            </p-paginator>
+                            <span class="total-records-count">
+                                {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <createOrEditConfigEmailModal #createOrEditConfigEmailModal (modalSave)="getConfigEmails()"></createOrEditConfigEmailModal>
+    <viewConfigEmailModal #viewConfigEmailModal></viewConfigEmailModal>
+    
+  </div>
+</div>
+<style>
+      tr.highlight {
+        background-color: #639bb7 !important;
+        color: #ffffff !important;
+    }
+</style>

@@ -1,0 +1,26 @@
+﻿using Abp.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Hinnova.Authorization;
+using Hinnova.DashboardCustomization;
+using Hinnova.Web.DashboardCustomization;
+using System.Threading.Tasks;
+
+namespace Hinnova.Web.Areas.App.Controllers
+{
+    [Area("App")]
+    [AbpMvcAuthorize(AppPermissions.Pages_Tenant_Dashboard)]
+    public class TenantDashboardController : CustomizableDashboardControllerBase
+    {
+        public TenantDashboardController(DashboardViewConfiguration dashboardViewConfiguration, 
+            IDashboardCustomizationAppService dashboardCustomizationAppService) 
+            : base(dashboardViewConfiguration, dashboardCustomizationAppService)
+        {
+
+        }
+
+        public async Task<ActionResult> Index()
+        {
+            return await GetView(HinnovaDashboardCustomizationConsts.DashboardNames.DefaultTenantDashboard);
+        }
+    }
+}

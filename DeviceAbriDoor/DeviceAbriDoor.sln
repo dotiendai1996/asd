@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceAbriDoor", "DeviceAbriDoor\DeviceAbriDoor.csproj", "{76832F0B-A7DF-4A6C-AE11-C36EA2903982}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76832F0B-A7DF-4A6C-AE11-C36EA2903982}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76832F0B-A7DF-4A6C-AE11-C36EA2903982}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76832F0B-A7DF-4A6C-AE11-C36EA2903982}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76832F0B-A7DF-4A6C-AE11-C36EA2903982}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45
+		SolutionGuid = {C7BA02ED-C04F-47BF-A0C2-C4E5E3AC8E8C}
+	EndGlobalSection
+EndGlobal

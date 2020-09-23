@@ -1,0 +1,62 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #dynamicDatasourceForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="dynamicDatasource.id">{{l("EditDynamicDatasource")}}</span>
+                        <span *ngIf="!dynamicDatasource.id">{{l("CreateNewDynamicDatasource")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="DynamicDatasource_Type">{{l("Type")}}</label>
+									<!-- <input type="number" id="DynamicDatasource_Type" class="form-control" [(ngModel)]="dynamicDatasource.type" name="Type"  /> -->
+									<select name="DynamicDatasource_Type" class="form-control" [(ngModel)]="dynamicDatasource.type">
+										<option *ngFor="let item of dataSource" [value]="item.id">{{item.name}}</option>
+									</select>
+								</div>
+					
+								<!-- <div class="form-group">
+									<label for="DynamicDatasource_ObjectId">{{l("ObjectId")}}</label>
+									<input type="number" id="DynamicDatasource_ObjectId" class="form-control" [(ngModel)]="dynamicDatasource.objectId" name="ObjectId" />
+								</div> -->
+					
+								<div class="form-group">
+									<label for="DynamicDatasource_DynamicFieldId">{{l("DynamicFieldId")}}</label>
+									<!-- <input type="number" id="DynamicDatasource_DynamicFieldId" class="form-control" [(ngModel)]="dynamicDatasource.dynamicFieldId" name="DynamicFieldId"  /> -->
+									<select class="form-control" name="DynamicDatasource_DynamicFieldId_CBB" (change)="getSelectedRow($event)" [(ngModel)]="selectedRow" >
+										<option *ngFor="let item of dynamicField" selected="selectedRow" [ngValue]="item">{{item.name}} - {{item.tableName}}</option>
+									</select>
+								</div>
+					
+								<div class="form-group">
+									<label for="DynamicDatasource_Order">{{l("Order")}}</label>
+									<input type="number" id="DynamicDatasource_Order" class="form-control" [(ngModel)]="dynamicDatasource.order" name="Order"  />
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="DynamicDatasource_IsActive" class="kt-checkbox">
+										<input id="DynamicDatasource_IsActive" type="checkbox" name="IsActive" [(ngModel)]="dynamicDatasource.isActive"> 
+										{{l("IsActive")}}
+										<span></span>
+									</label>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!dynamicDatasourceForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

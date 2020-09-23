@@ -1,0 +1,222 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+    font-family: Arial;
+    font-size: 15px;
+}
+
+.margin-left-5 {
+    margin-left: 5px !important;
+}
+
+
+.margin-right-5 {
+    margin-right: 5px !important;
+}
+
+.margin-top-5 {
+    margin-top: 5px !important;
+}
+
+.margin-top-15 {
+    margin-top: 15px !important;
+}
+
+.margin-bottom-5 {
+    margin-bottom: 5px !important;
+}
+
+.margin-bottom-5 {
+    margin-bottom: 5px !important;
+}
+
+.margin-bottom-15 {
+    margin-bottom: 15px !important;
+}
+
+.padding-left-5 {
+    padding-left: 5px !important;
+}
+
+.padding-right-5 {
+    padding-right: 5px !important;
+}
+
+.padding-top-5 {
+    padding-top: 5px !important;
+}
+
+.padding-bottom-5 {
+    padding-bottom: 5px !important;
+}
+
+.width-percent-5 {
+    width: 5%;
+}
+
+.width-percent-10 {
+    width: 10%;
+}
+
+.width-percent-15 {
+    width: 15%;
+}
+
+.width-percent-20 {
+    width: 20%;
+}
+
+.width-percent-30 {
+    width: 30%;
+}
+
+.width-percent-40 {
+    width: 40%;
+}
+
+.width-percent-50 {
+    width: 50%;
+}
+
+.width-percent-100 {
+    width: 100%;
+}
+
+/* Sweet alert */
+
+.swal2-title {
+    display: inline-block !important;
+}
+
+body.swal2-height-auto {
+    height: inherit !important;
+}
+
+.swal2-popup.swal2-toast {
+    padding: 10px 12px!important;
+    display: block !important;
+}
+
+.swal2-popup.swal2-toast .swal2-header, .swal2-popup.swal2-toast .swal2-title, .swal2-popup.swal2-toast .swal2-content {
+    text-align: left !important;
+    margin: 0 !important;
+}
+.swal2-popup.swal2-toast .swal2-title {
+    margin-bottom: 4px !important;
+}
+@keyframes glowing {
+    0% {
+        opacity: .3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: .3;
+    }
+}
+
+.glowing {
+    animation: glowing 2s infinite;
+}
+
+.dx-button-mode-contained.dx-button-success
+{
+    background-color: #258cbe !important;
+}
+.dx-fileuploader-input-wrapper {
+
+    border: 3px dashed transparent;
+    padding-left: 47px !important;
+}
+
+.kt-aside-menu-wrapper.kt-grid__item.kt-grid__item--fluid.kt-aside-menu-dark > .kt-aside-menu {
+    background-color: #258cbe;
+}
+
+.kt-aside-menu-wrapper.kt-grid__item.kt-grid__item--fluid.kt-aside-menu-dark > .kt-aside-menu > ul > li > a > span {
+    color: white;
+    /* background-color: #258cbe; */
+}
+.kt-aside-menu-wrapper.kt-grid__item.kt-grid__item--fluid.kt-aside-menu-dark > .kt-aside-menu > ul > li >a {
+   /* background-color: #258cbe; */
+    color: white;
+}
+
+.kt-menu__link-icon.ng-star-inserted
+{
+    color: white ;
+}
+
+.kt-aside-menu .kt-menu__nav > .kt-menu__item > .kt-menu__link .kt-menu__link-icon {
+    color: white !important;
+}
+
+.kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item.kt-menu__item--active > .kt-menu__link .kt-menu__link-icon {
+    color: white !important;
+}
+
+.kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item > .kt-menu__link .kt-menu__link-icon {
+    color: white !important;
+}
+/* .kt-container.kt-container--fluid {
+    background-color: #258cbe;
+} */
+.kt-menu__link.kt-menu__toggle.ng-star-inserted{
+    background-color: #258cbe;
+}
+.kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item > .kt-menu__heading .kt-menu__link-text, .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item > .kt-menu__link .kt-menu__link-text {
+    color: white !important;
+}
+
+.dx-datagrid-nowrap .dx-header-row > td > .dx-datagrid-text-content {
+    color:  white;
+}
+.kt-subheader .kt-container {
+    background: #248cbf !important;
+    height: 52px;
+}
+
+.kt-aside--enabled.kt-subheader--fixed .kt-subheader {
+    left: 272px !important;
+    right: 23px !important;
+}
+
+.dx-row.dx-column-lines.dx-header-row
+{
+    background-color:#248cbf ;
+}
+
+
+
+.dx-datagrid .dx-column-indicators .dx-header-filter.dx-header-filter {
+    display: inline-block;
+    color: white !important;
+}
+
+ .dx-field-item-label-text
+	{
+		color: black !important;
+
+    }
+
+    .dx-layout-manager .dx-field-item:not(.dx-last-col) {
+         padding-right: 0px !important ;
+    }
+    .dx-fileuploader-input-wrapper {
+        padding: 0px 0 0px !important;
+        width: 100% !important;
+        border: 3px dashed transparent !important;
+    }
+    .dx-fileuploader-wrapper {
+        padding: 0px !important ;
+    }
+    .dx-fileuploader-input-wrapper .dx-button {
+        float: left;
+        width: 100% !important ;;
+    }
+
+    body .ui-dropdown .ui-dropdown-label {
+        padding-right: 3em !important ;
+    }

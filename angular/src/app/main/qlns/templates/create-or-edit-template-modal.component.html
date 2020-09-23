@@ -1,0 +1,48 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #templateForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="template.id">{{l("EditTemplate")}}</span>
+                        <span *ngIf="!template.id">{{l("CreateNewTemplate")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="Template_MaTemplate">{{l("MaTemplate")}}</label>
+									<input type="text" id="Template_MaTemplate" class="form-control" [(ngModel)]="template.maTemplate" name="MaTemplate"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Template_TenTemplate">{{l("TenTemplate")}}</label>
+									<input type="text" id="Template_TenTemplate" class="form-control" [(ngModel)]="template.tenTemplate" name="TenTemplate"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Template_LinkTemplate">{{l("LinkTemplate")}}</label>
+									<input type="text" id="Template_LinkTemplate" class="form-control" [(ngModel)]="template.linkTemplate" name="LinkTemplate"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Template_GhiChu">{{l("GhiChu")}}</label>
+									<input type="text" id="Template_GhiChu" class="form-control" [(ngModel)]="template.ghiChu" name="GhiChu"    />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!templateForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

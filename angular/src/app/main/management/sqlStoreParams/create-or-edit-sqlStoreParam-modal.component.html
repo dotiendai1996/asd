@@ -1,0 +1,69 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #sqlStoreParamForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="sqlStoreParam.id">{{l("EditSqlStoreParam")}}</span>
+                        <span *ngIf="!sqlStoreParam.id">{{l("CreateNewSqlStoreParam")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="SqlStoreParam_SqlConfigId">{{l("SqlConfigId")}}</label>
+									<input type="number" id="SqlStoreParam_SqlConfigId" class="form-control" [(ngModel)]="sqlStoreParam.sqlConfigId" name="SqlConfigId"  />
+									<select name="CbbSqlConfig" class="form-control" [(ngModel)]="sqlStoreParam.sqlConfigId">
+										<option *ngFor="let item of listStore" [value]="item.id">{{item.code}}</option>
+									</select>
+								</div>
+					
+								<div class="form-group">
+									<label for="SqlStoreParam_Code">{{l("Code")}}</label>
+									<input type="text" id="SqlStoreParam_Code" class="form-control" [(ngModel)]="sqlStoreParam.code" name="Code"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="SqlStoreParam_Format">{{l("Format")}}</label>
+									<input type="text" id="SqlStoreParam_Format" class="form-control" [(ngModel)]="sqlStoreParam.format" name="Format"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="SqlStoreParam_Name">{{l("Name")}}</label>
+									<input type="text" id="SqlStoreParam_Name" class="form-control" [(ngModel)]="sqlStoreParam.name" name="Name"    />
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="SqlStoreParam_IsActive" class="kt-checkbox">
+										<input id="SqlStoreParam_IsActive" type="checkbox" name="IsActive" [(ngModel)]="sqlStoreParam.isActive"> 
+										{{l("IsActive")}}
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="form-group">
+									<label for="SqlStoreParam_ValueString">{{l("ValueString")}}</label>
+									<input type="text" id="SqlStoreParam_ValueString" class="form-control" [(ngModel)]="sqlStoreParam.valueString" name="ValueString"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="SqlStoreParam_ValueInt">{{l("ValueInt")}}</label>
+									<input type="number" id="SqlStoreParam_ValueInt" class="form-control" [(ngModel)]="sqlStoreParam.valueInt" name="ValueInt"  />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!sqlStoreParamForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

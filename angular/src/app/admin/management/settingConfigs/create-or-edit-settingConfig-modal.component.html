@@ -1,0 +1,53 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #settingConfigForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="settingConfig.id">{{l("EditSettingConfig")}}</span>
+                        <span *ngIf="!settingConfig.id">{{l("CreateNewSettingConfig")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="SettingConfig_Code">{{l("Code")}}</label>
+									<input type="text" id="SettingConfig_Code" class="form-control" [(ngModel)]="settingConfig.code" name="Code"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="SettingConfig_ValueString">{{l("ValueString")}}</label>
+									<input type="text" id="SettingConfig_ValueString" class="form-control" [(ngModel)]="settingConfig.valueString" name="ValueString"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="SettingConfig_ValueInt">{{l("ValueInt")}}</label>
+									<input type="number" id="SettingConfig_ValueInt" class="form-control" [(ngModel)]="settingConfig.valueInt" name="ValueInt"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="SettingConfig_ValueHtml">{{l("ValueHtml")}}</label>
+									<input type="text" id="SettingConfig_ValueHtml" class="form-control" [(ngModel)]="settingConfig.valueHtml" name="ValueHtml"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="SettingConfig_Image">{{l("Image")}}</label>
+									<input type="text" id="SettingConfig_Image" class="form-control" [(ngModel)]="settingConfig.image" name="Image"    />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!settingConfigForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

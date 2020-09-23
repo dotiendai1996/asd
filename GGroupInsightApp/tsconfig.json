@@ -1,0 +1,23 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "baseUrl": ".",
+    "paths": { 
+      "@shared/*": ["./src/shared/*"],
+      "@node_modules/*": ["./node_modules/*"],
+      "@app/*": ["/src/app/*"],
+      "@abp/*": ["../node_modules/abp-ng2-module/dist/src/*"]
+    }
+  }
+}

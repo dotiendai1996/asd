@@ -1,0 +1,75 @@
+﻿import { Injectable } from '@angular/core';
+import { AppSessionService } from '../session/app-session.service';
+import { PermissionCheckerService } from 'abp-ng2-module/dist/src/auth/permission-checker.service';
+import {
+    CanActivate, Router,
+    ActivatedRouteSnapshot,
+    RouterStateSnapshot,
+    CanActivateChild
+} from '@angular/router';
+import { AuthService } from '../../service/auth.service';
+import { UtilService } from '../../service/util.service';
+import { AppConsts } from '../AppConsts';
+
+
+@Injectable({
+    providedIn: 'root'
+  })
+export class AppRouteGuard implements CanActivate, CanActivateChild {
+
+    constructor(
+        private _permissionChecker: PermissionCheckerService,
+        private _router: Router,
+        private _sessionService: AppSessionService,
+        private _utilService: UtilService
+    ) {
+        _sessionService.init().then((result) => {
+        }, (err) => {
+        });
+     }
+
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        this._sessionService.init();
+        if (!this._sessionService.user) {
+            this._router.navigate(['/account/login']);
+            return false;
+        }
+
+
+        // if (!this._utilService.getCookie(AppConsts.authorization.encrptedAuthTokenName)) {
+        //     this._router.navigate(['/account/login']);
+        //     return false;
+        // }
+        
+        if (!route.data || !route.data["permission"]) {
+            return true;
+        }
+
+        if (this._permissionChecker.isGranted(route.data["permission"])) {
+            return true;
+        }
+
+        this._router.navigate([this.selectBestRoute()]);
+        return false;
+    }
+
+    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        return this.canActivate(route, state);
+    }
+
+    selectBestRoute(): string {
+        if (!this._sessionService.user) {
+            return '/account/login';
+        }
+        
+        if (this._permissionChecker.isGranted('Pages.Users')) {
+            return '/app/admin/users';
+        }
+
+        // if (!this._utilService.getCookie(AppConsts.authorization.encrptedAuthTokenName)) {
+        //     return '/account/login';
+        // }
+
+        return '/app/main/home';
+    }
+}

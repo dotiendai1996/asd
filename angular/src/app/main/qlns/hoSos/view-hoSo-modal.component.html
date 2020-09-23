@@ -1,0 +1,446 @@
+﻿<style>
+    /* .form-group {
+		margin-bottom: 0.7rem !important;
+	} */
+
+    .dropdown-content inputDropdown:hover {
+        background-color: #f1f1f1
+    }
+</style>
+<div>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <div class="col-xl-12" style="padding-top: 5px;">
+                        <dx-button text="Trở về" type="success" icon="arrowleft" (onClick)="troVe()"> </dx-button>
+                        &nbsp;
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile" style="background: #ececf3;"  >
+                <div class="modal-body">
+            
+                    <dx-form id="form" [formData]="hoSo" [readOnly]="true">
+                 
+                        <dxi-item itemType="group" caption="Thông tin chung" cssClass="first-group" [colCount]="4">
+                            <dxi-item>
+                                <div class="form-avatar">
+                                    <img class="center" [src]="profilePicture" alt="House" width="200" height="200" />
+                                </div>
+                            </dxi-item>
+                            <dxi-item itemType="group" [colSpan]="3">
+                                <dxi-item dataField="maNhanVien" [colSpan]="1">
+                                    <dxo-label text="Mã nhân viên"></dxo-label>
+
+                                </dxi-item>
+                                <dxi-item dataField="hoVaTen">
+                                    <dxo-label text="Họ và tên"></dxo-label>
+                                </dxi-item>
+                                <dxi-item dataField="donViCongTac">
+                                    <dxo-label text="Đơn vị công tác"></dxo-label>
+
+                                </dxi-item>
+                                <dxi-item dataField="viTriCongViecCode">
+                                    <dxo-label text="Vị trí công việc"></dxo-label>
+                                </dxi-item>
+                            </dxi-item>
+                        </dxi-item>
+                        <dxi-item itemType="group" cssClass="second-group" [colCount]="2">
+                            <dxi-item itemType="group">
+                                <dxi-item dataField="mstCaNhan" [colSpan]="2">
+                                    <dxo-label text="MST cá nhân"></dxo-label>
+                                </dxi-item>
+                                <dxi-item dataField="gioiTinh" [colSpan]="1">
+                                    <dxo-label text="Giới tính "></dxo-label>
+                                </dxi-item>
+                                <dxi-item dataField="quocTich" [colSpan]="1">
+                                    <dxo-label text="Quốc tịch"></dxo-label>
+                                </dxi-item>
+                            </dxi-item>
+                            <dxi-item itemType="group">
+
+
+                                <dxi-item dataField="danToc" [colSpan]="1">
+                                    <dxo-label text="Dân tộc"></dxo-label>
+                                </dxi-item>
+
+                                <dxi-item dataField="tonGiao" [colSpan]="1">
+                                    <dxo-label text="Tôn giáo"></dxo-label>
+                                </dxi-item>
+
+
+
+                                <dxi-item dataField="ngaySinh" [colSpan]="1" editorType="dxDateBox" [editorOptions]="{displayFormat:'dd/MM/yyyy'}">
+                                    <dxo-label text="Ngày sinh "></dxo-label>
+
+                                </dxi-item>
+                            </dxi-item>
+
+                        </dxi-item>
+                    <!-- </dx-form> -->
+                    <!-- <dx-form id="form" [formData]="hoSo" [readOnly]="true" [showColonAfterLabel]="true"
+                        [showValidationSummary]="true" validationGroup="formValidateGroup" colCount="3"> -->
+
+                    <!-- <dxi-item itemType="group" caption=" Thông tin CMND" cssClass="first-group"  [colSpan]="3" ></dxi-item> -->
+                    <dxi-item itemType="group" caption=" Thông tin CMND" cssClass="second-group" [colCount]="2">
+                        <dxi-item dataField="soCMND" [colSpan]="1">
+                            <dxo-label text="Số CMND"></dxo-label>
+                        </dxi-item>
+
+                        <dxi-item dataField="ngayCap" [colSpan]="1" editorType="dxDateBox" [editorOptions]="{displayFormat:'dd/MM/yyyy'}">
+                            <dxo-label text="Ngày cấp"></dxo-label>
+
+                        </dxi-item>
+
+                        <dxi-item dataField="ngayHetHan" [colSpan]="1" editorType="dxDateBox" [editorOptions]="">
+                            <dxo-label text="Ngày hết hạn"></dxo-label>
+
+                        </dxi-item>
+
+                        <dxi-item dataField="noiCap" [colSpan]="3">
+                            <dxo-label text="Nơi cấp"></dxo-label>
+                        </dxi-item>
+
+                    </dxi-item>
+                 
+                    <dxi-item itemType="group" caption="Trình độ / bằng cấp" cssClass="second-group" [colCount]="2">
+
+                    <dxi-item dataField="trinhDoVanHoa" [colSpan]="1">
+                        <dxo-label text="Trình độ văn hóa"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="trinhDoDaoTaoCode" [colSpan]="1">
+                        <dxo-label text="Trình độ đào tạo"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="noiDaoTao" [colSpan]="1">
+                        <dxo-label text="Nơi đào tạo "></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="namTotNghiep" [colSpan]="1">
+                        <dxo-label text="Năm tốt nghiệp"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="khoa" [colSpan]="1">
+                        <dxo-label text="Khoa"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="xepLoai" [colSpan]="1">
+                        <dxo-label text="Xếp loại"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="tinhTrangHonNhanCode" [colSpan]="1">
+                        <dxo-label text="Tình trạng hôn nhân"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="chuyenNganh" [colSpan]="2">
+                        <dxo-label text="Chuyên nghành"></dxo-label>
+                    </dxi-item>
+
+                </dxi-item>
+                 
+                <dxi-item itemType="group" caption="Thông tin liên hệ" cssClass="second-group" [colCount]="2">
+               
+
+                    <dxi-item dataField="dtDiDong" [colSpan]="1">
+                        <dxo-label text="Đt di động"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="nguyenQuan" [colSpan]="1">
+                        <dxo-label text="Nguyên quán"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="dtCoQuan" [colSpan]="1">
+                        <dxo-label text="Đt cơ quan"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="tinhThanhID" [colSpan]="1">
+                        <dxo-label text="Tỉnh/Thành phố"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="dtNhaRieng" [colSpan]="1">
+                        <dxo-label text="Đt nhà riêng"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="noiSinh" [colSpan]="1">
+                        <dxo-label text="Nơi sinh"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="dtKhac" [colSpan]="1">
+                        <dxo-label text="Đt khác"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="skype" [colSpan]="1">
+                        <dxo-label text="Skype"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="emailCaNhan" [colSpan]="1">
+                        <dxo-label text="Email cá nhân"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="facebook" [colSpan]="1">
+                        <dxo-label text=" Facebook"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="emailCoQuan" [colSpan]="1">
+                        <dxo-label text="Email cơ quan"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="emailKhac" [colSpan]="1">
+                        <dxo-label text="Email khác"></dxo-label>
+                    </dxi-item>
+
+                </dxi-item>
+                 
+                <dxi-item itemType="group" caption="Hộ khẩu thường trú" cssClass="second-group" [colCount]="2">
+
+                    <dxi-item dataField="quocGiaHKTT" [colSpan]="1">
+                        <dxo-label text="Quốc gia"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="tinhThanhIDHKTT" [colSpan]="1">
+                        <dxo-label text="Tỉnh thành"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="soSoHoKhau" [colSpan]="1">
+                        <dxo-label text="Số sổ hộ khẩu"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="maSoHoGiaDinh" [colSpan]="1">
+                        <dxo-label text="Mã số hộ gia đình"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="diaChiHKTT" [colSpan]="2">
+                        <dxo-label text="Địa chỉ HKTT (*)"></dxo-label>
+                    </dxi-item>
+
+                </dxi-item>
+                 
+                <dxi-item itemType="group" caption="Thông tin người liên hệ" cssClass="second-group" [colCount]="2">
+
+                    <dxi-item dataField="hoVaTenLHKC" [colSpan]="1">
+                        <dxo-label text="Họ và tên LHKC"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="quanHeLHKC" [colSpan]="1">
+                        <dxo-label text="Quan hệ LHKC"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="dtDiDongLHKC" [colSpan]="1">
+                        <dxo-label text="Đt di động LHKC"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="dtNhaRiengLHKC" [colSpan]="1">
+                        <dxo-label text="Đt nhà riêng LHKC"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="emailLHKC" [colSpan]="1">
+                        <dxo-label text="Email LHKC"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="diaChiLHKC" [colSpan]="2">
+                        <dxo-label text="Địa chỉ LHKC"></dxo-label>
+                    </dxi-item>
+                </dxi-item>
+                 
+                <dxi-item itemType="group" caption="Thông tin công việc" cssClass="second-group" [colCount]="2">
+
+                    <dxi-item dataField="maChamCong" [colSpan]="1">
+                        <dxo-label text="Mã chấm công"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="soSoQLLaoDong" [colSpan]="1">
+                        <dxo-label text="Số sổ QL lao động"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="chucDanh" [colSpan]="1">
+                        <dxo-label text="Chức danh"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="hopDongHienTai" [colSpan]="1">
+                        <dxo-label text="Loai hợp đồng"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="cap" [colSpan]="1">
+                        <dxo-label text=" Cấp"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="bac" [colSpan]="1">
+                        <dxo-label text="Bậc"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="ngayTapSu" [colSpan]="1" editorType="dxDateBox" [editorOptions]="{displayFormat:'dd/MM/yyyy'}">
+                        <dxo-label text="Ngày tập sự"></dxo-label>
+
+                    </dxi-item>
+
+                    <dxi-item dataField="ngayThuViec" [colSpan]="1" editorType="dxDateBox" [editorOptions]="{displayFormat:'dd/MM/yyyy'}">
+                        <dxo-label text="Ngày thử việc"></dxo-label>
+
+                    </dxi-item>
+
+                    <dxi-item dataField="trangThaiLamViecCode" [colSpan]="1">
+                        <dxo-label text="Trạng thái làm việc"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="ngayChinhThuc" [colSpan]="1" editorType="dxDateBox" [editorOptions]="{displayFormat:'dd/MM/yyyy'}">
+                        <dxo-label text="Ngày chính thức"></dxo-label>
+
+                    </dxi-item>
+
+                    <dxi-item dataField="soNgayPhep" [colSpan]="1">
+                        <dxo-label text="Số ngày phép"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="quanLyGianTiep" [colSpan]="1">
+                        <dxo-label text="Quản lý gián tiếp"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="diaDiemLamViecCode" [colSpan]="3">
+                        <dxo-label text=" Địa điểm làm việc"></dxo-label>
+                    </dxi-item>
+                </dxi-item>
+                 
+                <dxi-item itemType="group" caption="Thông tin lương" cssClass="second-group" [colCount]="2">
+                  
+
+                    <dxi-item dataField="bacLuongCode" [colSpan]="1">
+                        <dxo-label text=" Bậc lương"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="tkNganHang" [colSpan]="1">
+                        <dxo-label text="Tài khoản ngân hàng"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="luongCoBan" [colSpan]="1">
+                        <dx-text-box [readOnly]="true" [hoverStateEnabled]="false"
+                                    value="{{hoSo?.luongCoBan | formatnumber}}"></dx-text-box>
+                        <dxo-label text="Lương cơ bản"></dxo-label>
+                    </dxi-item>
+
+
+                    <dxi-item dataField="luongDongBH" [colSpan]="1">
+                        <dx-text-box [readOnly]="true" [hoverStateEnabled]="false"
+                                    value="{{hoSo?.luongDongBH | formatnumber}}"></dx-text-box>
+                        <dxo-label text="Lương đóng bảo hiểm"></dxo-label>
+                    </dxi-item>
+
+
+                    <dxi-item dataField="soCongChuan" [colSpan]="1">
+                        <dxo-label text="Số công chuẩn"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="donViSoCongChuanCode" [colSpan]="1">
+                        <dxo-label text="Đơn vị số công chuẩn"></dxo-label>
+                    </dxi-item>
+
+
+                    <dxi-item dataField="nganHang" [colSpan]="3">
+                        <dxo-label text="Ngân Hàng"></dxo-label>
+                    </dxi-item>
+
+                </dxi-item>
+                 
+                <dxi-item itemType="group" caption="Thông tin nơi  khám chữa bệnh" cssClass="second-group" [colCount]="2">
+                 
+
+                    <dxi-item dataField="noiDangKyKCBID" [colSpan]="2">
+                        <dxo-label text="Nơi đăng ký khám chữa bệnh"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="soSoBHXH" [colSpan]="1">
+                        <dxo-label text="Số xổ BHXH"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="soTheBHYT" [colSpan]="1">
+                        <dxo-label text="Số thẻ BHYT"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="maSoBHXH" [colSpan]="1">
+                        <dxo-label text="Mã số BHXH"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="maSoNoiKCB" [colSpan]="1">
+                        <dxo-label text="Mã số nơi KCB"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="tyLeDongBH" [colSpan]="1">
+                        <dxo-label text="Tỷ lệ đóng bảo hiểm"></dxo-label>
+                    </dxi-item>
+
+                    <dxi-item dataField="ngayThamGiaBH" [colSpan]="1" editorType="dxDateBox" [editorOptions]="{displayFormat:'dd/MM/yyyy'}">
+                        <dxo-label text="Ngày tham gia BH"></dxo-label>
+
+                    </dxi-item>
+
+                    <dxi-item dataField="ngayHetHanBHYT" [colSpan]="1" editorType="dxDateBox" [editorOptions]="{displayFormat:'dd/MM/yyyy'}">
+                        <dxo-label text="Ngày hết hạn BHYT"></dxo-label>
+
+                    </dxi-item>
+                </dxi-item>
+
+
+
+                <dx-button text="Đóng" type="success" icon="close" style="width: 127px;" (onClick)="close()">
+                </dx-button>
+
+                    </dx-form>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .dx-command-edit dx-focused {
+        text-align: center;
+        background: #78b1de;
+
+    }
+
+    .dx-command-edit dx-cell-focus-disabled dx-datagrid-drag-action {
+        color: white;
+    }
+
+    .dx-button-text {
+        line-height: normal;
+        color: white;
+
+
+    }
+
+    .dx-button-has-text .dx-button-content {
+        padding: 7px 18px 8px;
+        color: white;
+    }
+
+    .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {
+        width: 100px;
+        min-width: 100px;
+        background-color: #258cbe;
+    }
+
+    .dx-datagrid-headers .dx-datagrid-table .dx-row>td {
+        border-bottom: 1px solid #ddd;
+        color: white;
+    }
+
+    ::ng-deep .first-group,
+    ::ng-deep .second-group {
+        padding: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 206%;
+        font-weight: bold;
+    }
+
+    ::ng-deep .second-group {
+        background-color: rgba(191, 191, 191, 0.15);
+    }
+</style>

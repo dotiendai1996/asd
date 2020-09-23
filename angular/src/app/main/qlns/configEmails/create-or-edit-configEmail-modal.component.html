@@ -1,0 +1,84 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #configEmailForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="configEmail.id">{{l("EditConfigEmail")}}</span>
+                        <span *ngIf="!configEmail.id">{{l("CreateNewConfigEmail")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="ConfigEmail_DiaChiEmail">{{l("DiaChiEmail")}}</label>
+									<input type="text" id="ConfigEmail_DiaChiEmail" class="form-control" [(ngModel)]="configEmail.diaChiEmail" name="DiaChiEmail"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ConfigEmail_TenHienThi">{{l("TenHienThi")}}</label>
+									<input type="text" id="ConfigEmail_TenHienThi" class="form-control" [(ngModel)]="configEmail.tenHienThi" name="TenHienThi"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ConfigEmail_DiaChiIP">{{l("DiaChiIP")}}</label>
+									<input type="text" id="ConfigEmail_DiaChiIP" class="form-control" [(ngModel)]="configEmail.diaChiIP" name="DiaChiIP"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ConfigEmail_CongSMTP">{{l("CongSMTP")}}</label>
+									<input type="number" id="ConfigEmail_CongSMTP" class="form-control" [(ngModel)]="configEmail.congSMTP" name="CongSMTP"  />
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="ConfigEmail_CheckSSL" class="kt-checkbox">
+										<input id="ConfigEmail_CheckSSL" type="checkbox" name="CheckSSL" [(ngModel)]="configEmail.checkSSL"> 
+										{{l("CheckSSL")}}
+										<span></span>
+									</label>
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="ConfigEmail_CheckThongTin" class="kt-checkbox">
+										<input id="ConfigEmail_CheckThongTin" type="checkbox" name="CheckThongTin" [(ngModel)]="configEmail.checkThongTin"> 
+										{{l("CheckThongTin")}}
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="form-group">
+									<label for="ConfigEmail_TenMien">{{l("TenMien")}}</label>
+									<input type="text" id="ConfigEmail_TenMien" class="form-control" [(ngModel)]="configEmail.tenMien" name="TenMien"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ConfigEmail_TenTruyCap">{{l("TenTruyCap")}}</label>
+									<input type="text" id="ConfigEmail_TenTruyCap" class="form-control" [(ngModel)]="configEmail.tenTruyCap" name="TenTruyCap"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ConfigEmail_MatKhau">{{l("MatKhau")}}</label>
+									<input type="text" id="ConfigEmail_MatKhau" class="form-control" [(ngModel)]="configEmail.matKhau" name="MatKhau"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="ConfigEmail_TenCTY">{{l("TenCTY")}}</label>
+									<input type="text" id="ConfigEmail_TenCTY" class="form-control" [(ngModel)]="configEmail.tenCTY" name="TenCTY"    />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!configEmailForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

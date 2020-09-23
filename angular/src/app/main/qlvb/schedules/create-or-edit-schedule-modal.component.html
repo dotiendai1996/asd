@@ -1,0 +1,63 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #scheduleForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="schedule.id">{{l("EditSchedule")}}</span>
+                        <span *ngIf="!schedule.id">{{l("CreateNewSchedule")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="Schedule_ScheduleTypeID">{{l("ScheduleTypeID")}}</label>
+									<input type="number" id="Schedule_ScheduleTypeID" class="form-control" [(ngModel)]="schedule.scheduleTypeID" name="ScheduleTypeID"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="Schedule_DateCreated">{{l("DateCreated")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="schedule.dateCreated._d" id="Schedule_DateCreated" name="Schedule_DateCreated">
+								</div>
+					
+								<div class="form-group">
+									<label for="Schedule_DateOccur">{{l("DateOccur")}}</label>
+									 <input required class="form-control m-input" type="datetime" bsDatepicker [(ngModel)]="schedule.dateOccur._d" id="Schedule_DateOccur" name="Schedule_DateOccur">
+								</div>
+					
+								<div class="form-group">
+									<label for="Schedule_FromTime">{{l("FromTime")}}</label>
+									<input type="text" id="Schedule_FromTime" class="form-control" [(ngModel)]="schedule.fromTime" name="FromTime"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Schedule_ToTime">{{l("ToTime")}}</label>
+									<input type="text" id="Schedule_ToTime" class="form-control" [(ngModel)]="schedule.toTime" name="ToTime"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Schedule_Content">{{l("Content")}}</label>
+									<input type="text" id="Schedule_Content" class="form-control" [(ngModel)]="schedule.content" name="Content"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Schedule_Notes">{{l("Notes")}}</label>
+									<input type="text" id="Schedule_Notes" class="form-control" [(ngModel)]="schedule.notes" name="Notes"    />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!scheduleForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

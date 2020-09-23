@@ -1,0 +1,32 @@
+DEBUG 2020-07-27 11:40:20,537 [1    ] DeviceAbriDoor.Utils.LogUtils            - Unexpected Error
+System.TypeInitializationException: The type initializer for 'TestDeviceAbriDoor.AbriDoorSDK' threw an exception. ---> System.Runtime.InteropServices.COMException: Retrieving the COM class factory for component with CLSID {00853A19-BD51-419B-9269-2DABE57EB61F} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)).
+   at System.RuntimeTypeHandle.CreateInstance(RuntimeType type, Boolean publicOnly, Boolean noCheck, Boolean& canBeCached, RuntimeMethodHandleInternal& ctor, Boolean& bNeedSecurityCheck)
+   at System.RuntimeType.CreateInstanceSlow(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark& stackMark)
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark& stackMark)
+   at System.Activator.CreateInstance(Type type, Boolean nonPublic)
+   at System.Activator.CreateInstance(Type type)
+   at TestDeviceAbriDoor.AbriDoorSDK.CreateEngines() in D:\GSoft\QLNS_1\TestDeviceAbriDoor\DeviceAbriDoor\Devices\AbriDoorSDK.cs:line 1646
+   at TestDeviceAbriDoor.AbriDoorSDK..ctor() in D:\GSoft\QLNS_1\TestDeviceAbriDoor\DeviceAbriDoor\Devices\AbriDoorSDK.cs:line 82
+   at TestDeviceAbriDoor.AbriDoorSDK..cctor() in D:\GSoft\QLNS_1\TestDeviceAbriDoor\DeviceAbriDoor\Devices\AbriDoorSDK.cs:line 70
+   --- End of inner exception stack trace ---
+   at TestDeviceAbriDoor.AbriDoorSDK..ctor()
+   at TestDeviceAbriDoor.FormMain..ctor() in D:\GSoft\QLNS_1\TestDeviceAbriDoor\DeviceAbriDoor\FormMain.cs:line 22
+   at TestDeviceAbriDoor.Program.<Main>d__0.MoveNext() in D:\GSoft\QLNS_1\TestDeviceAbriDoor\DeviceAbriDoor\Program.cs:line 46
+INFO  2020-07-30 16:33:01,103 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-30 16:33:40,840 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 56663
+INFO  2020-07-30 16:51:46,021 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-30 16:52:25,777 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 56663
+INFO  2020-07-30 16:59:50,125 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-30 17:00:29,753 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 56663
+INFO  2020-07-30 17:02:30,721 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-30 17:03:10,330 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 56663
+INFO  2020-07-30 17:04:22,119 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-30 17:05:02,977 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 56663
+INFO  2020-07-30 17:16:02,428 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-30 17:16:42,045 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 56663
+INFO  2020-07-30 17:21:17,586 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-30 17:21:57,212 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 56663
+INFO  2020-07-30 17:26:28,455 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-30 17:27:08,045 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 56663
+INFO  2020-08-01 08:25:21,830 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-08-01 08:26:01,806 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 57094

@@ -1,0 +1,68 @@
+INFO  2020-07-23 08:09:06,700 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-23 08:09:45,110 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 55106
+INFO  2020-07-23 08:09:57,010 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-23 08:10:35,393 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 55106
+DEBUG 2020-07-23 08:12:53,442 [1    ] DeviceAbriDoor.Utils.LogUtils            - Unexpected Error
+DeviceAbriDoor.Exceptions.HandleException: Exception of type 'DeviceAbriDoor.Exceptions.HandleException' was thrown.
+   at DeviceAbriDoor.RestSharp.WebApiHelper.Post(String url, Object data)
+   at TestDeviceAbriDoor.FormMain.button1_Click(Object sender, EventArgs e)
+   at System.Windows.Forms.Control.OnClick(EventArgs e)
+   at System.Windows.Forms.Button.OnClick(EventArgs e)
+   at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)
+   at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   at System.Windows.Forms.Control.WndProc(Message& m)
+   at System.Windows.Forms.ButtonBase.WndProc(Message& m)
+   at System.Windows.Forms.Button.WndProc(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+INFO  2020-07-24 08:13:40,870 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-24 08:14:18,012 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 55412
+INFO  2020-07-24 08:14:46,104 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-24 08:15:22,213 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 55412
+DEBUG 2020-07-27 08:11:50,721 [1    ] DeviceAbriDoor.Utils.LogUtils            - Unexpected Error
+System.Runtime.InteropServices.COMException (0x80040154): Retrieving the COM class factory for component with CLSID {00853A19-BD51-419B-9269-2DABE57EB61F} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)).
+   at System.RuntimeTypeHandle.CreateInstance(RuntimeType type, Boolean publicOnly, Boolean noCheck, Boolean& canBeCached, RuntimeMethodHandleInternal& ctor, Boolean& bNeedSecurityCheck)
+   at System.RuntimeType.CreateInstanceSlow(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark& stackMark)
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark& stackMark)
+   at System.Activator.CreateInstance(Type type, Boolean nonPublic)
+   at System.Activator.CreateInstance(Type type)
+   at TestDeviceAbriDoor.AbriDoorSDK.CreateEngines()
+   at TestDeviceAbriDoor.FormMain..ctor()
+   at TestDeviceAbriDoor.Program.<Main>d__0.MoveNext()
+DEBUG 2020-07-27 08:13:59,361 [1    ] DeviceAbriDoor.Utils.LogUtils            - Unexpected Error
+System.Runtime.InteropServices.COMException (0x80040154): Retrieving the COM class factory for component with CLSID {00853A19-BD51-419B-9269-2DABE57EB61F} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)).
+   at System.RuntimeTypeHandle.CreateInstance(RuntimeType type, Boolean publicOnly, Boolean noCheck, Boolean& canBeCached, RuntimeMethodHandleInternal& ctor, Boolean& bNeedSecurityCheck)
+   at System.RuntimeType.CreateInstanceSlow(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark& stackMark)
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark& stackMark)
+   at System.Activator.CreateInstance(Type type, Boolean nonPublic)
+   at System.Activator.CreateInstance(Type type)
+   at TestDeviceAbriDoor.AbriDoorSDK.CreateEngines()
+   at TestDeviceAbriDoor.FormMain..ctor()
+   at TestDeviceAbriDoor.Program.<Main>d__0.MoveNext()
+DEBUG 2020-07-27 08:40:43,553 [1    ] DeviceAbriDoor.Utils.LogUtils            - Unexpected Error
+System.Runtime.InteropServices.COMException (0x80040154): Retrieving the COM class factory for component with CLSID {00853A19-BD51-419B-9269-2DABE57EB61F} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)).
+   at System.RuntimeTypeHandle.CreateInstance(RuntimeType type, Boolean publicOnly, Boolean noCheck, Boolean& canBeCached, RuntimeMethodHandleInternal& ctor, Boolean& bNeedSecurityCheck)
+   at System.RuntimeType.CreateInstanceSlow(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark& stackMark)
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark& stackMark)
+   at System.Activator.CreateInstance(Type type, Boolean nonPublic)
+   at System.Activator.CreateInstance(Type type)
+   at TestDeviceAbriDoor.AbriDoorSDK.CreateEngines()
+   at TestDeviceAbriDoor.FormMain..ctor()
+   at TestDeviceAbriDoor.Program.<Main>d__0.MoveNext()
+DEBUG 2020-07-27 11:29:27,640 [1    ] DeviceAbriDoor.Utils.LogUtils            - Unexpected Error
+System.Runtime.InteropServices.COMException (0x80040154): Retrieving the COM class factory for component with CLSID {00853A19-BD51-419B-9269-2DABE57EB61F} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)).
+   at System.RuntimeTypeHandle.CreateInstance(RuntimeType type, Boolean publicOnly, Boolean noCheck, Boolean& canBeCached, RuntimeMethodHandleInternal& ctor, Boolean& bNeedSecurityCheck)
+   at System.RuntimeType.CreateInstanceSlow(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark& stackMark)
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark& stackMark)
+   at System.Activator.CreateInstance(Type type, Boolean nonPublic)
+   at System.Activator.CreateInstance(Type type)
+   at TestDeviceAbriDoor.AbriDoorSDK.CreateEngines()
+   at TestDeviceAbriDoor.FormMain..ctor()
+   at TestDeviceAbriDoor.Program.<Main>d__0.MoveNext()
+INFO  2020-07-27 13:01:30,186 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-27 13:02:08,983 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 55725
+INFO  2020-07-27 14:03:27,030 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-27 14:04:06,050 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 55727
+INFO  2020-07-27 14:04:16,979 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device Start
+INFO  2020-07-27 14:04:55,584 [1    ] DeviceAbriDoor.Utils.LogUtils            - Schedule Get Data From Device End - Count: 55727

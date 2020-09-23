@@ -1,0 +1,1636 @@
+﻿<div [@routerTransition]>
+  <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+      <div [class]="containerClass">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">
+                <span>{{l("ViTriCongViecs")}}</span>
+            </h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">
+                {{l("ViTriCongViecsHeaderInfo")}}
+            </span>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+				<button (click)="exportToExcel()" class="btn btn-outline-success"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                <button *ngIf="isGranted('Pages.ViTriCongViecs.Create')" (click)="createViTriCongViec()" 
+			class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewViTriCongViec")}}</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <form class="kt-form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="form-group m-form__group align-items-center">
+                                    <div class="input-group">
+                                        <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                                        <span class="input-group-btn">
+                                            <button (click)="getViTriCongViecs()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         <div class="kt-separator kt-separator--border-dashed"></div>
+						     </div>
+
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TenCtyFilter">{{l("TenCty")}}</label>
+									<input type="text" class="form-control" id="TenCtyFilter" name="tenCtyFilter" [(ngModel)]="tenCtyFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="HopDongHienTaiFilter">{{l("HopDongHienTai")}}</label>
+									<input type="text" class="form-control" id="HopDongHienTaiFilter" name="hopDongHienTaiFilter" [(ngModel)]="hopDongHienTaiFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="SoHDFilter">{{l("SoHD")}}</label>
+									<input type="text" class="form-control" id="SoHDFilter" name="soHDFilter" [(ngModel)]="soHDFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DonViCongTacNameFilter">{{l("DonViCongTacName")}}</label>
+									<input type="text" class="form-control" id="DonViCongTacNameFilter" name="donViCongTacNameFilter" [(ngModel)]="donViCongTacNameFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="ChoNgoiFilter">{{l("ChoNgoi")}}</label>
+									<input type="text" class="form-control" id="ChoNgoiFilter" name="choNgoiFilter" [(ngModel)]="choNgoiFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinNoiDaoTaoIDFilter">{{l("MinMax")}} {{l("NoiDaoTaoID")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinNoiDaoTaoIDFilter" [(ngModel)]="minNoiDaoTaoIDFilter" placeholder="{{l('MinValue')}}" name="minNoiDaoTaoIDFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxNoiDaoTaoIDFilter" placeholder="{{l('MaxValue')}}" name="maxNoiDaoTaoIDFilter" />
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinLoaiHopDongIDFilter">{{l("MinMax")}} {{l("LoaiHopDongID")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinLoaiHopDongIDFilter" [(ngModel)]="minLoaiHopDongIDFilter" placeholder="{{l('MinValue')}}" name="minLoaiHopDongIDFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxLoaiHopDongIDFilter" placeholder="{{l('MaxValue')}}" name="maxLoaiHopDongIDFilter" />
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="MaSoNoiKCBFilter">{{l("MaSoNoiKCB")}}</label>
+									<input type="text" class="form-control" id="MaSoNoiKCBFilter" name="maSoNoiKCBFilter" [(ngModel)]="maSoNoiKCBFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinNoiDangKyKCBIDFilter">{{l("MinMax")}} {{l("NoiDangKyKCBID")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinNoiDangKyKCBIDFilter" [(ngModel)]="minNoiDangKyKCBIDFilter" placeholder="{{l('MinValue')}}" name="minNoiDangKyKCBIDFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxNoiDangKyKCBIDFilter" placeholder="{{l('MaxValue')}}" name="maxNoiDangKyKCBIDFilter" />
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayHetHanBHYTFilter">{{l("NgayHetHanBHYTRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayHetHanBHYTFilter" name="MinNgayHetHanBHYTFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayHetHanBHYTFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayHetHanBHYTFilter" name="MaxNgayHetHanBHYTFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayHetHanBHYTFilter">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="SoTheBHYTFilter">{{l("SoTheBHYT")}}</label>
+									<input type="text" class="form-control" id="SoTheBHYTFilter" name="soTheBHYTFilter" [(ngModel)]="soTheBHYTFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="MaTinhCapFilter">{{l("MaTinhCap")}}</label>
+									<input type="text" class="form-control" id="MaTinhCapFilter" name="maTinhCapFilter" [(ngModel)]="maTinhCapFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="MaSoBHXHFilter">{{l("MaSoBHXH")}}</label>
+									<input type="text" class="form-control" id="MaSoBHXHFilter" name="maSoBHXHFilter" [(ngModel)]="maSoBHXHFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="SoSoBHXHFilter">{{l("SoSoBHXH")}}</label>
+									<input type="text" class="form-control" id="SoSoBHXHFilter" name="soSoBHXHFilter" [(ngModel)]="soSoBHXHFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinTyLeDongBHFilter">{{l("MinMax")}} {{l("TyLeDongBH")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinTyLeDongBHFilter" [(ngModel)]="minTyLeDongBHFilter" placeholder="{{l('MinValue')}}" name="minTyLeDongBHFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxTyLeDongBHFilter" placeholder="{{l('MaxValue')}}" name="maxTyLeDongBHFilter" />
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayThamGiaBHFilter">{{l("NgayThamGiaBHRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayThamGiaBHFilter" name="MinNgayThamGiaBHFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayThamGiaBHFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayThamGiaBHFilter" name="MaxNgayThamGiaBHFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayThamGiaBHFilter">
+									</div>
+                                </div>
+                            </div>	
+							<div class="col-md-3">
+								<label for="ThamGiaCongDoanFilterSelect">{{l("ThamGiaCongDoan")}}</label>
+								<select class="form-control" name="ThamGiaCongDoanFilter" id="ThamGiaCongDoanFilterSelect" [(ngModel)]="thamGiaCongDoanFilter">
+								<option value="-1">{{l("All")}}</option>
+								<option value="0">{{l("False")}}</option>
+								<option value="1">{{l("True")}}</option>
+								</select>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="NganHangCodeFilter">{{l("NganHangCode")}}</label>
+									<input type="text" class="form-control" id="NganHangCodeFilter" name="nganHangCodeFilter" [(ngModel)]="nganHangCodeFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TkNganHangFilter">{{l("TkNganHang")}}</label>
+									<input type="text" class="form-control" id="TkNganHangFilter" name="tkNganHangFilter" [(ngModel)]="tkNganHangFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DonViSoCongChuanCodeFilter">{{l("DonViSoCongChuanCode")}}</label>
+									<input type="text" class="form-control" id="DonViSoCongChuanCodeFilter" name="donViSoCongChuanCodeFilter" [(ngModel)]="donViSoCongChuanCodeFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="SoCongChuanFilter">{{l("SoCongChuan")}}</label>
+									<input type="text" class="form-control" id="SoCongChuanFilter" name="soCongChuanFilter" [(ngModel)]="soCongChuanFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="LuongDongBHFilter">{{l("LuongDongBH")}}</label>
+									<input type="text" class="form-control" id="LuongDongBHFilter" name="luongDongBHFilter" [(ngModel)]="luongDongBHFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="LuongCoBanFilter">{{l("LuongCoBan")}}</label>
+									<input type="text" class="form-control" id="LuongCoBanFilter" name="luongCoBanFilter" [(ngModel)]="luongCoBanFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="BacLuongCodeFilter">{{l("BacLuongCode")}}</label>
+									<input type="text" class="form-control" id="BacLuongCodeFilter" name="bacLuongCodeFilter" [(ngModel)]="bacLuongCodeFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinSoNgayPhepFilter">{{l("MinMax")}} {{l("SoNgayPhep")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinSoNgayPhepFilter" [(ngModel)]="minSoNgayPhepFilter" placeholder="{{l('MinValue')}}" name="minSoNgayPhepFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxSoNgayPhepFilter" placeholder="{{l('MaxValue')}}" name="maxSoNgayPhepFilter" />
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayChinhThucFilter">{{l("NgayChinhThucRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayChinhThucFilter" name="MinNgayChinhThucFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayChinhThucFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayChinhThucFilter" name="MaxNgayChinhThucFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayChinhThucFilter">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayThuViecFilter">{{l("NgayThuViecRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayThuViecFilter" name="MinNgayThuViecFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayThuViecFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayThuViecFilter" name="MaxNgayThuViecFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayThuViecFilter">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayTapSuFilter">{{l("NgayTapSuRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayTapSuFilter" name="MinNgayTapSuFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayTapSuFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayTapSuFilter" name="MaxNgayTapSuFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayTapSuFilter">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="SoSoQLLaoDongFilter">{{l("SoSoQLLaoDong")}}</label>
+									<input type="text" class="form-control" id="SoSoQLLaoDongFilter" name="soSoQLLaoDongFilter" [(ngModel)]="soSoQLLaoDongFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DiaDiemLamViecCodeFilter">{{l("DiaDiemLamViecCode")}}</label>
+									<input type="text" class="form-control" id="DiaDiemLamViecCodeFilter" name="diaDiemLamViecCodeFilter" [(ngModel)]="diaDiemLamViecCodeFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="QuanLyGianTiepFilter">{{l("QuanLyGianTiep")}}</label>
+									<input type="text" class="form-control" id="QuanLyGianTiepFilter" name="quanLyGianTiepFilter" [(ngModel)]="quanLyGianTiepFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="QuanLyTrucTiepFilter">{{l("QuanLyTrucTiep")}}</label>
+									<input type="text" class="form-control" id="QuanLyTrucTiepFilter" name="quanLyTrucTiepFilter" [(ngModel)]="quanLyTrucTiepFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TrangThaiLamViecCodeFilter">{{l("TrangThaiLamViecCode")}}</label>
+									<input type="text" class="form-control" id="TrangThaiLamViecCodeFilter" name="trangThaiLamViecCodeFilter" [(ngModel)]="trangThaiLamViecCodeFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="BacFilter">{{l("Bac")}}</label>
+									<input type="text" class="form-control" id="BacFilter" name="bacFilter" [(ngModel)]="bacFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="CapFilter">{{l("Cap")}}</label>
+									<input type="text" class="form-control" id="CapFilter" name="capFilter" [(ngModel)]="capFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="ChucDanhFilter">{{l("ChucDanh")}}</label>
+									<input type="text" class="form-control" id="ChucDanhFilter" name="chucDanhFilter" [(ngModel)]="chucDanhFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="MaChamCongFilter">{{l("MaChamCong")}}</label>
+									<input type="text" class="form-control" id="MaChamCongFilter" name="maChamCongFilter" [(ngModel)]="maChamCongFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DiaChiLHKCFilter">{{l("DiaChiLHKC")}}</label>
+									<input type="text" class="form-control" id="DiaChiLHKCFilter" name="diaChiLHKCFilter" [(ngModel)]="diaChiLHKCFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="EmailLHKCFilter">{{l("EmailLHKC")}}</label>
+									<input type="text" class="form-control" id="EmailLHKCFilter" name="emailLHKCFilter" [(ngModel)]="emailLHKCFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DtDiDongLHKCFilter">{{l("DtDiDongLHKC")}}</label>
+									<input type="text" class="form-control" id="DtDiDongLHKCFilter" name="dtDiDongLHKCFilter" [(ngModel)]="dtDiDongLHKCFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DtNhaRiengLHKCFilter">{{l("DtNhaRiengLHKC")}}</label>
+									<input type="text" class="form-control" id="DtNhaRiengLHKCFilter" name="dtNhaRiengLHKCFilter" [(ngModel)]="dtNhaRiengLHKCFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="QuanHeLHKCFilter">{{l("QuanHeLHKC")}}</label>
+									<input type="text" class="form-control" id="QuanHeLHKCFilter" name="quanHeLHKCFilter" [(ngModel)]="quanHeLHKCFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="HoVaTenLHKCFilter">{{l("HoVaTenLHKC")}}</label>
+									<input type="text" class="form-control" id="HoVaTenLHKCFilter" name="hoVaTenLHKCFilter" [(ngModel)]="hoVaTenLHKCFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DiaChiHNFilter">{{l("DiaChiHN")}}</label>
+									<input type="text" class="form-control" id="DiaChiHNFilter" name="diaChiHNFilter" [(ngModel)]="diaChiHNFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinTinhThanhIDHNFilter">{{l("MinMax")}} {{l("TinhThanhIDHN")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinTinhThanhIDHNFilter" [(ngModel)]="minTinhThanhIDHNFilter" placeholder="{{l('MinValue')}}" name="minTinhThanhIDHNFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxTinhThanhIDHNFilter" placeholder="{{l('MaxValue')}}" name="maxTinhThanhIDHNFilter" />
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="QuocGiaHNFilter">{{l("QuocGiaHN")}}</label>
+									<input type="text" class="form-control" id="QuocGiaHNFilter" name="quocGiaHNFilter" [(ngModel)]="quocGiaHNFilter">
+								</div>
+                            </div>	
+							<div class="col-md-3">
+								<label for="LaChuHoFilterSelect">{{l("LaChuHo")}}</label>
+								<select class="form-control" name="LaChuHoFilter" id="LaChuHoFilterSelect" [(ngModel)]="laChuHoFilter">
+								<option value="-1">{{l("All")}}</option>
+								<option value="0">{{l("False")}}</option>
+								<option value="1">{{l("True")}}</option>
+								</select>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="MaSoHoGiaDinhFilter">{{l("MaSoHoGiaDinh")}}</label>
+									<input type="text" class="form-control" id="MaSoHoGiaDinhFilter" name="maSoHoGiaDinhFilter" [(ngModel)]="maSoHoGiaDinhFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="SoSoHoKhauFilter">{{l("SoSoHoKhau")}}</label>
+									<input type="text" class="form-control" id="SoSoHoKhauFilter" name="soSoHoKhauFilter" [(ngModel)]="soSoHoKhauFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DiaChiHKTTFilter">{{l("DiaChiHKTT")}}</label>
+									<input type="text" class="form-control" id="DiaChiHKTTFilter" name="diaChiHKTTFilter" [(ngModel)]="diaChiHKTTFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinTinhThanhIDHKTTFilter">{{l("MinMax")}} {{l("TinhThanhIDHKTT")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinTinhThanhIDHKTTFilter" [(ngModel)]="minTinhThanhIDHKTTFilter" placeholder="{{l('MinValue')}}" name="minTinhThanhIDHKTTFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxTinhThanhIDHKTTFilter" placeholder="{{l('MaxValue')}}" name="maxTinhThanhIDHKTTFilter" />
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="QuocGiaHKTTFilter">{{l("QuocGiaHKTT")}}</label>
+									<input type="text" class="form-control" id="QuocGiaHKTTFilter" name="quocGiaHKTTFilter" [(ngModel)]="quocGiaHKTTFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="FacebookFilter">{{l("Facebook")}}</label>
+									<input type="text" class="form-control" id="FacebookFilter" name="facebookFilter" [(ngModel)]="facebookFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="SkypeFilter">{{l("Skype")}}</label>
+									<input type="text" class="form-control" id="SkypeFilter" name="skypeFilter" [(ngModel)]="skypeFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="NoiSinhFilter">{{l("NoiSinh")}}</label>
+									<input type="text" class="form-control" id="NoiSinhFilter" name="noiSinhFilter" [(ngModel)]="noiSinhFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinTinhThanhIDFilter">{{l("MinMax")}} {{l("TinhThanhID")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinTinhThanhIDFilter" [(ngModel)]="minTinhThanhIDFilter" placeholder="{{l('MinValue')}}" name="minTinhThanhIDFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxTinhThanhIDFilter" placeholder="{{l('MaxValue')}}" name="maxTinhThanhIDFilter" />
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="NguyenQuanFilter">{{l("NguyenQuan")}}</label>
+									<input type="text" class="form-control" id="NguyenQuanFilter" name="nguyenQuanFilter" [(ngModel)]="nguyenQuanFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="EmailKhacFilter">{{l("EmailKhac")}}</label>
+									<input type="text" class="form-control" id="EmailKhacFilter" name="emailKhacFilter" [(ngModel)]="emailKhacFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="EmailCoQuanFilter">{{l("EmailCoQuan")}}</label>
+									<input type="text" class="form-control" id="EmailCoQuanFilter" name="emailCoQuanFilter" [(ngModel)]="emailCoQuanFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="EmailCaNhanFilter">{{l("EmailCaNhan")}}</label>
+									<input type="text" class="form-control" id="EmailCaNhanFilter" name="emailCaNhanFilter" [(ngModel)]="emailCaNhanFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DtKhacFilter">{{l("DtKhac")}}</label>
+									<input type="text" class="form-control" id="DtKhacFilter" name="dtKhacFilter" [(ngModel)]="dtKhacFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DtNhaRiengFilter">{{l("DtNhaRieng")}}</label>
+									<input type="text" class="form-control" id="DtNhaRiengFilter" name="dtNhaRiengFilter" [(ngModel)]="dtNhaRiengFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DtCoQuanFilter">{{l("DtCoQuan")}}</label>
+									<input type="text" class="form-control" id="DtCoQuanFilter" name="dtCoQuanFilter" [(ngModel)]="dtCoQuanFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DtDiDongFilter">{{l("DtDiDong")}}</label>
+									<input type="text" class="form-control" id="DtDiDongFilter" name="dtDiDongFilter" [(ngModel)]="dtDiDongFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TepDinhKemFilter">{{l("TepDinhKem")}}</label>
+									<input type="text" class="form-control" id="TepDinhKemFilter" name="tepDinhKemFilter" [(ngModel)]="tepDinhKemFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TinhTrangHonNhanCodeFilter">{{l("TinhTrangHonNhanCode")}}</label>
+									<input type="text" class="form-control" id="TinhTrangHonNhanCodeFilter" name="tinhTrangHonNhanCodeFilter" [(ngModel)]="tinhTrangHonNhanCodeFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="XepLoaiCodeFilter">{{l("XepLoaiCode")}}</label>
+									<input type="text" class="form-control" id="XepLoaiCodeFilter" name="xepLoaiCodeFilter" [(ngModel)]="xepLoaiCodeFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinNamTotNghiepFilter">{{l("MinMax")}} {{l("NamTotNghiep")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinNamTotNghiepFilter" [(ngModel)]="minNamTotNghiepFilter" placeholder="{{l('MinValue')}}" name="minNamTotNghiepFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxNamTotNghiepFilter" placeholder="{{l('MaxValue')}}" name="maxNamTotNghiepFilter" />
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="ChuyenNganhFilter">{{l("ChuyenNganh")}}</label>
+									<input type="text" class="form-control" id="ChuyenNganhFilter" name="chuyenNganhFilter" [(ngModel)]="chuyenNganhFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="KhoaFilter">{{l("Khoa")}}</label>
+									<input type="text" class="form-control" id="KhoaFilter" name="khoaFilter" [(ngModel)]="khoaFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TrinhDoDaoTaoCodeFilter">{{l("TrinhDoDaoTaoCode")}}</label>
+									<input type="text" class="form-control" id="TrinhDoDaoTaoCodeFilter" name="trinhDoDaoTaoCodeFilter" [(ngModel)]="trinhDoDaoTaoCodeFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TrinhDoVanHoaFilter">{{l("TrinhDoVanHoa")}}</label>
+									<input type="text" class="form-control" id="TrinhDoVanHoaFilter" name="trinhDoVanHoaFilter" [(ngModel)]="trinhDoVanHoaFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayHetHanFilter">{{l("NgayHetHanRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayHetHanFilter" name="MinNgayHetHanFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayHetHanFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayHetHanFilter" name="MaxNgayHetHanFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayHetHanFilter">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="NoiCapFilter">{{l("NoiCap")}}</label>
+									<input type="text" class="form-control" id="NoiCapFilter" name="noiCapFilter" [(ngModel)]="noiCapFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayCapFilter">{{l("NgayCapRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayCapFilter" name="MinNgayCapFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayCapFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayCapFilter" name="MaxNgayCapFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayCapFilter">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="SoCMNDFilter">{{l("SoCMND")}}</label>
+									<input type="text" class="form-control" id="SoCMNDFilter" name="soCMNDFilter" [(ngModel)]="soCMNDFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="QuocTichFilter">{{l("QuocTich")}}</label>
+									<input type="text" class="form-control" id="QuocTichFilter" name="quocTichFilter" [(ngModel)]="quocTichFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TonGiaoFilter">{{l("TonGiao")}}</label>
+									<input type="text" class="form-control" id="TonGiaoFilter" name="tonGiaoFilter" [(ngModel)]="tonGiaoFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DanTocFilter">{{l("DanToc")}}</label>
+									<input type="text" class="form-control" id="DanTocFilter" name="danTocFilter" [(ngModel)]="danTocFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="ViTriCongViecCodeFilter">{{l("ViTriCongViecCode")}}</label>
+									<input type="text" class="form-control" id="ViTriCongViecCodeFilter" name="viTriCongViecCodeFilter" [(ngModel)]="viTriCongViecCodeFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label for="MinDonViCongTacIDFilter">{{l("MinMax")}} {{l("DonViCongTacID")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinDonViCongTacIDFilter" [(ngModel)]="minDonViCongTacIDFilter" placeholder="{{l('MinValue')}}" name="minDonViCongTacIDFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxDonViCongTacIDFilter" placeholder="{{l('MaxValue')}}" name="maxDonViCongTacIDFilter" />
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="MSTCaNhanFilter">{{l("MSTCaNhan")}}</label>
+									<input type="text" class="form-control" id="MSTCaNhanFilter" name="mstCaNhanFilter" [(ngModel)]="mstCaNhanFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgaySinhFilter">{{l("NgaySinhRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgaySinhFilter" name="MinNgaySinhFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgaySinhFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgaySinhFilter" name="MaxNgaySinhFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgaySinhFilter">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="GioiTinhCodeFilter">{{l("GioiTinhCode")}}</label>
+									<input type="text" class="form-control" id="GioiTinhCodeFilter" name="gioiTinhCodeFilter" [(ngModel)]="gioiTinhCodeFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="AnhDaiDienFilter">{{l("AnhDaiDien")}}</label>
+									<input type="text" class="form-control" id="AnhDaiDienFilter" name="anhDaiDienFilter" [(ngModel)]="anhDaiDienFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="HoVaTenFilter">{{l("HoVaTen")}}</label>
+									<input type="text" class="form-control" id="HoVaTenFilter" name="hoVaTenFilter" [(ngModel)]="hoVaTenFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="MaNhanVienFilter">{{l("MaNhanVien")}}</label>
+									<input type="text" class="form-control" id="MaNhanVienFilter" name="maNhanVienFilter" [(ngModel)]="maNhanVienFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="ChiNhanhFilter">{{l("ChiNhanh")}}</label>
+									<input type="text" class="form-control" id="ChiNhanhFilter" name="chiNhanhFilter" [(ngModel)]="chiNhanhFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DVTFilter">{{l("DVT")}}</label>
+									<input type="text" class="form-control" id="DVTFilter" name="dvtFilter" [(ngModel)]="dvtFilter">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayKyHDKTHFilter">{{l("NgayKyHDKTHRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayKyHDKTHFilter" name="MinNgayKyHDKTHFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayKyHDKTHFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayKyHDKTHFilter" name="MaxNgayKyHDKTHFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayKyHDKTHFilter">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayKyHD36THFilter">{{l("NgayKyHD36THRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayKyHD36THFilter" name="MinNgayKyHD36THFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayKyHD36THFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayKyHD36THFilter" name="MaxNgayKyHD36THFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayKyHD36THFilter">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayKyHD12THFilter">{{l("NgayKyHD12THRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayKyHD12THFilter" name="MinNgayKyHD12THFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayKyHD12THFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayKyHD12THFilter" name="MaxNgayKyHD12THFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayKyHD12THFilter">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayKyHDTVFilter">{{l("NgayKyHDTVRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayKyHDTVFilter" name="MinNgayKyHDTVFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayKyHDTVFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayKyHDTVFilter" name="MaxNgayKyHDTVFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayKyHDTVFilter">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayKYHDCTVFilter">{{l("NgayKYHDCTVRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayKYHDCTVFilter" name="MinNgayKYHDCTVFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayKYHDCTVFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayKYHDCTVFilter" name="MaxNgayKYHDCTVFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayKYHDCTVFilter">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayKyHDKVFilter">{{l("NgayKyHDKVRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayKyHDKVFilter" name="MinNgayKyHDKVFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayKyHDKVFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayKyHDKVFilter" name="MaxNgayKyHDKVFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayKyHDKVFilter">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayKYHDTTFilter">{{l("NgayKYHDTTRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayKYHDTTFilter" name="MinNgayKYHDTTFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayKYHDTTFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayKYHDTTFilter" name="MaxNgayKYHDTTFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayKYHDTTFilter">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+									<label  for="MinNgayKyHDFilter">{{l("NgayKyHDRange")}}</label>
+									<div class="input-group">
+                                        <input class="form-control m-input" id="MinNgayKyHDFilter" name="MinNgayKyHDFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minNgayKyHDFilter">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxNgayKyHDFilter" name="MaxNgayKyHDFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxNgayKyHDFilter">
+									</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getViTriCongViecs($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.ViTriCongViecs.Edit', 'Pages.ViTriCongViecs.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="tenCty">
+                                        {{l('TenCty')}}
+                                        <p-sortIcon field="viTriCongViec.tenCty"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hopDongHienTai">
+                                        {{l('HopDongHienTai')}}
+                                        <p-sortIcon field="viTriCongViec.hopDongHienTai"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="soHD">
+                                        {{l('SoHD')}}
+                                        <p-sortIcon field="viTriCongViec.soHD"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="donViCongTacName">
+                                        {{l('DonViCongTacName')}}
+                                        <p-sortIcon field="viTriCongViec.donViCongTacName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="choNgoi">
+                                        {{l('ChoNgoi')}}
+                                        <p-sortIcon field="viTriCongViec.choNgoi"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="noiDaoTaoID">
+                                        {{l('NoiDaoTaoID')}}
+                                        <p-sortIcon field="viTriCongViec.noiDaoTaoID"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="loaiHopDongID">
+                                        {{l('LoaiHopDongID')}}
+                                        <p-sortIcon field="viTriCongViec.loaiHopDongID"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="maSoNoiKCB">
+                                        {{l('MaSoNoiKCB')}}
+                                        <p-sortIcon field="viTriCongViec.maSoNoiKCB"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="noiDangKyKCBID">
+                                        {{l('NoiDangKyKCBID')}}
+                                        <p-sortIcon field="viTriCongViec.noiDangKyKCBID"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayHetHanBHYT">
+                                        {{l('NgayHetHanBHYT')}}
+                                        <p-sortIcon field="viTriCongViec.ngayHetHanBHYT"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="soTheBHYT">
+                                        {{l('SoTheBHYT')}}
+                                        <p-sortIcon field="viTriCongViec.soTheBHYT"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="maTinhCap">
+                                        {{l('MaTinhCap')}}
+                                        <p-sortIcon field="viTriCongViec.maTinhCap"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="maSoBHXH">
+                                        {{l('MaSoBHXH')}}
+                                        <p-sortIcon field="viTriCongViec.maSoBHXH"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="soSoBHXH">
+                                        {{l('SoSoBHXH')}}
+                                        <p-sortIcon field="viTriCongViec.soSoBHXH"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tyLeDongBH">
+                                        {{l('TyLeDongBH')}}
+                                        <p-sortIcon field="viTriCongViec.tyLeDongBH"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayThamGiaBH">
+                                        {{l('NgayThamGiaBH')}}
+                                        <p-sortIcon field="viTriCongViec.ngayThamGiaBH"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="thamGiaCongDoan">
+                                        {{l('ThamGiaCongDoan')}}
+                                        <p-sortIcon field="viTriCongViec.thamGiaCongDoan"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="nganHangCode">
+                                        {{l('NganHangCode')}}
+                                        <p-sortIcon field="viTriCongViec.nganHangCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tkNganHang">
+                                        {{l('TkNganHang')}}
+                                        <p-sortIcon field="viTriCongViec.tkNganHang"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="donViSoCongChuanCode">
+                                        {{l('DonViSoCongChuanCode')}}
+                                        <p-sortIcon field="viTriCongViec.donViSoCongChuanCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="soCongChuan">
+                                        {{l('SoCongChuan')}}
+                                        <p-sortIcon field="viTriCongViec.soCongChuan"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="luongDongBH">
+                                        {{l('LuongDongBH')}}
+                                        <p-sortIcon field="viTriCongViec.luongDongBH"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="luongCoBan">
+                                        {{l('LuongCoBan')}}
+                                        <p-sortIcon field="viTriCongViec.luongCoBan"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="bacLuongCode">
+                                        {{l('BacLuongCode')}}
+                                        <p-sortIcon field="viTriCongViec.bacLuongCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="soNgayPhep">
+                                        {{l('SoNgayPhep')}}
+                                        <p-sortIcon field="viTriCongViec.soNgayPhep"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayChinhThuc">
+                                        {{l('NgayChinhThuc')}}
+                                        <p-sortIcon field="viTriCongViec.ngayChinhThuc"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayThuViec">
+                                        {{l('NgayThuViec')}}
+                                        <p-sortIcon field="viTriCongViec.ngayThuViec"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayTapSu">
+                                        {{l('NgayTapSu')}}
+                                        <p-sortIcon field="viTriCongViec.ngayTapSu"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="soSoQLLaoDong">
+                                        {{l('SoSoQLLaoDong')}}
+                                        <p-sortIcon field="viTriCongViec.soSoQLLaoDong"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="diaDiemLamViecCode">
+                                        {{l('DiaDiemLamViecCode')}}
+                                        <p-sortIcon field="viTriCongViec.diaDiemLamViecCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="quanLyGianTiep">
+                                        {{l('QuanLyGianTiep')}}
+                                        <p-sortIcon field="viTriCongViec.quanLyGianTiep"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="quanLyTrucTiep">
+                                        {{l('QuanLyTrucTiep')}}
+                                        <p-sortIcon field="viTriCongViec.quanLyTrucTiep"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="trangThaiLamViecCode">
+                                        {{l('TrangThaiLamViecCode')}}
+                                        <p-sortIcon field="viTriCongViec.trangThaiLamViecCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="bac">
+                                        {{l('Bac')}}
+                                        <p-sortIcon field="viTriCongViec.bac"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cap">
+                                        {{l('Cap')}}
+                                        <p-sortIcon field="viTriCongViec.cap"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="chucDanh">
+                                        {{l('ChucDanh')}}
+                                        <p-sortIcon field="viTriCongViec.chucDanh"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="maChamCong">
+                                        {{l('MaChamCong')}}
+                                        <p-sortIcon field="viTriCongViec.maChamCong"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="diaChiLHKC">
+                                        {{l('DiaChiLHKC')}}
+                                        <p-sortIcon field="viTriCongViec.diaChiLHKC"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="emailLHKC">
+                                        {{l('EmailLHKC')}}
+                                        <p-sortIcon field="viTriCongViec.emailLHKC"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dtDiDongLHKC">
+                                        {{l('DtDiDongLHKC')}}
+                                        <p-sortIcon field="viTriCongViec.dtDiDongLHKC"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dtNhaRiengLHKC">
+                                        {{l('DtNhaRiengLHKC')}}
+                                        <p-sortIcon field="viTriCongViec.dtNhaRiengLHKC"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="quanHeLHKC">
+                                        {{l('QuanHeLHKC')}}
+                                        <p-sortIcon field="viTriCongViec.quanHeLHKC"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hoVaTenLHKC">
+                                        {{l('HoVaTenLHKC')}}
+                                        <p-sortIcon field="viTriCongViec.hoVaTenLHKC"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="diaChiHN">
+                                        {{l('DiaChiHN')}}
+                                        <p-sortIcon field="viTriCongViec.diaChiHN"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tinhThanhIDHN">
+                                        {{l('TinhThanhIDHN')}}
+                                        <p-sortIcon field="viTriCongViec.tinhThanhIDHN"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="quocGiaHN">
+                                        {{l('QuocGiaHN')}}
+                                        <p-sortIcon field="viTriCongViec.quocGiaHN"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="laChuHo">
+                                        {{l('LaChuHo')}}
+                                        <p-sortIcon field="viTriCongViec.laChuHo"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="maSoHoGiaDinh">
+                                        {{l('MaSoHoGiaDinh')}}
+                                        <p-sortIcon field="viTriCongViec.maSoHoGiaDinh"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="soSoHoKhau">
+                                        {{l('SoSoHoKhau')}}
+                                        <p-sortIcon field="viTriCongViec.soSoHoKhau"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="diaChiHKTT">
+                                        {{l('DiaChiHKTT')}}
+                                        <p-sortIcon field="viTriCongViec.diaChiHKTT"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tinhThanhIDHKTT">
+                                        {{l('TinhThanhIDHKTT')}}
+                                        <p-sortIcon field="viTriCongViec.tinhThanhIDHKTT"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="quocGiaHKTT">
+                                        {{l('QuocGiaHKTT')}}
+                                        <p-sortIcon field="viTriCongViec.quocGiaHKTT"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="facebook">
+                                        {{l('Facebook')}}
+                                        <p-sortIcon field="viTriCongViec.facebook"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="skype">
+                                        {{l('Skype')}}
+                                        <p-sortIcon field="viTriCongViec.skype"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="noiSinh">
+                                        {{l('NoiSinh')}}
+                                        <p-sortIcon field="viTriCongViec.noiSinh"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tinhThanhID">
+                                        {{l('TinhThanhID')}}
+                                        <p-sortIcon field="viTriCongViec.tinhThanhID"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="nguyenQuan">
+                                        {{l('NguyenQuan')}}
+                                        <p-sortIcon field="viTriCongViec.nguyenQuan"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="emailKhac">
+                                        {{l('EmailKhac')}}
+                                        <p-sortIcon field="viTriCongViec.emailKhac"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="emailCoQuan">
+                                        {{l('EmailCoQuan')}}
+                                        <p-sortIcon field="viTriCongViec.emailCoQuan"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="emailCaNhan">
+                                        {{l('EmailCaNhan')}}
+                                        <p-sortIcon field="viTriCongViec.emailCaNhan"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dtKhac">
+                                        {{l('DtKhac')}}
+                                        <p-sortIcon field="viTriCongViec.dtKhac"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dtNhaRieng">
+                                        {{l('DtNhaRieng')}}
+                                        <p-sortIcon field="viTriCongViec.dtNhaRieng"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dtCoQuan">
+                                        {{l('DtCoQuan')}}
+                                        <p-sortIcon field="viTriCongViec.dtCoQuan"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dtDiDong">
+                                        {{l('DtDiDong')}}
+                                        <p-sortIcon field="viTriCongViec.dtDiDong"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tepDinhKem">
+                                        {{l('TepDinhKem')}}
+                                        <p-sortIcon field="viTriCongViec.tepDinhKem"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tinhTrangHonNhanCode">
+                                        {{l('TinhTrangHonNhanCode')}}
+                                        <p-sortIcon field="viTriCongViec.tinhTrangHonNhanCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="xepLoaiCode">
+                                        {{l('XepLoaiCode')}}
+                                        <p-sortIcon field="viTriCongViec.xepLoaiCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="namTotNghiep">
+                                        {{l('NamTotNghiep')}}
+                                        <p-sortIcon field="viTriCongViec.namTotNghiep"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="chuyenNganh">
+                                        {{l('ChuyenNganh')}}
+                                        <p-sortIcon field="viTriCongViec.chuyenNganh"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="khoa">
+                                        {{l('Khoa')}}
+                                        <p-sortIcon field="viTriCongViec.khoa"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="trinhDoDaoTaoCode">
+                                        {{l('TrinhDoDaoTaoCode')}}
+                                        <p-sortIcon field="viTriCongViec.trinhDoDaoTaoCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="trinhDoVanHoa">
+                                        {{l('TrinhDoVanHoa')}}
+                                        <p-sortIcon field="viTriCongViec.trinhDoVanHoa"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayHetHan">
+                                        {{l('NgayHetHan')}}
+                                        <p-sortIcon field="viTriCongViec.ngayHetHan"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="noiCap">
+                                        {{l('NoiCap')}}
+                                        <p-sortIcon field="viTriCongViec.noiCap"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayCap">
+                                        {{l('NgayCap')}}
+                                        <p-sortIcon field="viTriCongViec.ngayCap"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="soCMND">
+                                        {{l('SoCMND')}}
+                                        <p-sortIcon field="viTriCongViec.soCMND"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="quocTich">
+                                        {{l('QuocTich')}}
+                                        <p-sortIcon field="viTriCongViec.quocTich"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tonGiao">
+                                        {{l('TonGiao')}}
+                                        <p-sortIcon field="viTriCongViec.tonGiao"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="danToc">
+                                        {{l('DanToc')}}
+                                        <p-sortIcon field="viTriCongViec.danToc"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="viTriCongViecCode">
+                                        {{l('ViTriCongViecCode')}}
+                                        <p-sortIcon field="viTriCongViec.viTriCongViecCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="donViCongTacID">
+                                        {{l('DonViCongTacID')}}
+                                        <p-sortIcon field="viTriCongViec.donViCongTacID"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="mstCaNhan">
+                                        {{l('MSTCaNhan')}}
+                                        <p-sortIcon field="viTriCongViec.mstCaNhan"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngaySinh">
+                                        {{l('NgaySinh')}}
+                                        <p-sortIcon field="viTriCongViec.ngaySinh"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="gioiTinhCode">
+                                        {{l('GioiTinhCode')}}
+                                        <p-sortIcon field="viTriCongViec.gioiTinhCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="anhDaiDien">
+                                        {{l('AnhDaiDien')}}
+                                        <p-sortIcon field="viTriCongViec.anhDaiDien"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hoVaTen">
+                                        {{l('HoVaTen')}}
+                                        <p-sortIcon field="viTriCongViec.hoVaTen"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="maNhanVien">
+                                        {{l('MaNhanVien')}}
+                                        <p-sortIcon field="viTriCongViec.maNhanVien"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="chiNhanh">
+                                        {{l('ChiNhanh')}}
+                                        <p-sortIcon field="viTriCongViec.chiNhanh"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dvt">
+                                        {{l('DVT')}}
+                                        <p-sortIcon field="viTriCongViec.dvt"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayKyHDKTH">
+                                        {{l('NgayKyHDKTH')}}
+                                        <p-sortIcon field="viTriCongViec.ngayKyHDKTH"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayKyHD36TH">
+                                        {{l('NgayKyHD36TH')}}
+                                        <p-sortIcon field="viTriCongViec.ngayKyHD36TH"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayKyHD12TH">
+                                        {{l('NgayKyHD12TH')}}
+                                        <p-sortIcon field="viTriCongViec.ngayKyHD12TH"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayKyHDTV">
+                                        {{l('NgayKyHDTV')}}
+                                        <p-sortIcon field="viTriCongViec.ngayKyHDTV"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayKYHDCTV">
+                                        {{l('NgayKYHDCTV')}}
+                                        <p-sortIcon field="viTriCongViec.ngayKYHDCTV"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayKyHDKV">
+                                        {{l('NgayKyHDKV')}}
+                                        <p-sortIcon field="viTriCongViec.ngayKyHDKV"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayKYHDTT">
+                                        {{l('NgayKYHDTT')}}
+                                        <p-sortIcon field="viTriCongViec.ngayKYHDTT"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ngayKyHD">
+                                        {{l('NgayKyHD')}}
+                                        <p-sortIcon field="viTriCongViec.ngayKyHD"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.ViTriCongViecs.Edit', 'Pages.ViTriCongViecs.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;"
+														(click)="viewViTriCongViecModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+													<a href="javascript:;" *ngIf="permission.isGranted('Pages.ViTriCongViecs.Edit')"
+														(click)="createOrEditViTriCongViecModal.show(record.viTriCongViec.id)">{{l('Edit')}}</a>
+												</li>
+												<li>
+											        <a href="javascript:;" *ngIf="permission.isGranted('Pages.ViTriCongViecs.Delete')"
+														(click)="deleteViTriCongViec(record.viTriCongViec)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TenCty')}}</span>
+											{{record.viTriCongViec.tenCty}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('HopDongHienTai')}}</span>
+											{{record.viTriCongViec.hopDongHienTai}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('SoHD')}}</span>
+											{{record.viTriCongViec.soHD}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DonViCongTacName')}}</span>
+											{{record.viTriCongViec.donViCongTacName}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('ChoNgoi')}}</span>
+											{{record.viTriCongViec.choNgoi}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('NoiDaoTaoID')}}</span>
+											{{record.viTriCongViec.noiDaoTaoID}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('LoaiHopDongID')}}</span>
+											{{record.viTriCongViec.loaiHopDongID}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('MaSoNoiKCB')}}</span>
+											{{record.viTriCongViec.maSoNoiKCB}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('NoiDangKyKCBID')}}</span>
+											{{record.viTriCongViec.noiDangKyKCBID}}
+										</td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayHetHanBHYT')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayHetHanBHYT">
+											{{record.viTriCongViec.ngayHetHanBHYT | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayHetHanBHYT">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('SoTheBHYT')}}</span>
+											{{record.viTriCongViec.soTheBHYT}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('MaTinhCap')}}</span>
+											{{record.viTriCongViec.maTinhCap}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('MaSoBHXH')}}</span>
+											{{record.viTriCongViec.maSoBHXH}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('SoSoBHXH')}}</span>
+											{{record.viTriCongViec.soSoBHXH}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TyLeDongBH')}}</span>
+											{{record.viTriCongViec.tyLeDongBH}}
+										</td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayThamGiaBH')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayThamGiaBH">
+											{{record.viTriCongViec.ngayThamGiaBH | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayThamGiaBH">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('ThamGiaCongDoan')}}</span>
+                                        <div *ngIf="record.viTriCongViec.thamGiaCongDoan" class="text-center"><i class="fa fa-check-circle kt--font-success" title="True"></i></div>
+										<div *ngIf="!record.viTriCongViec.thamGiaCongDoan" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('NganHangCode')}}</span>
+											{{record.viTriCongViec.nganHangCode}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TkNganHang')}}</span>
+											{{record.viTriCongViec.tkNganHang}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DonViSoCongChuanCode')}}</span>
+											{{record.viTriCongViec.donViSoCongChuanCode}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('SoCongChuan')}}</span>
+											{{record.viTriCongViec.soCongChuan}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('LuongDongBH')}}</span>
+											{{record.viTriCongViec.luongDongBH}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('LuongCoBan')}}</span>
+											{{record.viTriCongViec.luongCoBan}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('BacLuongCode')}}</span>
+											{{record.viTriCongViec.bacLuongCode}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('SoNgayPhep')}}</span>
+											{{record.viTriCongViec.soNgayPhep}}
+										</td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayChinhThuc')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayChinhThuc">
+											{{record.viTriCongViec.ngayChinhThuc | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayChinhThuc">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayThuViec')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayThuViec">
+											{{record.viTriCongViec.ngayThuViec | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayThuViec">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayTapSu')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayTapSu">
+											{{record.viTriCongViec.ngayTapSu | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayTapSu">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('SoSoQLLaoDong')}}</span>
+											{{record.viTriCongViec.soSoQLLaoDong}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DiaDiemLamViecCode')}}</span>
+											{{record.viTriCongViec.diaDiemLamViecCode}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('QuanLyGianTiep')}}</span>
+											{{record.viTriCongViec.quanLyGianTiep}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('QuanLyTrucTiep')}}</span>
+											{{record.viTriCongViec.quanLyTrucTiep}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TrangThaiLamViecCode')}}</span>
+											{{record.viTriCongViec.trangThaiLamViecCode}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('Bac')}}</span>
+											{{record.viTriCongViec.bac}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('Cap')}}</span>
+											{{record.viTriCongViec.cap}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('ChucDanh')}}</span>
+											{{record.viTriCongViec.chucDanh}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('MaChamCong')}}</span>
+											{{record.viTriCongViec.maChamCong}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DiaChiLHKC')}}</span>
+											{{record.viTriCongViec.diaChiLHKC}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('EmailLHKC')}}</span>
+											{{record.viTriCongViec.emailLHKC}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DtDiDongLHKC')}}</span>
+											{{record.viTriCongViec.dtDiDongLHKC}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DtNhaRiengLHKC')}}</span>
+											{{record.viTriCongViec.dtNhaRiengLHKC}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('QuanHeLHKC')}}</span>
+											{{record.viTriCongViec.quanHeLHKC}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('HoVaTenLHKC')}}</span>
+											{{record.viTriCongViec.hoVaTenLHKC}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DiaChiHN')}}</span>
+											{{record.viTriCongViec.diaChiHN}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TinhThanhIDHN')}}</span>
+											{{record.viTriCongViec.tinhThanhIDHN}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('QuocGiaHN')}}</span>
+											{{record.viTriCongViec.quocGiaHN}}
+										</td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('LaChuHo')}}</span>
+                                        <div *ngIf="record.viTriCongViec.laChuHo" class="text-center"><i class="fa fa-check-circle kt--font-success" title="True"></i></div>
+										<div *ngIf="!record.viTriCongViec.laChuHo" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('MaSoHoGiaDinh')}}</span>
+											{{record.viTriCongViec.maSoHoGiaDinh}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('SoSoHoKhau')}}</span>
+											{{record.viTriCongViec.soSoHoKhau}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DiaChiHKTT')}}</span>
+											{{record.viTriCongViec.diaChiHKTT}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TinhThanhIDHKTT')}}</span>
+											{{record.viTriCongViec.tinhThanhIDHKTT}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('QuocGiaHKTT')}}</span>
+											{{record.viTriCongViec.quocGiaHKTT}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('Facebook')}}</span>
+											{{record.viTriCongViec.facebook}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('Skype')}}</span>
+											{{record.viTriCongViec.skype}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('NoiSinh')}}</span>
+											{{record.viTriCongViec.noiSinh}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TinhThanhID')}}</span>
+											{{record.viTriCongViec.tinhThanhID}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('NguyenQuan')}}</span>
+											{{record.viTriCongViec.nguyenQuan}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('EmailKhac')}}</span>
+											{{record.viTriCongViec.emailKhac}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('EmailCoQuan')}}</span>
+											{{record.viTriCongViec.emailCoQuan}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('EmailCaNhan')}}</span>
+											{{record.viTriCongViec.emailCaNhan}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DtKhac')}}</span>
+											{{record.viTriCongViec.dtKhac}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DtNhaRieng')}}</span>
+											{{record.viTriCongViec.dtNhaRieng}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DtCoQuan')}}</span>
+											{{record.viTriCongViec.dtCoQuan}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DtDiDong')}}</span>
+											{{record.viTriCongViec.dtDiDong}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TepDinhKem')}}</span>
+											{{record.viTriCongViec.tepDinhKem}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TinhTrangHonNhanCode')}}</span>
+											{{record.viTriCongViec.tinhTrangHonNhanCode}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('XepLoaiCode')}}</span>
+											{{record.viTriCongViec.xepLoaiCode}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('NamTotNghiep')}}</span>
+											{{record.viTriCongViec.namTotNghiep}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('ChuyenNganh')}}</span>
+											{{record.viTriCongViec.chuyenNganh}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('Khoa')}}</span>
+											{{record.viTriCongViec.khoa}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TrinhDoDaoTaoCode')}}</span>
+											{{record.viTriCongViec.trinhDoDaoTaoCode}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TrinhDoVanHoa')}}</span>
+											{{record.viTriCongViec.trinhDoVanHoa}}
+										</td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayHetHan')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayHetHan">
+											{{record.viTriCongViec.ngayHetHan | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayHetHan">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('NoiCap')}}</span>
+											{{record.viTriCongViec.noiCap}}
+										</td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayCap')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayCap">
+											{{record.viTriCongViec.ngayCap | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayCap">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('SoCMND')}}</span>
+											{{record.viTriCongViec.soCMND}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('QuocTich')}}</span>
+											{{record.viTriCongViec.quocTich}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('TonGiao')}}</span>
+											{{record.viTriCongViec.tonGiao}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DanToc')}}</span>
+											{{record.viTriCongViec.danToc}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('ViTriCongViecCode')}}</span>
+											{{record.viTriCongViec.viTriCongViecCode}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DonViCongTacID')}}</span>
+											{{record.viTriCongViec.donViCongTacID}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('MSTCaNhan')}}</span>
+											{{record.viTriCongViec.mstCaNhan}}
+										</td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgaySinh')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngaySinh">
+											{{record.viTriCongViec.ngaySinh | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngaySinh">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('GioiTinhCode')}}</span>
+											{{record.viTriCongViec.gioiTinhCode}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('AnhDaiDien')}}</span>
+											{{record.viTriCongViec.anhDaiDien}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('HoVaTen')}}</span>
+											{{record.viTriCongViec.hoVaTen}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('MaNhanVien')}}</span>
+											{{record.viTriCongViec.maNhanVien}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('ChiNhanh')}}</span>
+											{{record.viTriCongViec.chiNhanh}}
+										</td>
+                                    <td style="width:150px">
+											<span class="ui-column-title"> {{l('DVT')}}</span>
+											{{record.viTriCongViec.dvt}}
+										</td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayKyHDKTH')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayKyHDKTH">
+											{{record.viTriCongViec.ngayKyHDKTH | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayKyHDKTH">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayKyHD36TH')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayKyHD36TH">
+											{{record.viTriCongViec.ngayKyHD36TH | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayKyHD36TH">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayKyHD12TH')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayKyHD12TH">
+											{{record.viTriCongViec.ngayKyHD12TH | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayKyHD12TH">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayKyHDTV')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayKyHDTV">
+											{{record.viTriCongViec.ngayKyHDTV | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayKyHDTV">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayKYHDCTV')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayKYHDCTV">
+											{{record.viTriCongViec.ngayKYHDCTV | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayKYHDCTV">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayKyHDKV')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayKyHDKV">
+											{{record.viTriCongViec.ngayKyHDKV | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayKyHDKV">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayKYHDTT')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayKYHDTT">
+											{{record.viTriCongViec.ngayKYHDTT | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayKYHDTT">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="ui-column-title"> {{l('NgayKyHD')}}</span>
+                                        <span *ngIf="record.viTriCongViec.ngayKyHD">
+											{{record.viTriCongViec.ngayKyHD | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.viTriCongViec.ngayKyHD">-</span>
+                                    </td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getViTriCongViecs($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                            </p-paginator>
+                            <span class="total-records-count">
+                                {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <createOrEditViTriCongViecModal #createOrEditViTriCongViecModal (modalSave)="getViTriCongViecs()"></createOrEditViTriCongViecModal>
+    <viewViTriCongViecModal #viewViTriCongViecModal></viewViTriCongViecModal>
+    
+  </div>
+</div>

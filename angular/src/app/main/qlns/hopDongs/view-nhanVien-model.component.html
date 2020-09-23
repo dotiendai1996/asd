@@ -1,0 +1,238 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #truongGiaoDichForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span>{{l("Xuất dữ liệu chấm công theo tháng")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="filterText">{{l("Tìm kiếm")}}</label>
+                            <input [(ngModel)]="filterText" name="filterText" autoFocus
+                            class="form-control m-input"
+                            [placeholder]="l('Nhập nội dung...')" type="text">
+                        </div>
+                    </div>
+                    <dx-button text="Tìm kiếm" stylingMode="contained" type="default" icon="fa fa-search"
+                        (onClick)="gettHoSos()">
+                    </dx-button>
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTablemodel (onLazyLoad)="getHoSos($event)" [value]="primengTableHelper.records"
+                        rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false"
+                        [lazy]="false" [scrollable]="true" ScrollWidth="100%"
+                        [responsive]="primengTableHelper.isResponsive"
+                        [resizableColumns]="primengTableHelper.resizableColumns">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 70px">
+                                    {{l('STT')}}</th>
+
+                                <th style="width: 200px" pSortableColumn="maChamCong">
+                                    {{l('Mã chấm công')}}
+                                    <p-sortIcon field="maChamCong"></p-sortIcon>
+                                </th>
+                                <th style="width: 200px" pSortableColumn="maNhanVien">
+                                    {{l('Mã nhân viên')}}
+                                    <p-sortIcon field="maNhanVien"></p-sortIcon>
+                                </th>
+                                <th style="width: 250px">
+                                    {{l('Họ và tên')}}
+                                </th>
+                                <th style="width: 200px">
+                                    {{l('Chức vụ')}}
+                                </th>
+                                <th style="width: 250px">
+                                    {{l('Đơn vị công tác')}}
+                                </th>
+                                <th style="width: 200px">
+                                    {{l('Loại hợp đồng')}}
+                                </th>
+
+                                <th style="width: 150px" pSortableColumn="ngaySinh">
+                                    {{l('Ngày sinh')}}
+                                    <p-sortIcon field="ngaySinh"></p-sortIcon>
+                                </th>
+                                <th style="width: 150px" pSortableColumn="creationTime">
+                                    {{l('Giới tính')}}
+                                    <p-sortIcon field="creationTime"></p-sortIcon>
+                                </th>
+                                <th style="width: 200px" pSortableColumn="lastModificationTime">
+                                    {{l('Số CMND')}}
+                                    <p-sortIcon field="lastModificationTime"></p-sortIcon>
+                                </th>
+                                <th style="width: 200px" pSortableColumn="day1">
+                                    {{l('Ngày cấp')}}
+                                    <p-sortIcon field="day1"></p-sortIcon>
+                                </th>
+                                <th style="width: 250px">
+                                    {{l('Nơi cấp')}}
+                                </th>
+                                <th style="width: 150px">
+                                    {{l('MST cá nhân')}}
+                                </th>
+                                <th style="width: 200px">
+                                    {{l('Nguyên quán')}}
+                                </th>
+                                <th style="width: 200px">
+                                    {{l('Địa chỉ HKTT')}}
+                                </th>
+
+                                <th style="width: 200px" pSortableColumn="ngayThuViec">
+                                    {{l('Ngày vào cty')}}
+                                    <p-sortIcon field="ngayThuViec"></p-sortIcon>
+                                </th>
+
+                                <th style="width: 200px" pSortableColumn="ngayHethan">
+                                    {{l('Ngày hết hạn')}}
+                                    <p-sortIcon field="ngayHethan"></p-sortIcon>
+                                </th>
+                                <th style="width: 200px">
+                                    {{l('Số tài khoản')}}
+                                </th>
+                                <th style="width: 200px">
+                                    {{l('Ngân hàng')}}
+                                </th>
+                                <th style="width: 200px">
+                                    {{l('Chi nhánh')}}
+                                </th>
+                                <th style="width: 200px">
+                                    {{l('Só hợp đồng')}}
+                                </th>
+                                <th style="width: 200px">
+                                    {{l('Tên công ty')}}
+                                </th>
+                                <th style="width: 200px">
+                                    {{l('Tình trạng')}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-record="$implicit">
+                            <tr  (click)="startEdit(record.hoSo)">
+                                <td style="width: 70px">
+                                    <span class="ui-column-title">{{l('STT')}}</span>
+                                    {{record.stt}}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Mã chấm công')}}</span>
+                                    {{record.hoSo.maChamCong}}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Mã nhân viên')}}</span>
+                                    {{record.hoSo.maNhanVien}}
+                                </td>
+                                <td style="width: 250px">
+                                    <span class="ui-column-title"> {{l('Họ và tên')}}</span>
+                                    {{record.hoSo.hoVaTen}}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Chức vụ')}}</span>
+                                    {{record.hoSo.chucVu}}
+                                </td>
+                                <td style="width: 250px">
+                                    <span class="ui-column-title">
+                                        {{l('Đơn vị công tác')}}</span>
+                                    {{record.donViCongTacValue}}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Loại hợp đồng')}}</span>
+                                    {{record.loaiHopDongValue}}
+                                </td>
+                                <td style="width: 150px">
+                                    <span class="ui-column-title"> {{l('Ngày sinh')}}</span>
+                                    {{record.hoSo.ngaySinh | date: 'dd/MM/yyyy' }}
+                                </td>
+                                <td style="width: 150px">
+                                    <span class="ui-column-title"> {{l('Giới tính')}}</span>
+                                    {{record.gioiTinhValue }}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Số CMND')}}</span>
+                                    {{record.hoSo.soCMND }}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Ngày cấp')}}</span>
+                                    {{record.hoSo.ngayCap | date: 'dd/MM/yyyy'}}
+                                </td>
+                                <td style="width: 250px">
+                                    <span class="ui-column-title"> {{l('Nơi cấp')}}</span>
+                                    {{record.hoSo.noiCap }}
+                                </td>
+                                <td style="width: 150px">
+                                    <span class="ui-column-title">
+                                        {{l('MST cá nhân')}}</span>
+                                    {{record.hoSo.mSTCaNhan }}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Nguyên quán')}}</span>
+                                    {{record.hoSo.nguyenQuan}}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title">
+                                        {{l('Địa chỉ HKTT')}}</span>
+                                    {{record.hoSo.diaChiHKTT }}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Ngày vào cty')}}</span>
+                                    {{record.hoSo.ngayThuViec | date: 'dd/MM/yyyy'}}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Ngày hết hạn')}}</span>
+                                    {{record.hoSo.ngayHetHan | date: 'dd/MM/yyyy'}}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Số tài khoản')}}</span>
+                                    {{record.hoSo.tkNganHang}}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Ngân hàng')}}</span>
+                                    {{record.hoSo.nganHangCode }}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Chi nhánh')}}</span>
+                                    {{record.hoSo.chiNhanh}}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Số hợp đồng')}}</span>
+                                    {{record.hoSo.soSoQLLaoDong }}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Tên công ty')}}</span>
+                                    {{record.hoSo.tenCty}}
+                                </td>
+                                <td style="width: 200px">
+                                    <span class="ui-column-title"> {{l('Tình trạng')}}</span>
+                                    {{record.tinhTrangNhanSuValue }}
+                                </td>
+                            </tr>
+                        </ng-template>
+                        </p-table>
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginatormodel
+                                (onPageChange)="getHoSos($event)"
+                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                            </p-paginator>
+                            <span class="total-records-count">
+                                {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!truongGiaoDichForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Xuất dữ liệu")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

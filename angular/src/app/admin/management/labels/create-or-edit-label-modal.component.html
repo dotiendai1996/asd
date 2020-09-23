@@ -1,0 +1,91 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #labelForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="label.id">{{l("EditLabel")}}</span>
+                        <span *ngIf="!label.id">{{l("CreateNewLabel")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="Label_Name">{{l("Name")}}</label>
+									<input type="text" id="Label_Name" class="form-control" [(ngModel)]="label.name" name="Name"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Label_Title">{{l("Title")}}</label>
+									<input type="text" id="Label_Title" class="form-control" [(ngModel)]="label.title" name="Title"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Label_Description">{{l("Description")}}</label>
+									<input type="text" id="Label_Description" class="form-control" [(ngModel)]="label.description" name="Description"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Label_Icon">{{l("Icon")}}</label>
+									<input type="text" id="Label_Icon" class="form-control" [(ngModel)]="label.icon" name="Icon"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Label_Link">{{l("Link")}}</label>
+									<input type="text" id="Label_Link" class="form-control" [(ngModel)]="label.link" name="Link"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Label_Parent">{{l("Parent")}}</label>
+									<!-- <input type="number" id="Label_Parent" class="form-control" [(ngModel)]="label.parent" name="Parent"  /> -->
+									<select name="Parent" id="Label_Parent" class="form-control" [(ngModel)]="label.parent">
+										<option *ngFor="let parent of parentOptions" [value]="parent.id">{{parent.title}}</option>
+									</select>
+								</div>
+					
+								<div class="form-group">
+									<label for="Label_Index">{{l("Index")}}</label>
+									<input type="number" id="Label_Index" class="form-control" [(ngModel)]="label.index" name="Index"  />
+								</div>
+
+								<!-- <div class="form-group">
+									<label for="Label_SQLString">{{l("SqlString")}}</label>
+									<input id="Label_SQLString" class="form-control" [(ngModel)]="label.sqlString" name="SqlString"  />
+								</div> -->
+
+								<div class="form-group">
+									<label for="Label_SqlString">{{l("SqlString")}}</label>
+									<select name="SqlString" id="Label_SqlString" class="form-control" [(ngModel)]="label.sqlString">
+										<option *ngFor="let code of codeOptions" [value]="code.code">{{code.code}}</option>
+									</select>
+								</div>
+
+								<div class="m-checkbox-list">
+									<label for="Label_IsActive" class="kt-checkbox">
+										<input id="Label_IsActive" type="checkbox" name="IsActive" [(ngModel)]="label.isActive"> 
+										{{l("IsActive")}}
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="form-group">
+									<label for="Label_RequiredPermissionName">{{l("RequiredPermissionName")}}</label>
+									<input type="text" id="Label_RequiredPermissionName" class="form-control" [(ngModel)]="label.requiredPermissionName" name="RequiredPermissionName"    />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!labelForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

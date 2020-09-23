@@ -1,0 +1,391 @@
+﻿<div [@routerTransition]>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <div class="col-xl-12" style="padding: 4px 17px 4px 1px;">
+                        <dx-button #myButton text="Tìm kiếm" stylingMode="text" type="default" icon="fa flaticon-search-1"
+                            (onClick)="getDataChamCongs()"> </dx-button>
+                    </div>
+                </div>
+                <div class="kt-subheader__toolbar">
+                    <div class="kt-subheader__wrapper">
+                        <button (click)="exportChamCongByFilterToExcel()" class="btn btn-outline-success"><i
+                            class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                        <button (click)="exportToExcel()" class="btn btn-outline-success"><i
+                                class="fa fa-file-excel"></i> {{l("Báo cáo tháng")}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body">
+
+                    <div class="kt-subheader__main">
+                        <h3 class="kt-subheader__title">
+                            <span> <i class="fas fa-home"></i>  {{l("Trang chủ")}}   | {{l("Danh sách chấm công")}} </span>
+                        </h3>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <dx-button class="pull-right" style="margin-bottom: 10px;" stylingMode="contained" icon="pulldown" text="Làm mới" type="default"
+                                    [width]="140" (onClick)="clearFilter()">
+                                </dx-button>
+                            </div>
+                        </div>
+
+                    <form class="kt-form" autocomplete="off">
+                        <div>
+                            <div class="row align-items-center">
+                                <div class="col-xl-12">
+                                    <div class="form-group m-form__group align-items-center">
+                                        <div class="input-group">
+                                            <input [(ngModel)]="filterText" name="filterText" autoFocus
+                                                class="form-control m-input" [placeholder]="l('SearchWithThreeDot')"
+                                                type="text">
+                                            <span class="input-group-btn">
+                                                <button (click)="getDataChamCongs()" class="btn btn-action"
+                                                    type="submit"><i class="flaticon-search-1"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" [hidden]="!advancedFiltersAreShown">
+                                <div class="col-md-12">
+                                    <div class="kt-separator kt-separator--border-dashed"></div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="phongBanFilter">{{l("Công ty")}}</label>
+                                        <select class="form-control" id="congTyFilter" name="congTyFilter"
+                                            [(ngModel)]="congTyFilter" (change)="getPhongBan($event)">
+                                            <option value="">--- Tất cả ---</option>
+                                            <option *ngFor="let item of congty" [ngValue]="item.cdName">
+                                                {{item.cdName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="phongBanFilter">{{l("Phòng ban")}}</label>
+                                        <select class="form-control" id="phongBanFilter" name="phongBanFilter"
+                                            [(ngModel)]="phongBanFilter">
+                                            <option value="">--- Tất cả ---</option>
+                                            <option *ngFor="let item of congViecList" [ngValue]="item.id">
+                                                {{item.displayName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="chucDanhFilter">{{l("Chức vụ")}}</label>
+                                        <select class="form-control" id="chucDanhFilter" name="chucDanhFilter"
+                                            [(ngModel)]="chucDanhFilter">
+                                            <option value="">--- Tất cả ---</option>
+                                            <option *ngFor="let item of viTriCongViec" [ngValue]="item.value">
+                                                {{item.value}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="minProcessDateFilter">{{l("Từ ngày")}}</label>
+                                        <input #SampleDatePicker id="minProcessDateFilter" name="minProcessDateFilter"
+                                            type="text" class="form-control" readonly="readonly"
+                                            bsDatepicker datePickerMomentModifier
+                                            [(date)]="minProcessDateFilter" [bsConfig]="{ adaptivePosition: true ,dateInputFormat: 'DD/MM/YYYY'}"
+											value="{{ minProcessDateFilter | date:'dd/MM/yyyy' }}"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="maxProcessDateFilter">{{l("Đến ngày")}}</label>
+                                        <input #SampleDatePicker id="maxProcessDateFilter" name="maxProcessDateFilter"
+                                            type="text" class="form-control" readonly="readonly"
+                                            bsDatepicker datePickerMomentModifier
+                                            [(date)]="maxProcessDateFilter" [bsConfig]="{ adaptivePosition: true ,dateInputFormat: 'DD/MM/YYYY'}"
+											value="{{ maxProcessDateFilter | date:'dd/MM/yyyy' }}"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="diTreFilter" class="kt-checkbox">
+                                            <input id="diTreFilter" type="checkbox" name="diTreFilter"
+                                                [(ngModel)]="diTreFilter">
+                                            {{"Đi trễ" | localize}}
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="veSomFilter" class="kt-checkbox">
+                                            <input id="veSomFilter" type="checkbox" name="veSomFilter"
+                                                [(ngModel)]="veSomFilter">
+                                            {{"Về sớm" | localize}}
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="tangCaFilter" class="kt-checkbox">
+                                            <input id="tangCaFilter" type="checkbox" name="tangCaFilter"
+                                                [(ngModel)]="tangCaFilter">
+                                            {{"Tăng ca" | localize}}
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="nghiPhepFilter" class="kt-checkbox">
+                                            <input id="nghiPhepFilter" type="checkbox" name="nghiPhepFilter"
+                                                [(ngModel)]="nghiPhepFilter">
+                                            {{"Nghỉ phép" | localize}}
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="congTacFilter" class="kt-checkbox">
+                                            <input id="congTacFilter" type="checkbox" name="congTacFilter"
+                                                [(ngModel)]="congTacFilter">
+                                            {{"Công tác" | localize}}
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="quenChamCongFilter" class="kt-checkbox">
+                                            <input id="quenChamCongFilter" type="checkbox" name="quenChamCongFilter"
+                                                [(ngModel)]="quenChamCongFilter">
+                                            {{"Quên chấm công" | localize}}
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-sm-12">
+                                    <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                        (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                            class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                    <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                        (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                            class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row align-items-center">
+                        <!--<Primeng-Datatable-Start>-->
+                        <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                            <p-table #dataTable scrollHeight="450px" (onLazyLoad)="getDataChamCongs($event)"
+                                [value]="primengTableHelper.records"
+                                rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false"
+                                [lazy]="false" [scrollable]="true" ScrollWidth="100%"
+                                [responsive]="primengTableHelper.isResponsive"
+                                [resizableColumns]="primengTableHelper.resizableColumns">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 80px" pSortableColumn="rowIndex">
+                                            {{l('STT')}}
+                                            <p-sortIcon field="rowIndex"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="maChamCong">
+                                            {{l('Mã chấm công')}}
+                                            <p-sortIcon field="maChamCong"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="maNhanVien">
+                                            {{l('Mã nhân viên')}}
+                                            <p-sortIcon field="maNhanVien"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="hoVaTen">
+                                            {{l('Họ & tên')}}
+                                            <p-sortIcon field="hoVaTen"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="donViCongTacName">
+                                            {{l('Phòng ban')}}
+                                            <p-sortIcon field="donViCongTacName"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="chucDanh">
+                                            {{l('Chức vụ')}}
+                                            <p-sortIcon field="chucDanh"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="processDate">
+                                            {{l('Ngày chấm công')}}
+                                            <p-sortIcon field="processDate"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="checkTimeIn">
+                                            {{l('Giờ vào')}}
+                                            <p-sortIcon field="checkTimeIn"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="timeViolatingRuleFirstDuration">
+                                            {{l('Số phút đi trễ')}}
+                                            <p-sortIcon field="timeViolatingRuleFirstDuration"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="checkTimeOut">
+                                            {{l('Giờ ra')}}
+                                            <p-sortIcon field="checkTimeOut"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="timeViolatingRuleLastDuration">
+                                            {{l('Số phút về sớm')}}
+                                            <p-sortIcon field="timeViolatingRuleLastDuration"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="timeOTDuration">
+                                            {{l('Số giờ tăng ca')}}
+                                            <p-sortIcon field="timeOTDuration"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="timeWorkDuration">
+                                            {{l('Số giờ làm việc')}}
+                                            <p-sortIcon field="timeWorkDuration"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 100px" pSortableColumn="WorkOffDate">
+                                            {{l('Nghỉ phép')}}
+                                            <p-sortIcon field="WorkOffDate"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 100px" pSortableColumn="MissionDate">
+                                            {{l('Công tác')}}
+                                            <p-sortIcon field="MissionDate"></p-sortIcon>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-record="$implicit">
+                                    <tr [ngClass] = "{'highlighted' : record.rowIndex == selectedName}" style="white-space: nowrap;" >
+
+                                        <td style="width: 80px">
+                                            <span class="ui-column-title"> {{l('STT')}}</span>
+                                            {{record.rowIndex}}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title"> {{l('Mã chấm công')}}</span>
+                                            {{record.maChamCong}}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title"> {{l('Mã nhân viên')}}</span>
+                                            {{record.maNhanVien}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Họ & tên')}}</span>
+                                            {{record.hoVaTen}}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title"> {{l('Phòng ban')}}</span>
+                                            {{record.donViCongTacName}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Chức vụ')}}</span>
+                                            {{record.chucDanh}}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title"> {{l('Ngày chấm công')}}</span>
+                                            {{record.processDate | date: 'dd/MM/yyyy'}}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title"> {{l('Giờ vào')}}</span>
+                                            {{record.checkTimeIn}}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title"> {{l('Số phút đi trễ')}}</span>
+                                            {{record.timeViolatingRuleFirstDuration}}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title"> {{l('Giờ ra')}}</span>
+                                            {{record.checkTimeOut}}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title"> {{l('Số phút về sớm')}}</span>
+                                            {{record.timeViolatingRuleLastDuration}}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title"> {{l('Số giờ tăng ca')}}</span>
+                                            {{record.timeOTDuration}}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title"> {{l('Số giờ làm việc')}}</span>
+                                            {{record.timeWorkDuration}}
+                                        </td>
+                                        <td style="width: 100px">
+                                            <span class="ui-column-title"> {{l('Nghỉ phép')}}</span>
+                                            {{record.workOffDate}}
+                                        </td>
+                                        <td style="width: 100px">
+                                            <span class="ui-column-title"> {{l('Công tác')}}</span>
+                                            {{record.missionDate}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td style="width: 2048px" colspan="100">{{l('NoData')}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <div class="primeng-paging-container">
+                                <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                                    (onPageChange)="getDataChamCongs($event)"
+                                    [totalRecords]="primengTableHelper.totalRecordsCount"
+                                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                                </p-paginator>
+                                <span class="total-records-count">
+                                    {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                                </span>
+                            </div>
+                        </div>
+                        <!--<Primeng-Datatable-End>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <exportChamCongModal #exportChamCongModal ></exportChamCongModal>
+
+    </div>
+</div>
+
+<style>
+
+
+    #myButton  {
+     color: white;
+
+ }
+  .dx-widget *:before {
+     -webkit-box-sizing: border-box;
+     box-sizing: border-box;
+     color: white;
+ }
+ .dx-button-content {
+     color: white;
+ }
+ .dx-row.dx-column-lines.dx-header-row
+ {
+     background-color:#248cbf ;
+ }
+ .dx-datagrid-borders > .dx-datagrid-headers, .dx-datagrid-borders > .dx-datagrid-filter-panel {
+     border-top: 1px solid #ddd;
+ }
+ .dx-checkbox-icon {
+     width: 22px;
+     height: 22px;
+     border-radius: 2px;
+     border: 1px solid #ddd;
+     background-color:#248cbf ;
+ }
+ tr.highlighted {
+        background-color: #639bb7 !important;
+        color: #ffffff !important;
+    }
+    tr:hover {
+        background-color: #639bb7 !important;
+        color: #ffffff !important;
+    }
+ </style>

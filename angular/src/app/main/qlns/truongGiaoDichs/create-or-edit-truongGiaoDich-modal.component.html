@@ -1,0 +1,77 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #truongGiaoDichForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="truongGiaoDich.id">{{l("EditTruongGiaoDich")}}</span>
+                        <span *ngIf="!truongGiaoDich.id">{{l("CreateNewTruongGiaoDich")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label class="required" for="TruongGiaoDich_Code">{{l("Mã phân hệ")}}</label>
+									<input #code="ngModel" type="text" id="TruongGiaoDich_Code" class="form-control" [(ngModel)]="truongGiaoDich.code" name="Code"  required pattern="[^ ](.*|\n|\r|\r\n)*" />
+                                    <!-- <validation-messages [formCtrl]="code"></validation-messages> -->
+                                    <div *ngIf="code.invalid && (code.dirty || code.touched)" class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="code?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="code?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>                      
+                                    </div>
+                                </div>
+					
+								<div class="form-group">
+									<label class="required" for="TruongGiaoDich_CDName">{{l("Ký hiệu giá trị trường")}}</label>
+									<input #cdName="ngModel" type="text" id="TruongGiaoDich_CDName" class="form-control" [(ngModel)]="truongGiaoDich.cdName" name="CDName" required pattern="[^ ](.*|\n|\r|\r\n)*"  />
+                                    <div *ngIf="cdName.invalid && (cdName.dirty || cdName.touched)" class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="cdName?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="cdName?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>                      
+                                    </div>
+                                </div>
+					
+								<div class="form-group">
+									<label class="required" for="TruongGiaoDich_Value">{{l("Tên giá trị trường")}}</label>
+									<input #value="ngModel" type="text" id="TruongGiaoDich_Value" class="form-control" [(ngModel)]="truongGiaoDich.value" name="Value" required pattern="[^ ](.*|\n|\r|\r\n)*"  />
+                                    <div *ngIf="value.invalid && (value.dirty || value.touched)" class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="value?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="value?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>                      
+                                    </div>
+                                </div>
+					
+								<div class="form-group">
+									<label for="TruongGiaoDich_GhiChu">{{l("GhiChu")}}</label>
+									<input type="text" id="TruongGiaoDich_GhiChu" class="form-control" [(ngModel)]="truongGiaoDich.ghiChu" name="GhiChu"    />
+                                </div>
+                                <div class="form-group">
+									<label for="TruongGiaoDich_DisplayOrder">{{l("Số thứ tự hiển thị")}}</label>
+									<input type="text" id="TruongGiaoDich_DisplayOrder" class="form-control" [(ngModel)]="truongGiaoDich.displayOrder" name="DisplayOrde"    />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!truongGiaoDichForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

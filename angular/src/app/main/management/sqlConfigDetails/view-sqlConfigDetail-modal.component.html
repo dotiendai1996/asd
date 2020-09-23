@@ -1,0 +1,98 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SqlConfigId")}} :</h6>
+                        {{ item.sqlConfigDetail.sqlConfigId }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Code")}} :</h6>
+                        {{ item.sqlConfigDetail.code }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Name")}} :</h6>
+                        {{ item.sqlConfigDetail.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Format")}} :</h6>
+                        {{ item.sqlConfigDetail.format }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Type")}} :</h6>
+                        {{ item.sqlConfigDetail.type }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Width")}} :</h6>
+                        {{ item.sqlConfigDetail.width }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ColNum")}} :</h6>
+                        {{ item.sqlConfigDetail.colNum }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("GroupLevel")}} :</h6>
+                        {{ item.sqlConfigDetail.groupLevel }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("IsDisplay")}} :</h6>
+                        {{ item.sqlConfigDetail.isDisplay }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Order")}} :</h6>
+                        {{ item.sqlConfigDetail.order }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TextAlign")}} :</h6>
+                        {{ item.sqlConfigDetail.textAlign }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Version")}} :</h6>
+                        {{ item.sqlConfigDetail.version }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("IsSum")}} :</h6>
+                        {{ item.sqlConfigDetail.isSum }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("IsFreePane")}} :</h6>
+                        {{ item.sqlConfigDetail.isFreePane }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("IsParent")}} :</h6>
+                        {{ item.sqlConfigDetail.isParent }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ParentCode")}} :</h6>
+                        {{ item.sqlConfigDetail.parentCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("GroupSort")}} :</h6>
+                        {{ item.sqlConfigDetail.groupSort }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("CellTemplate")}} :</h6>
+                        {{ item.sqlConfigDetail.cellTemplate }}
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-action blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

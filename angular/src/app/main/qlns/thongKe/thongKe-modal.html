@@ -1,0 +1,337 @@
+<div [@routerTransition]>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <div class="col-xl-12" style="padding-top: 5px;">
+                        <dx-button text="Lọc dữ liệu" type="success" icon="save" (onClick)="locDuLieu()"> </dx-button>                     
+                        &nbsp;
+                        <dx-button text="Xuất dữ liệu" type="success" icon="arrowdown" (onClick)="xuatDuLieu()"> </dx-button>
+                        &nbsp;
+                        <dx-button text="Làm tươi" type="success" icon="pulldown" (onClick)="restart()"> </dx-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="modal-body">
+                    <h3 class="kt-subheader__title">
+                        <span style="font-family: Arial, Helvetica, sans-serif;
+                        font-size: 76%;
+                        font-weight: bold;
+                        color: #246faf;"> <i class="fas fa-home"></i> {{l("Trang chủ")}} | {{l("Thống kê nhân sự")}} </span>
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                         
+                                <div class="dx-field-label"> Chọn lọc theo</div>
+                                <div class="dx-field-value">
+                                    <dx-select-box #typeExport text="In theo" id="typeExport" [items]="data_typeExport"
+                                        valueExpr="key" displayExpr="type" [(value)]="typeValue"
+                                        (onValueChanged)="typeChangedOption($event)">
+                                    </dx-select-box>
+                                </div>
+                           
+                        </div>
+                        <div class="col-md-4">
+                            <div class="dx-field-label" style="padding-left: 20px">{{fromLabel}}</div>
+                            <div class="dx-field-value" id="firstElement">
+                                <div id="fromValue"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="toValueDiv">
+                            <div class="dx-field-label" style="padding-left: 20px">{{toLabel}}</div>
+                            <div class="dx-field-value" id="secondElement">
+                          
+                                <div id="toValue"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-4">
+                         
+                                <div class="dx-field-label"> Chọn công ty</div>
+                                <div class="dx-field-value">
+                                    <dx-select-box #typeExport1  id="typeExport1" [items]="congTY"
+                                        valueExpr="cdName" displayExpr="cdName" [(value)]="typeValue1"
+                                        (onValueChanged)="getDaTa($event)">
+                                    </dx-select-box>
+                                </div>
+                           
+                        </div>
+                       
+                    </div>
+                 
+                    <br>
+                    <br>
+                    <div class="row align-items-center">
+                        <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                            <p-table #dataTable (onLazyLoad)="getHoSos($event)" [value]="primengTableHelper.records"
+                                rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false"
+                                [lazy]="false" [scrollable]="true" ScrollWidth="100%"
+                                [responsive]="primengTableHelper.isResponsive"
+                                [resizableColumns]="primengTableHelper.resizableColumns">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 70px">
+                                            {{l('STT')}}</th>
+
+                                        <th style="width: 200px" pSortableColumn="maChamCong">
+                                            {{l('Mã chấm công')}}
+                                            <p-sortIcon field="maChamCong"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="maNhanVien">
+                                            {{l('Mã nhân viên')}}
+                                            <p-sortIcon field="maNhanVien"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 250px">
+                                            {{l('Họ và tên')}}
+                                        </th>
+                                        <th style="width: 200px">
+                                            {{l('Chức vụ')}}
+                                        </th>
+                                        <th style="width: 250px">
+                                            {{l('Đơn vị công tác')}}
+                                        </th>
+                                        <th style="width: 200px">
+                                            {{l('Loại hợp đồng')}}
+                                        </th>
+
+                                        <th style="width: 150px" pSortableColumn="ngaySinh">
+                                            {{l('Ngày sinh')}}
+                                            <p-sortIcon field="ngaySinh"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="creationTime">
+                                            {{l('Giới tính')}}
+                                            <p-sortIcon field="creationTime"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="lastModificationTime">
+                                            {{l('Số CMND')}}
+                                            <p-sortIcon field="lastModificationTime"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px" pSortableColumn="day1">
+                                            {{l('Ngày cấp')}}
+                                            <p-sortIcon field="day1"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 250px">
+                                            {{l('Nơi cấp')}}
+                                        </th>
+                                        <th style="width: 150px">
+                                            {{l('MST cá nhân')}}
+                                        </th>
+                                        <th style="width: 200px">
+                                            {{l('Nguyên quán')}}
+                                        </th>
+                                        <th style="width: 200px">
+                                            {{l('Địa chỉ HKTT')}}
+                                        </th>
+
+                                        <th style="width: 200px" pSortableColumn="ngayThuViec">
+                                            {{l('Ngày vào cty')}}
+                                            <p-sortIcon field="ngayThuViec"></p-sortIcon>
+                                        </th>
+
+                                        <th style="width: 200px" pSortableColumn="ngayHethan">
+                                            {{l('Ngày hết hạn')}}
+                                            <p-sortIcon field="ngayHethan"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 200px">
+                                            {{l('Số tài khoản')}}
+                                        </th>
+                                        <th style="width: 200px">
+                                            {{l('Ngân hàng')}}
+                                        </th>
+                                        <th style="width: 200px">
+                                            {{l('Chi nhánh')}}
+                                        </th>
+                                        <th style="width: 200px">
+                                            {{l('Só hợp đồng')}}
+                                        </th>
+                                        <th style="width: 200px">
+                                            {{l('Tên công ty')}}
+                                        </th>
+                                        <th style="width: 200px">
+                                            {{l('Tình trạng')}}
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-record="$implicit">
+
+                                    <tr  (mouseover)="highlightRow(record)"
+                                        [ngClass] = "{'highlight' : record.hoSo.id == selectedName}"  >
+                                  
+                                        <td style="width: 70px">
+                                            <span class="ui-column-title">{{l('STT')}}</span>
+                                            {{record.stt}}
+                                        </td>
+                                       
+
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Mã chấm công')}}</span>
+                                            {{record.hoSo.maChamCong}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Mã nhân viên')}}</span>
+                                            {{record.hoSo.maNhanVien}}
+                                        </td>
+                                        <td style="width: 250px">
+                                            <span class="ui-column-title"> {{l('Họ và tên')}}</span>
+                                            {{record.hoSo.hoVaTen}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Chức vụ')}}</span>
+                                            {{record.hoSo.chucVu}}
+                                        </td>
+                                        <td style="width: 250px">
+                                            <span class="ui-column-title">
+                                                {{l('Đơn vị công tác')}}</span>
+                                            {{record.donViCongTacValue}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Loại hợp đồng')}}</span>
+                                            {{record.loaiHopDongValue}}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title"> {{l('Ngày sinh')}}</span>
+                                            {{record.hoSo.ngaySinh | date: 'dd/MM/yyyy' }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title"> {{l('Giới tính')}}</span>
+                                            {{record.gioiTinhValue }}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Số CMND')}}</span>
+                                            {{record.hoSo.soCMND }}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Ngày cấp')}}</span>
+                                            {{record.hoSo.ngayCap | date: 'dd/MM/yyyy'}}
+                                        </td>
+                                        <td style="width: 250px">
+                                            <span class="ui-column-title"> {{l('Nơi cấp')}}</span>
+                                            {{record.hoSo.noiCap }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="ui-column-title">
+                                                {{l('MST cá nhân')}}</span>
+                                            {{record.hoSo.mSTCaNhan }}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Nguyên quán')}}</span>
+                                            {{record.hoSo.nguyenQuan}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title">
+                                                {{l('Địa chỉ HKTT')}}</span>
+                                            {{record.hoSo.diaChiHKTT }}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Ngày vào cty')}}</span>
+                                            {{record.hoSo.ngayThuViec | date: 'dd/MM/yyyy'}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Ngày hết hạn')}}</span>
+                                            {{record.hoSo.ngayHetHan | date: 'dd/MM/yyyy'}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Số tài khoản')}}</span>
+                                            {{record.hoSo.tkNganHang}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Ngân hàng')}}</span>
+                                            {{record.hoSo.nganHangCode }}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Chi nhánh')}}</span>
+                                            {{record.hoSo.chiNhanh}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Số hợp đồng')}}</span>
+                                            {{record.hoSo.soSoQLLaoDong }}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Tên công ty')}}</span>
+                                            {{record.hoSo.tenCty}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            <span class="ui-column-title"> {{l('Tình trạng')}}</span>
+                                            {{record.tinhTrangNhanSuValue }}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                                {{l('NoData')}}
+                            </div>
+                            <div class="primeng-paging-container">
+                                <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                                    (onPageChange)="getHoSos($event)"
+                                    [totalRecords]="primengTableHelper.totalRecordsCount"
+                                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                                </p-paginator>
+                                <span class="total-records-count">
+                                    {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #myButton {
+        color: white;
+
+    }
+
+    .dx-widget *:before {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        color: white;
+    }
+
+    .dx-button-content {
+        color: white;
+    }
+
+    .dx-row.dx-column-lines.dx-header-row {
+        background-color: #248cbf;
+    }
+
+    .dx-datagrid-borders>.dx-datagrid-headers,
+    .dx-datagrid-borders>.dx-datagrid-filter-panel {
+        border-top: 1px solid #ddd;
+    }
+    .dx-calendar-navigator .dx-calendar-caption-button.dx-button .dx-button-content {
+    padding: 2px 15px 4px;
+    color: white;
+}
+
+    .dx-checkbox-icon {
+        width: 22px;
+        height: 22px;
+        border-radius: 2px;
+        border: 1px solid #ddd;
+        background-color: #248cbf;
+    }
+    tr.highlight {
+        background-color: #639bb7 !important;
+        color: #ffffff !important;
+    }
+    
+    /* #gridContainer .dx-scrollable-scroll {  
+     height: 23px !important;  
+ }  
+     #gridContainer .dx-scrollable-scroll-content {  
+         background-color:#248cbf !important;
+         height: 23px !important;
+     }  */
+</style>

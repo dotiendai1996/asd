@@ -1,0 +1,66 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #noiDaoTaoForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="noiDaoTao.id">{{l("EditNoiDaoTao")}}</span>
+                        <span *ngIf="!noiDaoTao.id">{{l("CreateNewNoiDaoTao")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label class="required" for="NoiDaoTao_TenNoiDaoTao">{{l("TenNoiDaoTao")}}</label>
+									<input #tenNdt="ngModel" type="text" id="NoiDaoTao_TenNoiDaoTao" class="form-control" [(ngModel)]="noiDaoTao.tenNoiDaoTao" name="TenNoiDaoTao" required pattern="[^ ](.*|\n|\r|\r\n)*" />
+                                    <!-- <validation-messages [formCtrl]="tenNdt"></validation-messages> -->
+                                    <div *ngIf="tenNdt.invalid && (tenNdt.dirty || tenNdt.touched)" class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="tenNdt?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="tenNdt?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>                      
+                                    </div>
+                                </div>
+					
+								<div class="form-group">
+									<label for="NoiDaoTao_MaNoiDaoTao">{{l("MaNoiDaoTao")}}</label>
+									<input #maNdt="ngModel" type="text" id="NoiDaoTao_MaNoiDaoTao" class="form-control" [(ngModel)]="noiDaoTao.maNoiDaoTao" name="MaNoiDaoTao" required pattern="[^ ](.*|\n|\r|\r\n)*"/>
+                                    <!-- <validation-messages [formCtrl]="maNdt"></validation-messages> -->
+                                    <div *ngIf="maNdt.invalid && (maNdt.dirty || maNdt.touched)" class="has-danger ">
+                                        <div class="form-control-feedback" *ngIf="maNdt?.errors.required">
+                                            Trường này là bắt buộc.
+                                        </div>
+                                        <div class="form-control-feedback" *ngIf="maNdt?.errors.pattern">
+                                            Không nhập ký tự trắng đầu tiên.
+                                        </div>                      
+                                    </div>
+                                </div>
+					
+								<div class="form-group">
+									<label for="NoiDaoTao_DiaChi">{{l("DiaChi")}}</label>
+									<input type="text" id="NoiDaoTao_DiaChi" class="form-control" [(ngModel)]="noiDaoTao.diaChi" name="DiaChi"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="NoiDaoTao_KhuVuc">{{l("KhuVuc")}}</label>
+									<input type="text" id="NoiDaoTao_KhuVuc" class="form-control" [(ngModel)]="noiDaoTao.khuVuc" name="KhuVuc"    />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!noiDaoTaoForm.form.valid || mndtExists" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

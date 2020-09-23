@@ -1,0 +1,204 @@
+    <!-- <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card card-outline-info">
+                <div class="tab-content">
+                    <div id="tab2" class="tab-pane">
+                        <div class="row" style="margin: 20px">
+                            <h3>{{reportName}}</h3>
+                            <div class="col-md-12">
+                                <dx-text-area  [height]="150"
+                                [(value)]="sqlContent"></dx-text-area>
+                            </div>
+                            <div class="col-md-12 justify-content-center" style="margin-top: 20px; text-align: center;margin-bottom: 50px;">
+                                <dx-button text="Kiểm tra" icon="fa fa-check-circle" type="success" (onClick)="check()"></dx-button>
+                                <dx-button text="Tạo cột" icon="fa fa-plus" type="success"  (onClick)="createColumn()"></dx-button>
+                                <dx-button text="Lưu" icon="fa fa-save" type="success"  (onClick)="save()"></dx-button>
+                                <dx-button text="Quay lại" icon="fa fa-arrow-left" (onClick)="back()"></dx-button>
+                            </div>
+                            <div class="col-md-12">
+                                <dx-data-grid 
+                                    #data2table
+                                    showRowLines="true" 
+                                    showBorders="true" 
+                                    [allowColumnResizing]="true" 
+                                    [columnAutoWidth]="true"
+                                    (onRowUpdated)="onCreateColumnRowUpdated($event)"
+                                    (onRowUpdating)="onCreateColumnRowUpdating($event)" 
+                                    dataSource="dataSourceTab2">
+                                    <dxo-editing 
+                                        mode="batch"
+                                        [allowUpdating]="true"
+                                        >
+                                    </dxo-editing> 
+                                    <dxi-column caption="Code" [allowEditing]="false" width="100" dataField="code"  >
+                                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                                    </dxi-column>
+                                    <dxi-column caption="Tên" width="200" dataField="name" >
+                                    </dxi-column>
+
+                                    <dxi-column caption="Kiểu dữ liệu" dataField="type" width="150" >
+                                        <dxo-lookup
+                                            dataSource="_dataType"
+                                            displayExpr="display"
+                                            valueExpr="key">
+                                        </dxo-lookup>
+                                    </dxi-column>
+                                    <dxi-column caption="Định dạng" width="100"  dataField="format" dataType="string">
+                                    </dxi-column>
+                                    <dxi-column caption="Độ rộng" width="100" dataField="width" dataType="number">
+                                    </dxi-column>
+                                    <dxi-column caption="Group level" width="100" dataField="groupLevel" dataType="number" >
+                                            <dxo-lookup
+                                            dataSource="groupLeveldata"
+                                            displayExpr="display"
+                                            valueExpr="key">
+                                            </dxo-lookup>
+                                    </dxi-column>
+                                    <dxi-column caption="Sắp xếp" width="100" dataField="groupSort" dataType="number" >
+                                        <dxo-lookup
+                                        dataSource="groupSortdata"
+                                        displayExpr="display"
+                                        valueExpr="key">
+                                        </dxo-lookup>
+                                    </dxi-column>
+                                    <dxi-column caption="Thứ tự cột" width="100" dataField="colnum" dataType="number" >
+                                    </dxi-column>
+                                    <dxi-column caption="Căn lề"  alignment="right"
+                                            dataField="textAlign"
+                                            [width]="125">         
+                                            <dxo-lookup
+                                                dataSource="textAlignment"
+                                                displayExpr="display"
+                                                valueExpr="key">
+                                            </dxo-lookup>
+                                    </dxi-column>
+                                    <dxi-column caption="Hoạt động" width="100" dataField='isActive'  dataType="boolean" alignment="center" >
+                                    </dxi-column>
+                                    <dxi-column caption="Hiển thị" width="100" dataField="isDisplay" dataType="boolean" alignment="center" >
+                                    </dxi-column>
+                                    <dxi-column caption="Is Sum" width="100" dataField='isSum' dataType="boolean" alignment="center" >
+                                    </dxi-column>
+                                </dx-data-grid>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+    <div [@routerTransition]>
+        <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span><a routerLink="/app/main/management/sqlConfigs">{{l("SqlConfigs")}}</a></span>
+                </h3>
+                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                <span class="kt-subheader__desc">
+                    {{l("SqlConfigsHeaderInfo")}}
+                </span>
+            </div>
+            <div class="kt-subheader__toolbar">
+                
+            </div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body">
+                    <div class="col-md-12">
+                        <dx-text-area  [height]="150"
+                        [(value)]="sqlContent"></dx-text-area>
+                    </div>
+                    <div class="col-md-12 justify-content-center" style="margin-top: 20px; text-align: center;margin-bottom: 50px;">
+                        <dx-button text="Kiểm tra" icon="fa fa-check-circle" type="success" (onClick)="check()"></dx-button>
+                        <dx-button text="Tạo cột" icon="fa fa-plus" type="success"  (onClick)="createColumn()"></dx-button>
+                        <dx-button text="Lưu" icon="fa fa-save" type="success"  (onClick)="save()"></dx-button>
+                        <dx-button text="Quay lại" icon="fa fa-arrow-left" (onClick)="back()"></dx-button>
+                    </div>
+    
+                    <div class="row align-items-center">
+                        <!--<Primeng-Datatable-Start>-->
+                        <div class="primeng-datatable-container col-12"
+                            [busyIf]="primengTableHelper.isLoading">
+                            <dx-data-grid 
+                                    #data2table
+                                    showRowLines="true" 
+                                    showBorders="true" 
+                                    allowColumnResizing="true" 
+                                    columnAutoWidth="true"
+                                    (onRowUpdated)="onCreateColumnRowUpdated($event)"
+                                    (onRowUpdating)="onCreateColumnRowUpdating($event)" 
+                                    dataSource="dataSourceTab2">
+                                    <dxo-paging [pageSize]="100"></dxo-paging>
+                                    <dxo-editing 
+                                        mode="batch"
+                                        [allowUpdating]="true"
+                                        >
+                                    </dxo-editing> 
+                                    <dxi-column caption="Code" [allowEditing]="false" width="100" dataField="code"  >
+                                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                                    </dxi-column>
+                                    <dxi-column caption="Tên" width="200" dataField="name" >
+                                    </dxi-column>
+
+                                    <dxi-column caption="Kiểu dữ liệu" dataField="type" width="150" >
+                                        <dxo-lookup
+                                            dataSource="_dataType"
+                                            displayExpr="display"
+                                            valueExpr="key">
+                                        </dxo-lookup>
+                                    </dxi-column>
+                                    <dxi-column caption="Định dạng" width="100"  dataField="format" dataType="string">
+                                    </dxi-column>
+                                    <dxi-column caption="Độ rộng" width="100" dataField="width" dataType="number">
+                                    </dxi-column>
+                                    <dxi-column caption="Hoạt động" width="100" dataField='isActive'  dataType="boolean" alignment="center" >
+                                    </dxi-column>
+                                    <dxi-column caption="Hiển thị" width="100" dataField="isDisplay" dataType="boolean" alignment="center" >
+                                    </dxi-column>
+                                    <dxi-column caption="Thứ tự cột" width="100" dataField="colNum" dataType="number" >
+                                    </dxi-column>
+                                    <dxi-column caption="Căn lề"  alignment="right"
+                                            dataField="textAlign"
+                                            [width]="125">         
+                                            <dxo-lookup
+                                                dataSource="textAlignment"
+                                                displayExpr="display"
+                                                valueExpr="key">
+                                            </dxo-lookup>
+                                    </dxi-column>
+                                    <dxi-column caption="Group level" width="100" dataField="groupLevel" dataType="number" >
+                                            <dxo-lookup
+                                            dataSource="groupLeveldata"
+                                            displayExpr="display"
+                                            valueExpr="key">
+                                            </dxo-lookup>
+                                    </dxi-column>
+                                    <dxi-column caption="Sắp xếp" width="100" dataField="groupSort" dataType="number" >
+                                        <dxo-lookup
+                                        dataSource="groupSortdata"
+                                        displayExpr="display"
+                                        valueExpr="key">
+                                        </dxo-lookup>
+                                    </dxi-column>
+                                    <dxi-column caption="Is Sum" width="100" dataField='isSum' dataType="boolean" alignment="center" >
+                                    </dxi-column>
+                                    <dxi-column caption="Cell Template" width="100" dataField='cellTemplate' dataType="string" alignment="center" >
+                                    </dxi-column>
+                                </dx-data-grid>
+                        </div>
+                        <!--<Primeng-Datatable-End>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+        
+    </div>
+</div>
+    

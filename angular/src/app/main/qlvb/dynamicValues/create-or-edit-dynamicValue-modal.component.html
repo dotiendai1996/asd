@@ -1,0 +1,48 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #dynamicValueForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="dynamicValue.id">{{l("EditDynamicValue")}}</span>
+                        <span *ngIf="!dynamicValue.id">{{l("CreateNewDynamicValue")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="DynamicValue_ObjectId">{{l("ObjectId")}}</label>
+									<input type="number" id="DynamicValue_ObjectId" class="form-control" [(ngModel)]="dynamicValue.objectId" name="ObjectId"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="DynamicValue_Key">{{l("Key")}}</label>
+									<input type="text" id="DynamicValue_Key" class="form-control" [(ngModel)]="dynamicValue.key" name="Key"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="DynamicValue_Value">{{l("Value")}}</label>
+									<input type="text" id="DynamicValue_Value" class="form-control" [(ngModel)]="dynamicValue.value" name="Value"    />
+								</div>
+					
+								<div class="form-group">
+									<label for="DynamicValue_DynamicFieldId">{{l("DynamicFieldId")}}</label>
+									<input type="number" id="DynamicValue_DynamicFieldId" class="form-control" [(ngModel)]="dynamicValue.dynamicFieldId" name="DynamicFieldId"  />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-action blue" [disabled]="!dynamicValueForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
