@@ -19,6 +19,10 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Remove="JobSchedules\**" />
     <EmbeddedResource Remove="JobSchedules\**" />
@@ -29,6 +33,7 @@
     <PackageReference Include="Aspose.Cells" Version="20.3.0" />
     <PackageReference Include="Dapper" Version="2.0.30" />
     <PackageReference Include="EPPlus" Version="4.5.3.2" />
+    <PackageReference Include="Novell.Directory.Ldap.NETStandard" Version="3.3.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.0" />
     <PackageReference Include="Z.EntityFramework.Extensions" Version="4.0.67" />
   </ItemGroup>

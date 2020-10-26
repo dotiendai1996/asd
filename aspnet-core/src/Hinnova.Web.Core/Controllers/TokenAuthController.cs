@@ -13,6 +13,7 @@ using Abp.Authorization;
 using Abp.Authorization.Users;
 using Abp.MultiTenancy;
 using Abp.Configuration;
+using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.Net.Mail;
 using Abp.Notifications;
@@ -42,9 +43,14 @@ using Hinnova.Debugging;
 using Hinnova.Identity;
 using Hinnova.Net.Sms;
 using Hinnova.Notifications;
+using Hinnova.QLNS;
 using Hinnova.Security.Recaptcha;
 using Hinnova.Web.Authentication.External;
+using Hinnova.Web.Authentication.LDap;
 using Hinnova.Web.Common;
+using Microsoft.Extensions.Configuration;
+using Novell.Directory.Ldap;
+using System.DirectoryServices;
 
 namespace Hinnova.Web.Controllers
 {
@@ -52,8 +58,8 @@ namespace Hinnova.Web.Controllers
     public class TokenAuthController : HinnovaControllerBase
     {
         private const string UserIdentifierClaimType = "http://aspnetzero.com/claims/useridentifier";
-
         private readonly LogInManager _logInManager;
+        private readonly SignInManager _signInManager;
         private readonly ITenantCache _tenantCache;
         private readonly AbpLoginResultTypeHelper _abpLoginResultTypeHelper;
         private readonly TokenAuthConfiguration _configuration;
@@ -74,6 +80,10 @@ namespace Hinnova.Web.Controllers
         private readonly ISettingManager _settingManager;
         private readonly IJwtSecurityStampHandler _securityStampHandler;
         private readonly AbpUserClaimsPrincipalFactory<User, Role> _claimsPrincipalFactory;
+        private readonly IRepository<CM_BRANCH, string> _cmBranchRepository;
+        private readonly IEnumerable<IPasswordValidator<User>> _passwordValidators;
+        private readonly LDapAuthConfiguration _ldapConfiguration;
+        private readonly IRepository<HoSo, int> _hoSoRepository;
         public IRecaptchaValidator RecaptchaValidator { get; set; }
 
         public TokenAuthController(
@@ -97,7 +107,7 @@ namespace Hinnova.Web.Controllers
             ExternalLoginInfoManagerFactory externalLoginInfoManagerFactory,
             ISettingManager settingManager,
             IJwtSecurityStampHandler securityStampHandler,
-            AbpUserClaimsPrincipalFactory<User, Role> claimsPrincipalFactory)
+            AbpUserClaimsPrincipalFactory<User, Role> claimsPrincipalFactory, IRepository<CM_BRANCH, string> cmBranchRepository, LDapAuthConfiguration ldapConfiguration, SignInManager signInManager, IEnumerable<IPasswordValidator<User>> passwordValidators, IRepository<HoSo, int> hoSoRepository)
         {
             _logInManager = logInManager;
             _tenantCache = tenantCache;
@@ -120,9 +130,13 @@ namespace Hinnova.Web.Controllers
             _securityStampHandler = securityStampHandler;
             _identityOptions = identityOptions.Value;
             _claimsPrincipalFactory = claimsPrincipalFactory;
+            _cmBranchRepository = cmBranchRepository;
+            _ldapConfiguration = ldapConfiguration;
+            _signInManager = signInManager;
+            _passwordValidators = passwordValidators;
+            _hoSoRepository = hoSoRepository;
             RecaptchaValidator = NullRecaptchaValidator.Instance;
         }
-
         [HttpPost]
         public async Task<AuthenticateResultModel> Authenticate([FromBody] AuthenticateModel model)
         {
@@ -210,6 +224,155 @@ namespace Hinnova.Web.Controllers
         }
 
         [HttpPost]
+        public async Task<AuthenticateResultModel> AuthenticateForMobile([FromBody] AuthenticateModel model)
+        {
+            var returnUrl = model.ReturnUrl;
+            if (ValidateUserLdap(model.UserNameOrEmailAddress, model.Password))
+            {
+                var userCheck = await _userManager.FindByNameAsync(model.UserNameOrEmailAddress);
+                if (userCheck != null)
+                {
+                    if (!await _userManager.CheckPasswordAsync(userCheck, model.Password))
+                    {
+                        await _userManager.InitializeOptionsAsync(AbpSession.TenantId);
+                        CheckErrors(await _userManager.ChangePasswordAsync(userCheck, model.Password));
+                    }
+                    if (UseCaptchaOnLogin())
+                    {
+                        await ValidateReCaptcha(model.CaptchaResponse);
+                    }
+                    var loginResult = await GetLoginResultAsync(model.UserNameOrEmailAddress, model.Password, GetTenancyNameOrNull());
+                    if (model.SingleSignIn.HasValue && model.SingleSignIn.Value && loginResult.Result == AbpLoginResultType.Success)
+                    {
+                        loginResult.User.SetSignInToken();
+                        returnUrl = AddSingleSignInParametersToReturnUrl(model.ReturnUrl, loginResult.User.SignInToken, loginResult.User.Id, loginResult.User.TenantId);
+                    }
+                    //Password reset
+                    if (loginResult.User.ShouldChangePasswordOnNextLogin)
+                    {
+                        loginResult.User.SetNewPasswordResetCode();
+                        return new AuthenticateResultModel
+                        {
+                            ShouldResetPassword = true,
+                            PasswordResetCode = loginResult.User.PasswordResetCode,
+                            UserId = loginResult.User.Id,
+                            ReturnUrl = returnUrl
+                        };
+                    }
+                    //Two factor auth
+                    await _userManager.InitializeOptionsAsync(loginResult.Tenant?.Id);
+                    string twoFactorRememberClientToken = null;
+                    if (await IsTwoFactorAuthRequiredAsync(loginResult, model))
+                    {
+                        if (model.TwoFactorVerificationCode.IsNullOrEmpty())
+                        {
+                            //Add a cache item which will be checked in SendTwoFactorAuthCode to prevent sending unwanted two factor code to users.
+                            await _cacheManager.GetTwoFactorCodeCache().SetAsync(loginResult.User.ToUserIdentifier().ToString(), new TwoFactorCodeCacheItem());
+                            return new AuthenticateResultModel
+                            {
+                                RequiresTwoFactorVerification = true,
+                                UserId = loginResult.User.Id,
+                                TwoFactorAuthProviders = await _userManager.GetValidTwoFactorProvidersAsync(loginResult.User),
+                                ReturnUrl = returnUrl
+                            };
+                        }
+                        twoFactorRememberClientToken = await TwoFactorAuthenticateAsync(loginResult.User, model);
+                    }
+                    // One Concurrent Login 
+                    if (AllowOneConcurrentLoginPerUser())
+                    {
+                        await _userManager.UpdateSecurityStampAsync(loginResult.User);
+                        await _securityStampHandler.SetSecurityStampCacheItem(loginResult.User.TenantId, loginResult.User.Id, loginResult.User.SecurityStamp);
+                        loginResult.Identity.ReplaceClaim(new Claim(AppConsts.SecurityStampKey, loginResult.User.SecurityStamp));
+                    }
+                    var accessToken = CreateAccessToken(await CreateJwtClaims(loginResult.Identity, loginResult.User));
+                    var branch = await _cmBranchRepository.FirstOrDefaultAsync(x => x.Id == loginResult.User.BRANCH_ID);
+                    var hoSo = await _hoSoRepository.FirstOrDefaultAsync(x => x.MaNhanVien == loginResult.User.EmployeeCode);
+                    return new AuthenticateResultModel
+                    {
+                        AccessToken = accessToken,
+                        ExpireInSeconds = (int)_configuration.AccessTokenExpiration.TotalSeconds,
+                        RefreshToken = CreateRefreshToken(await CreateJwtClaims(loginResult.Identity, loginResult.User, tokenType: TokenType.RefreshToken)),
+                        EncryptedAccessToken = GetEncryptedAccessToken(accessToken),
+                        TwoFactorRememberClientToken = twoFactorRememberClientToken,
+                        UserId = loginResult.User.Id,
+                        BranchId = loginResult.User.BRANCH_ID,
+                        BranchType = branch.BRANCH_TYPE,
+                        ReturnUrl = returnUrl,
+                        MaChamCong = int.Parse(hoSo.MaChamCong),
+                        HoVaTen = hoSo.HoVaTen,
+                        TenCty = hoSo.TenCty
+                    };
+                }
+                throw new UserFriendlyException(L("LoginFailed"), L("InvalidUserNameOrPassword"));
+            }
+            throw new UserFriendlyException(L("LoginFailed"), L("InvalidUserNameOrPassword"));
+        }
+
+        /// <summary>
+        /// Login with Ldap By Microsoft's library
+        /// </summary>
+        /// <param name="userNameOrEmailAddress"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public bool ValidateUserLdap(string userNameOrEmailAddress, string password)
+        {
+            DirectoryEntry domain = new DirectoryEntry("LDAP://" + _ldapConfiguration.Domain, userNameOrEmailAddress, password, AuthenticationTypes.Secure);
+            try
+            {
+                if (domain.Properties.Count > 0)
+                {
+                    return true;
+                }
+                ////Hàm Search Dữ liệu Ldap
+                //DirectorySearcher searcher = new DirectorySearcher(domain)
+                //{
+                //    PageSize = int.MaxValue,
+                //    Filter = string.Format(_ldapConfiguration.SearchFilter, userNameOrEmailAddress)
+                //};
+                //searcher.PropertiesToLoad.Add("displayName");
+
+                //var result = searcher.FindOne();
+                //return  new UserLdap()
+                //{
+                //    DisplayName = result.Properties["displayName"][0].ToString()
+                //};
+                return true;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, e);
+                return false;
+            }
+            finally
+            {
+                domain.Close();
+            }
+        }
+
+        [HttpGet]
+        public bool AuthenticateWithLDap()
+        {
+            return ValidateUserLdap("daidt", "Tc#uiL84!");
+        }
+
+
+        private string AddSingleSignInParametersToReturnUrl(string returnUrl, string signInToken, long userId, int? tenantId)
+        {
+            returnUrl += (returnUrl.Contains("?") ? "&" : "?") +
+                         "accessToken=" + signInToken +
+                         "&userId=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(userId.ToString()));
+            if (tenantId.HasValue)
+            {
+                returnUrl += "&tenantId=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(tenantId.Value.ToString()));
+            }
+
+            return returnUrl;
+        }
+
+
+        [HttpPost]
         public async Task<RefreshTokenResult> RefreshToken(string refreshToken)
         {
             if (string.IsNullOrWhiteSpace(refreshToken))
@@ -258,7 +421,7 @@ namespace Hinnova.Web.Controllers
 
 
         [HttpGet]
-        [AbpAuthorize]
+        // [AbpAuthorize]
         public async Task LogOut()
         {
             if (AbpSession.UserId != null)
@@ -616,13 +779,15 @@ namespace Hinnova.Web.Controllers
         private async Task<AbpLoginResult<Tenant, User>> GetLoginResultAsync(string usernameOrEmailAddress, string password, string tenancyName)
         {
             var loginResult = await _logInManager.LoginAsync(usernameOrEmailAddress, password, tenancyName);
-
             switch (loginResult.Result)
             {
                 case AbpLoginResultType.Success:
                     return loginResult;
                 default:
-                    throw _abpLoginResultTypeHelper.CreateExceptionForFailedLoginAttempt(loginResult.Result, usernameOrEmailAddress, tenancyName);
+                    {
+                        throw _abpLoginResultTypeHelper.CreateExceptionForFailedLoginAttempt(loginResult.Result, usernameOrEmailAddress, tenancyName);
+                    }
+
             }
         }
 
@@ -664,7 +829,6 @@ namespace Hinnova.Web.Controllers
             var tokenValidityKey = Guid.NewGuid().ToString();
             var claims = identity.Claims.ToList();
             var nameIdClaim = claims.First(c => c.Type == _identityOptions.ClaimsIdentity.UserIdClaimType);
-
             if (_identityOptions.ClaimsIdentity.UserIdClaimType != JwtRegisteredClaimNames.Sub)
             {
                 claims.Add(new Claim(JwtRegisteredClaimNames.Sub, nameIdClaim.Value));
@@ -700,20 +864,6 @@ namespace Hinnova.Web.Controllers
 
             return claims;
         }
-
-        private string AddSingleSignInParametersToReturnUrl(string returnUrl, string signInToken, long userId, int? tenantId)
-        {
-            returnUrl += (returnUrl.Contains("?") ? "&" : "?") +
-                         "accessToken=" + signInToken +
-                         "&userId=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(userId.ToString()));
-            if (tenantId.HasValue)
-            {
-                returnUrl += "&tenantId=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(tenantId.Value.ToString()));
-            }
-
-            return returnUrl;
-        }
-
 
         private bool IsRefreshTokenValid(string refreshToken, out ClaimsPrincipal principal)
         {
@@ -776,3 +926,4 @@ namespace Hinnova.Web.Controllers
         }
     }
 }
+

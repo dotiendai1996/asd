@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Hinnova.EntityFrameworkCore": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

@@ -23,6 +23,7 @@ namespace Hinnova.Authorization.Users
         public string GoogleAuthenticatorKey { get; set; }
 
         public List<UserOrganizationUnit> OrganizationUnits { get; set; }
+        public string BRANCH_ID { get; set; }
 
         //Can add application specific user properties here
 

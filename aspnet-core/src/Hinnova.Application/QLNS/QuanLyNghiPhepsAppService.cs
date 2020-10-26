@@ -30,6 +30,7 @@ using Microsoft.Extensions.Configuration;
 using Hinnova.Authorization.Users.Dto;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Abp.UI;
+using Abp.Collections.Extensions;
 
 namespace Hinnova.QLNS
 {
@@ -46,13 +47,14 @@ namespace Hinnova.QLNS
         private readonly IRepository<User, long> _userRepository;
         private readonly IRepository<OrganizationUnit, long> _organizationUnitRepository;
         private readonly ILichSuUploadsAppService _lichSuUploadsAppService;
-
+        
         private readonly IQuanLyTrucTiepPNPsAppService _quanLyTrucTiepPNPsAppService;
         private readonly IQuanLyNghiPhepsExcelExporter _quanLyNghiPhepsExcelExporter;
         private readonly string connectionString;
 
+        private readonly UserManager _userManager;
 
-        public QuanLyNghiPhepsAppService(IQuanLyTrucTiepPNPsAppService quanLyTrucTiepPNPsAppService, IRepository<QuanLyTrucTiepPNP> quanLyTrucTiepPNPRepository, IRepository<HoSo> hoSoRepository, IWebHostEnvironment env, IRepository<User, long> userRepository, ILichSuUploadsAppService lichSuUploadsAppService, IOrganizationUnitAppService organizationUnitAppService, IRepository<QuanLyNghiPhep> quanLyNghiPhepRepository, IRepository<TruongGiaoDich> truongGiaoDichRepository, IRepository<OrganizationUnit, long> organizationUnitRepository, IRepository<LichSuUpload> lichSuUploadRepository, IQuanLyNghiPhepsExcelExporter quanLyNghiPhepsExcelExporter)
+        public QuanLyNghiPhepsAppService(IQuanLyTrucTiepPNPsAppService quanLyTrucTiepPNPsAppService, IRepository<QuanLyTrucTiepPNP> quanLyTrucTiepPNPRepository, IRepository<HoSo> hoSoRepository, IWebHostEnvironment env, IRepository<User, long> userRepository, ILichSuUploadsAppService lichSuUploadsAppService, IOrganizationUnitAppService organizationUnitAppService, IRepository<QuanLyNghiPhep> quanLyNghiPhepRepository, IRepository<TruongGiaoDich> truongGiaoDichRepository, IRepository<OrganizationUnit, long> organizationUnitRepository, IRepository<LichSuUpload> lichSuUploadRepository, IQuanLyNghiPhepsExcelExporter quanLyNghiPhepsExcelExporter, UserManager userManager)
         {
             _quanLyNghiPhepRepository = quanLyNghiPhepRepository;
             _lichSuUploadRepository = lichSuUploadRepository;
@@ -66,6 +68,7 @@ namespace Hinnova.QLNS
             _truongGiaoDichRepository = truongGiaoDichRepository;
             _quanLyNghiPhepsExcelExporter = quanLyNghiPhepsExcelExporter;
             connectionString = env.GetAppConfiguration().GetConnectionString("Default");
+            _userManager = userManager;
 
         }
 
@@ -91,8 +94,8 @@ namespace Hinnova.QLNS
                 return result.ToList();
             }
         }
-
-
+        
+        
         public async Task<List<QuanLyNghiPhepDto>> GetAllPhieuNghiPhep()
         {
 
@@ -355,6 +358,8 @@ namespace Hinnova.QLNS
         }
 
 
+
+
         public async Task<int> CreateOrEdit(CreateOrEditNghiPhepInput inputNghiPhep)
         {
             var input = inputNghiPhep.NghiPhep;
@@ -443,6 +448,27 @@ namespace Hinnova.QLNS
         {
             await _quanLyNghiPhepRepository.DeleteAsync(input.Id);
         }
+
+        public async Task<List<QuanLyNghiPhepDto>> GetQuanLyNghiPhepForDate(GetQuanLyNghiPhepForDateInput input)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    await conn.OpenAsync();
+                }
+                var parameters = new DynamicParameters();
+                parameters.Add("@branchId", input.BranchId);
+                parameters.Add("@date", input.NgayNghi);
+                var lstCmBRANCH = await conn.QueryAsync<QuanLyNghiPhepDto>("ProcGetAllByBranchIdQLNP", parameters, null, null, CommandType.StoredProcedure);
+                return lstCmBRANCH
+                    .OrderBy(p=>p.Id)
+                    .ToList();
+            }
+        }
+    
+
+
 
         //public async Task<FileDto> GetQuanLyNghiPhepsToExcel(GetAllQuanLyNghiPhepsForExcelInput input)
         //      {

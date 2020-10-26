@@ -9,7 +9,7 @@ namespace Hinnova.QLNS
 	[Table("DataChamCongs")]
     public class DataChamCong : FullAuditedEntity 
     {
-		public virtual int MaChamCong { get; set; }
+		public virtual int? MaChamCong { get; set; }
 		public virtual DateTime ProcessDate { get; set; }
 		/// <summary>
 		/// Lưu lịch sử thời gian check trong ngày

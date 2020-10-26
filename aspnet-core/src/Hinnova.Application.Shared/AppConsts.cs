@@ -46,7 +46,8 @@ namespace Hinnova
         public const string Theme11 = "theme11";
         public const string Theme12 = "theme12";
 
-        public static TimeSpan AccessTokenExpiration = TimeSpan.FromDays(1);
+        //public static TimeSpan AccessTokenExpiration = TimeSpan.FromDays(1);
+        public static TimeSpan AccessTokenExpiration = TimeSpan.FromMinutes(2);
         public static TimeSpan RefreshTokenExpiration = TimeSpan.FromDays(365);
 
         public const string DateTimeOffsetFormat = "yyyy-MM-ddTHH:mm:sszzz";

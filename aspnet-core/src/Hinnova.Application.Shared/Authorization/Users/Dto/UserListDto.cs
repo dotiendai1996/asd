@@ -27,5 +27,12 @@ namespace Hinnova.Authorization.Users.Dto
         public bool IsActive { get; set; }
 
         public DateTime CreationTime { get; set; }
+        public string EmployeeCode { get; set; }
+
+        public string BRANCH_ID { get; set; }
+        public string BRANCH_CODE { get; set; }
+        public string BRANCH_TYPE { get; set; }
+        public string MaChamCong { get; set; }
+        public string HoVaTen { get; set; }
     }
 }

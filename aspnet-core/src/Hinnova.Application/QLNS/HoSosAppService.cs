@@ -97,8 +97,7 @@ namespace Hinnova.QLNS
                 }
 
                 //    var name = GetCurrentUser();
-                string sql = $"SELECT * FROM  HoSo WHERE IsDeleted = 0   and MaNhanVien = '{id}' ";
-
+                string sql = $"SELECT * FROM  HoSo WHERE IsDeleted = 0 and MaNhanVien = '{id}' ";
                 var result = await conn.QueryAsync<HoSoDto>(sql: sql);
                 return result.ToList();
             }
@@ -107,8 +106,10 @@ namespace Hinnova.QLNS
         public bool CheckCMND(string cmnd)
         {
             if (cmnd.IsNullOrEmpty())
+            {
+                Logger.Warn("CMND is Null");
                 return false;
-
+            }
             var x = _hoSoRepository.GetAll().Where(t => t.IsDeleted == false).Any(k => k.SoCMND == cmnd);
             return x;
         }
@@ -227,25 +228,17 @@ namespace Hinnova.QLNS
 
         public async Task<List<HoSoDto>> getHoSoNhanVien(int userId)
         {
-            try
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                if (conn.State == ConnectionState.Closed)
                 {
-                    if (conn.State == ConnectionState.Closed)
-                    {
-                        await conn.OpenAsync();
-                    }
-                    string sql =
-                        $"select * from hoso join AbpUsers on hoso.MaNhanVien = AbpUsers.EmployeeCode where hoso.IsDeleted = 0 and AbpUsers.id ={userId}";
-
-                    var result = await conn.QueryAsync<HoSoDto>(sql: sql);
-                    return result.ToList();
+                    await conn.OpenAsync();
                 }
-            }
-            catch (Exception ex)
-            {
+                string sql =
+                    $"select * from HoSo join AbpUsers on HoSo.MaNhanVien = AbpUsers.EmployeeCode where HoSo.IsDeleted = 0 and AbpUsers.id ={userId}";
 
-                throw;
+                var result = await conn.QueryAsync<HoSoDto>(sql: sql);
+                return result.ToList();
             }
 
         }
@@ -694,7 +687,7 @@ namespace Hinnova.QLNS
             if (hoSo != null)
             {
                 output.HoSo = ObjectMapper.Map<CreateOrEditHoSoDto>(hoSo);
-                output.QuaTrinhCongTac = await _quyTrinhCongTacsAppService.GetAll(hoSo.Id);
+                output.QuaTrinhCongTac = await _quyTrinhCongTacsAppService.GetAll(hoSo.MaHoSo);
                 output.DanhSachCV = await GetAllCongViec(hoSo.DonViCongTacID ?? 0);
                 output.LichSuUpload = await _lichSuUploadsAppService.GetListLichSuUploadDto("HS", hoSo.Id.ToString());
             }

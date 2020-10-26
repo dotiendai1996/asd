@@ -334,7 +334,7 @@ namespace Hinnova.Authorization.Users
             user.EmployeeCode = input.User.EmployeeCode;
 
             CheckErrors(await UserManager.UpdateAsync(user));
-
+            
             if (input.SetRandomPassword)
             {
                 var randomPassword = await _userManager.CreateRandomPassword();

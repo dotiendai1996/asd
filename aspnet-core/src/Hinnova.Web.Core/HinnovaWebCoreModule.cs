@@ -24,6 +24,7 @@ using Hinnova.Configuration;
 using Hinnova.EntityFrameworkCore;
 using Hinnova.Startup;
 using Hinnova.Web.Authentication.JwtBearer;
+using Hinnova.Web.Authentication.LDap;
 using Hinnova.Web.Authentication.TwoFactor;
 using Hinnova.Web.Chat.SignalR;
 using Hinnova.Web.Configuration;
@@ -90,6 +91,19 @@ namespace Hinnova.Web
             //    options.ConnectionString = _appConfiguration["Abp:RedisCache:ConnectionString"];
             //    options.DatabaseId = _appConfiguration.GetValue<int>("Abp:RedisCache:DatabaseId");
             //});
+            // Config LDap
+            ConfigurationLDap();
+        }
+
+        private void ConfigurationLDap()
+        {
+           IocManager.Register<LDapAuthConfiguration>();
+           var ldapAuthConfig = IocManager.Resolve<LDapAuthConfiguration>();
+           ldapAuthConfig.Domain = _appConfiguration["LdapAuth:Domain"];
+           ldapAuthConfig.DistinguishedName = _appConfiguration["LdapAuth:Dn"];
+           ldapAuthConfig.Port = 389;
+           ldapAuthConfig.SearchFilter = _appConfiguration["LdapAuth:SearchFilter"];
+           ldapAuthConfig.SearchBase = _appConfiguration["LdapAuth:SearchBase"];
         }
 
         private void ConfigureTokenAuth()

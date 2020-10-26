@@ -9,11 +9,14 @@ namespace Hinnova.QLNS
 {
     public interface IQuyTrinhCongTacsAppService : IApplicationService
     {
-        Task<PagedResultDto<GetQuyTrinhCongTacForViewDto>> GetAll( int id);
+        Task<PagedResultDto<GetQuyTrinhCongTacForViewDto>> GetAll( string id);
 
         Task<GetQuyTrinhCongTacForEditOutput> GetQuyTrinhCongTacForEdit(EntityDto input);
 
         Task CreateOrEdit(CreateOrEditQuyTrinhCongTacDto input);
+
+        Task<int> CreateOrEditForMobile(CreateOrEditQuyTrinhCongTacDto input);
+
 
         Task Delete(EntityDto input);
 

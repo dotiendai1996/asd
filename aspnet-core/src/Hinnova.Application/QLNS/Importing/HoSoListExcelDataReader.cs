@@ -15,6 +15,7 @@ namespace Hinnova.Authorization.Users.Importing
     public class HoSoListExcelDataReader : EpPlusExcelImporterBase<HoSoImportDto>, IHoSoListExcelDataReader
     {
         private readonly ILocalizationSource _localizationSource;
+        
 
         public HoSoListExcelDataReader(ILocalizationManager localizationManager)
         {

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Hinnova.Application": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

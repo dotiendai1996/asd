@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Hinnova.Migrator": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false,
+      "nativeDebugging": false
+    }
+  }
+}

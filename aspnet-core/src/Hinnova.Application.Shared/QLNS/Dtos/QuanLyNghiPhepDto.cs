@@ -40,11 +40,5 @@ namespace Hinnova.QLNS.Dtos
 
 		public DateTime? CreateTime { get; set; }
 		public DateTime? LastModificationTime { get; set; }
-		public DateTime? startDate { get; set; }
-
-		public DateTime? EndDate { get; set; }
-
-		public bool isCheckTime { get; set; }
-
 	}
 }

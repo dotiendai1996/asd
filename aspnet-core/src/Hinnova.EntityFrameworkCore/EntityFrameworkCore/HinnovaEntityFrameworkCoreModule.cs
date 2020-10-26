@@ -29,7 +29,7 @@ namespace Hinnova.EntityFrameworkCore
         {
             if (!SkipDbContextRegistration)
             {
-                Configuration.Modules.AbpEfCore().AddDbContext<HinnovaDbContext>(options =>{
+                Configuration.Modules.AbpEfCore().AddDbContext<HinnovaDbContext>(options => {
                     if (options.ExistingConnection != null)
                     {
                         HinnovaDbContextConfigurer.Configure(options.DbContextOptions, options.ExistingConnection);

@@ -46,5 +46,6 @@ namespace Hinnova.Authorization.Users.Dto
 
         public virtual bool IsLockoutEnabled { get; set; }
         public string EmployeeCode { get; set; }
+        public string BRANCH_ID { get; set; }
     }
 }

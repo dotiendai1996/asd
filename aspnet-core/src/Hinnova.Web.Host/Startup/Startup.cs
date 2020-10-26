@@ -87,10 +87,8 @@ namespace Hinnova.Web.Startup
                                 .Select(o => o.RemovePostFix("/"))
                                 .ToArray()
                         )
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
                         .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
+                        .AllowAnyMethod();
                 });
             });
 
@@ -264,7 +262,7 @@ namespace Hinnova.Web.Startup
             {
                 endpoints.MapHub<AbpCommonHub>("/signalr");
                 endpoints.MapHub<ChatHub>("/signalr-chat");
-
+                endpoints.MapHub<ChatHubMobile>("/signalRMobile");
                 endpoints.MapControllerRoute("defaultWithArea", "{area}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 

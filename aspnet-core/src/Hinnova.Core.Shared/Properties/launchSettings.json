@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Hinnova.Core.Shared": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

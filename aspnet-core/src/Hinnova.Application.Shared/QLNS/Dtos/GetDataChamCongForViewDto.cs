@@ -17,7 +17,7 @@ namespace Hinnova.QLNS.Dtos
     {
         public DataChamCongDto DataChamCong { get; set; }
         public int RowIndex { get; set; }
-        public string MaChamCong { get; set; }
+        public int? MaChamCong { get; set; }
         public string MaNhanVien { get; set; }
         public string HoVaTen { get; set; }
         public string TenCTy { get; set; }

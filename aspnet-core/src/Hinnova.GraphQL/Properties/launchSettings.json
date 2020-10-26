@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Hinnova.GraphQL": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

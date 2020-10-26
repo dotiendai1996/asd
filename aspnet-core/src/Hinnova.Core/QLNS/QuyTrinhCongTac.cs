@@ -17,15 +17,31 @@ namespace Hinnova.QLNS
 		public virtual DateTime DateFrom { get; set; }
 		
 		public virtual string ViTriCongViecCode { get; set; }
-		
+
+        public virtual string QuanLyTrucTiep { get; set; }
+
 		public virtual int? DonViCongTacID { get; set; }
-		
-		public virtual string QuanLyTrucTiep { get; set; }
-		
+        
 		public virtual string TrangThaiCode { get; set; }
 		
 		public virtual string GhiChu { get; set; }
-        public virtual int MaHoSo { get; set; }
+        public virtual string LyDo { get; set; }
+
+		public virtual int MaHoSo { get; set; }
+			   
+        public virtual DateTime NgayDuyet { get; set; }
+			   
+        public virtual string NguoiDuyetId { get; set; }
+
+        public virtual string TruongBoPhanId { get; set; }
+			  
+        public virtual string GiamDocBoPhanId { get; set; }
+			  
+        public virtual string PhongCTNSId { get; set; }
+			  
+        public virtual string GiamDocId { get; set; }
+			 
+        public virtual string Status { get; set; }
 
 
 	}

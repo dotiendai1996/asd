@@ -29,7 +29,7 @@ namespace Hinnova.QLNS
 		public virtual string LyDo { get; set; }
 
        // public virtual int[] QuanLyTrucTiepID { get; set; }
-//	public virtual int? QuanLyTrucTiepID { get; set; }
+//			public virtual int? QuanLyTrucTiepID { get; set; }
 
     public virtual string QuanLyTrucTiepID { get; set; }
 
@@ -43,8 +43,6 @@ namespace Hinnova.QLNS
 		
 		public virtual DateTime NgayDuyet { get; set; }
 		
-		
-
 		public virtual int? TrangThaiID { get; set; }
 	}
 }

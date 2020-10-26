@@ -19,7 +19,7 @@ namespace Hinnova.EntityFrameworkCore
 {
     public class HinnovaDbContext : AbpZeroDbContext<Tenant, Role, User, HinnovaDbContext>, IAbpPersistedGrantDbContext
     {
-
+        public virtual DbSet<CM_BRANCH> CM_BRANCHs { get; set; }
         public virtual DbSet<QuanLyTrucTiepPNP> QuanLyTrucTiepPNPs { get; set; }
 
         public virtual DbSet<QuanLyNghiPhep> QuanLyNghiPheps { get; set; }
@@ -31,8 +31,9 @@ namespace Hinnova.EntityFrameworkCore
         public virtual DbSet<LichSuUpload> LichSuUploads { get; set; }
 
         //public virtual DbSet<ViTriCongViec> ViTriCongViecs { get; set; }
-
         public virtual DbSet<ConfigEmail> ConfigEmails { get; set; }
+
+        public virtual DbSet<CM_BRANCH> CM_BRANCH { get; set; }
 
         public virtual DbSet<Template> Templates { get; set; }
 
@@ -184,33 +185,31 @@ namespace Hinnova.EntityFrameworkCore
 //            {
 //                d.HasIndex(e => new { e.TenantId });
 //            });
- modelBuilder.Entity<TextBook>(t =>
-           
+
+            modelBuilder.Entity<CM_BRANCH>(m =>
+            {
+                m.Property(p => p.Id).IsRequired().HasColumnType("varchar(15)").HasMaxLength(15);
+            });
+
             modelBuilder.Entity<Memorize_Keywords>(m =>
             {
-                m.HasIndex(e => new { e.TenantId });
-            }));
- modelBuilder.Entity<TextBook>(t =>
-            {
-                //t.HasIndex(e => new { e.TenantId });
+                m.HasIndex(e => new {e.TenantId});
             });
             modelBuilder.Entity<DynamicDatasource>(d => 
             {
                 d.HasIndex(e => new { e.TenantId });
             });
-           
-           
             modelBuilder.Entity<StoreDatasource>(s =>
             {
                 s.HasIndex(e => new { e.TenantId });
             });
- modelBuilder.Entity<HardDatasource>(h =>
+            modelBuilder.Entity<HardDatasource>(h =>
             {
-                h.HasIndex(e => new { e.TenantId });
+                h.HasIndex(e => new {e.TenantId});
             });
- modelBuilder.Entity<CommandDatasource>(c =>
+            modelBuilder.Entity<CommandDatasource>(c =>
             {
-                c.HasIndex(e => new { e.TenantId });
+                c.HasIndex(e => new {e.TenantId});
             });
             modelBuilder.Entity<Priority>(p =>
             {
@@ -220,29 +219,29 @@ namespace Hinnova.EntityFrameworkCore
             {
                 d.HasIndex(e => new { e.TenantId });
             });
- modelBuilder.Entity<DynamicValue>(d =>
+            modelBuilder.Entity<DynamicValue>(d =>
             {
-                d.HasIndex(e => new { e.TenantId });
+                d.HasIndex(e => new {e.TenantId});
             });
- modelBuilder.Entity<DynamicField>(d =>
+            modelBuilder.Entity<DynamicField>(d =>
             {
-                d.HasIndex(e => new { e.TenantId });
+                d.HasIndex(e => new {e.TenantId});
             });
- modelBuilder.Entity<SqlStoreParam>(s =>
+            modelBuilder.Entity<SqlStoreParam>(s =>
             {
-                s.HasIndex(e => new { e.TenantId });
+                s.HasIndex(e => new {e.TenantId});
             });
- modelBuilder.Entity<SqlConfigDetail>(s =>
+            modelBuilder.Entity<SqlConfigDetail>(s =>
             {
-                s.HasIndex(e => new { e.TenantId });
+                s.HasIndex(e => new {e.TenantId});
             });
- modelBuilder.Entity<SqlConfig>(s =>
+            modelBuilder.Entity<SqlConfig>(s =>
             {
-                s.HasIndex(e => new { e.TenantId });
+                s.HasIndex(e => new {e.TenantId});
             });
- modelBuilder.Entity<Schedule>(s =>
+            modelBuilder.Entity<Schedule>(s =>
             {
-                s.HasIndex(e => new { e.TenantId });
+                s.HasIndex(e => new {e.TenantId});
             });
             modelBuilder.Entity<Promulgated>(p =>
             {

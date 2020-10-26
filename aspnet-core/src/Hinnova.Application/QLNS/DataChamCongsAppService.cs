@@ -25,16 +25,22 @@ using Dapper;
 using Abp.UI;
 using GemBox.Spreadsheet;
 using System.IO;
+using Abp.Collections.Extensions;
+using Hinnova.Authorization.Users;
 using Hinnova.Authorization.Users.Importing;
 using Microsoft.AspNetCore.Hosting;
 using Hinnova.Configuration;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+using OfficeOpenXml.FormulaParsing.Utilities;
 
 namespace Hinnova.QLNS
 {
     //[AbpAuthorize(AppPermissions.Pages_DataChamCongs)]
     public class DataChamCongsAppService : HinnovaAppServiceBase, IDataChamCongsAppService
     {
+        private readonly UserManager _userManager;
         private readonly IRepository<DataChamCong> _dataChamCongRepository;
         private readonly IWebHostEnvironment _env;
         private readonly IRepository<TruongGiaoDich> _truongGiaoDichRepository;
@@ -42,7 +48,8 @@ namespace Hinnova.QLNS
         private readonly IDataChamCongsExcelExporter _dataChamCongsExcelExporter;
         private readonly ISqlServerStoreRepository _sqlServerStoreRepository;
         private readonly IHoSosAppService _hoSosAppService;
-        private readonly string connectionString;
+        private readonly string _connectionString;
+        private readonly IRepository<HoSo> _hoSoRepository;
 
         public DataChamCongsAppService(
             IRepository<DataChamCong> dataChamCongRepository,
@@ -51,15 +58,17 @@ namespace Hinnova.QLNS
             IDataChamCongsExcelExporter dataChamCongsExcelExporter,
             IWebHostEnvironment env,
             ISqlServerStoreRepository sqlServerStoreRepository,
-            IHoSosAppService hoSosAppService)
+            IHoSosAppService hoSosAppService, UserManager userManager, IRepository<HoSo> hoSoRepository)
         {
             _hoSosAppService = hoSosAppService;
+            _userManager = userManager;
+            _hoSoRepository = hoSoRepository;
             _dataChamCongRepository = dataChamCongRepository;
             _truongGiaoDichRepository = truongGiaoDichRepository;
             _organizationUnitRepository = organizationUnitRepository;
             _dataChamCongsExcelExporter = dataChamCongsExcelExporter;
             _sqlServerStoreRepository = sqlServerStoreRepository;
-            connectionString = env.GetAppConfiguration().GetConnectionString("Default");
+            _connectionString = env.GetAppConfiguration().GetConnectionString("Default");
         }
 
         public async Task<PagedResultDto<GetDataChamCongForViewDto>> GetAll(GetAllDataChamCongsInput input)
@@ -82,7 +91,7 @@ namespace Hinnova.QLNS
             output.Congty = ObjectMapper.Map<List<TruongGiaoDichDto>>(truongGiaoDichList.Where(x => x.Code.Equals(TruongGiaoDichConsts.CT)).OrderBy(x => x.Value));
             output.ViTriCongViec = ObjectMapper.Map<List<TruongGiaoDichDto>>(truongGiaoDichList.Where(x => x.Code.Equals(TruongGiaoDichConsts.VTUT)).OrderBy(x => x.Value));
 
-            if (output.Congty != null && output.Congty.Count() > 0)
+            if (output.Congty != null && output.Congty.Any())
             {
                 var congTy = output.Congty.FirstOrDefault();
                 var org = await _organizationUnitRepository.GetAll().FirstOrDefaultAsync(x => x.DisplayName.ToUpper().Equals(congTy.Value.ToUpper()));
@@ -131,85 +140,159 @@ namespace Hinnova.QLNS
 
         public async Task CreateOrEdit(CreateOrEditDataChamCongDto input)
         {
-            if (input.TimeCheckDate.HasValue)
+            try
             {
-                var dataChamCong = await _dataChamCongRepository.FirstOrDefaultAsync(x => x.MaChamCong == input.MaChamCong && x.ProcessDate == input.TimeCheckDate.Value.Date);
-                if (dataChamCong == null)
+                if (input.TimeCheckDate.HasValue)
                 {
-                    await Create(input);
+                    var dataChamCong = await _dataChamCongRepository.FirstOrDefaultAsync(x => x.MaChamCong == input.MaChamCong && x.ProcessDate == input.TimeCheckDate.Value.Date);
+                    if (dataChamCong == null)
+                    {
+                        await Create(input);
+                    }
+                    else
+                    {
+                        input.Id = dataChamCong.Id;
+                        await Update(input);
+                    }
                 }
-                else
-                {
-                    input.Id = dataChamCong.Id;
-                    await Update(input);
-                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, e);
             }
         }
 
-        public async Task CreateOrEditMobile(CreateOrEditMobileDataChamCongDto input)
-        {
-
-            var dataChamCong = await _dataChamCongRepository.FirstOrDefaultAsync(x => x.MaChamCong == input.MaChamCong && x.ProcessDate == input.ProcessDate.Date);
-            if (dataChamCong == null)
-            {
-                await CreateMobile(input);
-
-            }
-            else
-            {
-                input.Id = dataChamCong.Id;
-                await UpdateMobile(input);
-            }
-
-        }
-
-        public async Task<List<DataChamCongDto>> kiemTraCheckTrongNgay(int MaChamCong, DateTime TimeCheckDate)
+        public async Task<List<DataChamCongDto>> GetAllByMaChamCong(int maChamCong)
         {
             try
             {
-                var dataChamCong = await _dataChamCongRepository.FirstOrDefaultAsync(x => x.MaChamCong == MaChamCong && x.ProcessDate == TimeCheckDate.Date);
+                var dataChamCong = await _dataChamCongRepository.GetAllListAsync(x => x.MaChamCong == maChamCong && x.ProcessDate.Month == DateTime.UtcNow.Month && x.ProcessDate.Year == DateTime.UtcNow.Year);
                 if (dataChamCong == null)
                 {
-                    return null;
+                    throw new Exception("No Found Data");
                 }
-                else
+
+                var result = dataChamCong.Select(x => new DataChamCongDto()
                 {
-                    var id = dataChamCong.Id.ToString();
-                    // return id;
-                    try
-                    {
-                        using (SqlConnection conn = new SqlConnection(connectionString))
-                        {
-                            if (conn.State == ConnectionState.Closed)
-                            {
-                                await conn.OpenAsync();
-                            }
-                            string sql =
-                               $"select * from DataChamCongs where DataChamCongs.id = {id}";
-
-                            var result = await conn.QueryAsync<DataChamCongDto>(sql: sql);
-                            return result.ToList();
-
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // return ex.Message.ToString();
-                        throw;
-                    }
-
-
-
-                }
+                    MaChamCong = x.MaChamCong,
+                    ProcessDate = x.ProcessDate,
+                    CheckTime = x.CheckTime,
+                    CheckIn = x.CheckIn,
+                    CheckOut = x.CheckOut,
+                    TimeOTDuration = x.TimeOTDuration,
+                    Status = x.Status
+                });
+                return result.OrderByDescending(x => x.ProcessDate).ToList();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-
-                throw;
+                Logger.Warn(e.Message, e);
+                return null;
             }
+        }
+
+        public async Task<List<DataChamCongDto>> GetAllByBranchId(string branchId, DateTime dateTo, DateTime dateFrom, int maChamCong, string search, bool flagGlobal)
+        {
+            if (DateTime.Compare(dateFrom.Date, dateTo.Date) <= 0)
+            {
+                var conn = new SqlConnection(_connectionString);
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                DynamicParameters parameters;
+                if (!flagGlobal)
+                {
+                    //return _userManager.Users.ToList()
+                    //    .Join(_hoSoRepository.GetAll().ToList(), u => u.EmployeeCode, h => h.MaNhanVien,
+                    //        (u, h) => new { u, h })
+                    //    .Join(_dataChamCongRepository.GetAll().ToList(), uh => uh.h.MaChamCong, d => d.MaChamCong.ToString(),
+                    //        (uh, d) => new { uh, d })
+                    //    .Where(x => x.d.ProcessDate >= dateFrom && x.d.ProcessDate <= dateTo && x.uh.u.BRANCH_ID == branchId && x.d.MaChamCong == maChamCong)
+                    //    .OrderByDescending(x => x.d.ProcessDate)
+                    //    .Select(x => new DataChamCongDto()
+                    //    {
+                    //        Id = x.d.Id,
+                    //        CheckIn = x.d.CheckIn,
+                    //        ProcessDate = x.d.ProcessDate,
+                    //        CheckTime = x.d.CheckTime,
+                    //        CheckOut = x.d.CheckOut,
+                    //        MaChamCong = x.d.MaChamCong,
+                    //        Status = x.d.Status,
+                    //        TimeOTDuration = x.d.TimeOTDuration,
+                    //        BranchId = x.uh.u.BRANCH_ID
+
+                    //    }).ToList();
+                    parameters = new DynamicParameters();
+                    parameters.Add("@dateTo", dateTo.Date);
+                    parameters.Add("@dateFrom", dateFrom.Date);
+                    parameters.Add("@maChamCong", maChamCong);
+                    var result = await conn.QueryAsync<DataChamCongDto>("GetAllByBranchIdAndMaChamCong", parameters, null, null, CommandType.StoredProcedure);
+                    return result.ToList();
+                }
+
+                parameters = new DynamicParameters();
+                parameters.Add("@dateTo", dateTo.Date);
+                parameters.Add("@dateFrom", dateFrom.Date);
+                parameters.Add("@branchId", branchId);
+                parameters.Add("@filterKeyword", search);
+                var lstCmBRANCH = await conn.QueryAsync<DataChamCongDto>("ProcGetAllByBranchId", parameters, null, null, CommandType.StoredProcedure);
+                return lstCmBRANCH.ToList();
+            }
+            Logger.Error("DateTo < DateFrom");
+            return null;
 
         }
 
+        public async Task<List<string>> GetAllFullNameByFilterKeyWord(string branchId)
+        {
+            if (string.IsNullOrEmpty(branchId))
+            {
+                Logger.Warn("No Found BranchId");
+                return null;
+            }
+            var conn = new SqlConnection(_connectionString);
+            if (conn.State == ConnectionState.Closed)
+            {
+                conn.Open();
+            }
+            var parameters = new DynamicParameters();
+            parameters.Add("@branchId", branchId);
+            var result = await conn.QueryAsync<HoSo>("GetAllHoSoByBranchGetChild", parameters, null, null, CommandType.StoredProcedure);
+            return result.Select(x => x.HoVaTen).ToList();
+            //var resultListFullName = await _hoSoRepository.GetAllListAsync(x => x.HoVaTen.Contains(search));
+            //var result = await _userManager.Users.Where(x => x.BRANCH_ID == branchId)
+            //return resultListFullName.Select(x => x.HoVaTen).ToList();
+        }
+
+        public async Task<List<DataChamCongDto>> kiemTraCheckTrongNgay(int maChamCong, DateTime timeCheckDate)
+        {
+            try
+            {
+                List<DataChamCong> dataChamCong = await _dataChamCongRepository.GetAllListAsync(x => x.MaChamCong == maChamCong && x.ProcessDate == timeCheckDate.Date);
+                if (dataChamCong == null)
+                {
+                    throw new Exception("No Found Data");
+                }
+                return dataChamCong.Select(x => new DataChamCongDto()
+                {
+                    MaChamCong = x.MaChamCong,
+                    ProcessDate = x.ProcessDate,
+                    CheckTime = x.CheckTime,
+                    CheckIn = x.CheckIn,
+                    CheckOut = x.CheckOut,
+                    TimeOTDuration = x.TimeOTDuration,
+                    Status = x.Status
+                }).ToList();
+            }
+            catch (Exception e)
+            {
+                Logger.Warn(e.Message, e);
+                return null;
+            }
+
+        }
 
         //[AbpAuthorize(AppPermissions.Pages_DataChamCongs_Create)]
         protected virtual async Task Create(CreateOrEditDataChamCongDto input)
@@ -236,8 +319,7 @@ namespace Hinnova.QLNS
             }
             catch (Exception ex)
             {
-                // return ex.Message.ToString();
-                throw;
+                Logger.Error(ex.Message, ex);
             }
 
         }
@@ -245,41 +327,79 @@ namespace Hinnova.QLNS
         //[AbpAuthorize(AppPermissions.Pages_DataChamCongs_Edit)]
         protected virtual async Task Update(CreateOrEditDataChamCongDto input)
         {
-            var workTimeMonday = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_START_MONDAY));
-            var workTimeDaily = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_START_DAILY));
-            var workTimeEnd = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_END));
-            ///workTimeApprove: số giờ tối thiểu làm trong 1 buổi để được chấm công
-            var workTimeApprove = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORK_TIME_APPROVE));
-            /// kêt thúc làm việc buổi sáng: 12:00:00
-            var middleStart = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.MIDDLE_START));
-            /// giờ bắt đầu làm việc buổi chiều: 13:00:00
-            var middleEnd = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.MIDDLE_END));
-
-            var dataChamCong = await _dataChamCongRepository.FirstOrDefaultAsync((int)input.Id);
-
-            var timeCheckList = dataChamCong.CheckTime.Split('~');
-            var timeStr = input.TimeCheckDate.Value.ToString(AppConsts.TimeFormat);
-
-            if (timeCheckList == null || !timeCheckList.Any(x => x.Equals(timeStr)))
+            try
             {
-                var checkTime = input.TimeCheckDate.Value.ToString(AppConsts.TimeFormat);
+                var workTimeMonday = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_START_MONDAY));
+                var workTimeDaily = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_START_DAILY));
+                var workTimeEnd = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_END));
+                ///workTimeApprove: số giờ tối thiểu làm trong 1 buổi để được chấm công
+                var workTimeApprove = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORK_TIME_APPROVE));
+                /// kêt thúc làm việc buổi sáng: 12:00:00
+                var middleStart = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.MIDDLE_START));
+                /// giờ bắt đầu làm việc buổi chiều: 13:00:00
+                var middleEnd = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.MIDDLE_END));
 
-                dataChamCong.CheckOut = checkTime;
-                dataChamCong.CheckTime += $"~{checkTime}";
-                dataChamCong.TimeWorkMorningDuration = MathTimeWorkMorningDuration(dataChamCong.CheckTime, dataChamCong.ProcessDate, workTimeMonday, workTimeDaily, workTimeApprove, middleStart, middleEnd);
-                dataChamCong.TimeWorkAfternoonDuration = MathTimeWorkAfternoonDuration(dataChamCong.CheckTime, workTimeEnd, workTimeApprove, middleStart, middleEnd);
-                dataChamCong.TimeOTDuration = MathTimeOTDurationDaily(dataChamCong.CheckTime, workTimeEnd);
-                dataChamCong.TimeViolatingRuleFirstDuration = MathTimeViolatingRuleDurationFirst(dataChamCong.ProcessDate, dataChamCong.CheckTime, workTimeMonday, workTimeDaily, middleStart, middleEnd);
-                dataChamCong.TimeViolatingRuleLastDuration = MathTimeViolatingRuleDurationLast(dataChamCong.CheckTime, middleEnd, workTimeEnd);
-                dataChamCong.Status = DataChamCongConsts.SUCCESS;
+                var dataChamCong = await _dataChamCongRepository.FirstOrDefaultAsync((int)input.Id);
+
+                var timeCheckList = dataChamCong.CheckTime.Split('~');
+                var timeStr = input.TimeCheckDate.Value.ToString(AppConsts.TimeFormat);
+
+                if (!timeCheckList.Any(x => x.Equals(timeStr)))
+                {
+                    var checkTime = input.TimeCheckDate.Value.ToString(AppConsts.TimeFormat);
+
+                    dataChamCong.CheckOut = checkTime;
+                    dataChamCong.CheckTime += $"~{checkTime}";
+                    dataChamCong.TimeWorkMorningDuration = MathTimeWorkMorningDuration(dataChamCong.CheckTime, dataChamCong.ProcessDate, workTimeMonday, workTimeDaily, workTimeApprove, middleStart, middleEnd);
+                    dataChamCong.TimeWorkAfternoonDuration = MathTimeWorkAfternoonDuration(dataChamCong.CheckTime, workTimeEnd, workTimeApprove, middleStart, middleEnd);
+                    dataChamCong.TimeOTDuration = MathTimeOTDurationDaily(dataChamCong.CheckTime, workTimeEnd);
+                    dataChamCong.TimeViolatingRuleFirstDuration = MathTimeViolatingRuleDurationFirst(dataChamCong.ProcessDate, dataChamCong.CheckTime, workTimeMonday, workTimeDaily, middleStart, middleEnd);
+                    dataChamCong.TimeViolatingRuleLastDuration = MathTimeViolatingRuleDurationLast(dataChamCong.CheckTime, middleEnd, workTimeEnd);
+                    dataChamCong.Status = DataChamCongConsts.SUCCESS;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
             }
         }
 
+        public async Task CreateOrEditMobile(int maChamCong)
+        {
+            try
+            {
+                DateTime now = DateTime.Now;
+                var dataChamCong = await _dataChamCongRepository.FirstOrDefaultAsync(x => x.MaChamCong == maChamCong && x.ProcessDate.Date == now.Date);
+                var input = new CreateOrEditMobileDataChamCongDto()
+                {
+                    CheckTime = now.ToString("HH:mm") + ":00",
+                    MaChamCong = maChamCong,
+                    ProcessDate = DateTime.Now.Date
+                };
+                if (dataChamCong == null)
+                {
+                    await CreateMobile(input);
+
+                }
+                else
+                {
+                    input.Id = dataChamCong.Id;
+                    await UpdateMobile(input);
+                }
+               
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, e);
+            }
+        }
         protected async Task CreateMobile(CreateOrEditMobileDataChamCongDto input)
         {
             try
             {
+                // 7h30
                 var workTimeMonday = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_START_MONDAY));
+                // 7h45
                 var workTimeDaily = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_START_DAILY));
                 /// kêt thúc làm việc buổi sáng: 12:00:00
                 var middleStart = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.MIDDLE_START));
@@ -287,19 +407,21 @@ namespace Hinnova.QLNS
                 var middleEnd = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.MIDDLE_END));
 
                 //var dataChamCong = ObjectMapper.Map<DataChamCong>(input);
-                DataChamCong dataChamCong = new DataChamCong();
-                dataChamCong.MaChamCong = input.MaChamCong;
-                dataChamCong.ProcessDate = input.ProcessDate.Date;
-                dataChamCong.CheckTime = input.CheckTime;
+                DataChamCong dataChamCong = new DataChamCong
+                {
+                    MaChamCong = input.MaChamCong,
+                    ProcessDate = input.ProcessDate.Date,
+                    CheckTime = input.CheckTime,
+                    Status = DataChamCongConsts.PROCESS,
+                    CheckIn = input.CheckTime
+                };
                 dataChamCong.TimeViolatingRuleFirstDuration = MathTimeViolatingRuleDurationFirst(input.ProcessDate.Date, dataChamCong.CheckTime, workTimeMonday, workTimeDaily, middleStart, middleEnd);
-                dataChamCong.Status = DataChamCongConsts.PROCESS;
-                dataChamCong.CheckIn = input.CheckTime;
 
                 await _dataChamCongRepository.InsertAsync(dataChamCong);
             }
             catch (Exception ex)
             {
-                throw;
+                Logger.Error(ex.Message, ex);
             }
 
         }
@@ -307,36 +429,51 @@ namespace Hinnova.QLNS
         //[AbpAuthorize(AppPermissions.Pages_DataChamCongs_Edit)]
         protected virtual async Task UpdateMobile(CreateOrEditMobileDataChamCongDto input)
         {
-            var workTimeMonday = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_START_MONDAY));
-            var workTimeDaily = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_START_DAILY));
-            var workTimeEnd = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_END));
-            ///workTimeApprove: số giờ tối thiểu làm trong 1 buổi để được chấm công
-            var workTimeApprove = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORK_TIME_APPROVE));
-            /// kêt thúc làm việc buổi sáng: 12:00:00
-            var middleStart = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.MIDDLE_START));
-            /// giờ bắt đầu làm việc buổi chiều: 13:00:00
-            var middleEnd = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.MIDDLE_END));
-
-            var dataChamCong = await _dataChamCongRepository.FirstOrDefaultAsync((int)input.Id);
-
-            var timeCheckList = dataChamCong.CheckTime.Split('~');
-            var timeStr = input.CheckTime;
-
-            if (timeCheckList == null || !timeCheckList.Any(x => x.Equals(timeStr)))
+            try
             {
-                var checkTime = input.CheckTime;
+                // 7h30
+                var workTimeMonday = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_START_MONDAY));
+                // 7h45
+                var workTimeDaily = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_START_DAILY));
+                // 17h30
+                var workTimeEnd = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORKTIME_END));
+                ///workTimeApprove: số giờ tối thiểu làm trong 1 buổi để được chấm công
+                var workTimeApprove = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.WORK_TIME_APPROVE));
+                /// kêt thúc làm việc buổi sáng: 12:00:00
+                var middleStart = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.MIDDLE_START));
+                /// giờ bắt đầu làm việc buổi chiều: 13:00:00
+                var middleEnd = await _truongGiaoDichRepository.FirstOrDefaultAsync(x => x.Code.Equals(TruongGiaoDichConsts.WORKTIME) && x.CDName.Equals(DataChamCongConsts.MIDDLE_END));
 
-                dataChamCong.CheckOut = checkTime;
-                dataChamCong.ProcessDate = input.ProcessDate.Date;
-                dataChamCong.CheckTime += $"~{checkTime}";
-                dataChamCong.TimeWorkMorningDuration = MathTimeWorkMorningDuration(dataChamCong.CheckTime, dataChamCong.ProcessDate, workTimeMonday, workTimeDaily, workTimeApprove, middleStart, middleEnd);
-                dataChamCong.TimeWorkAfternoonDuration = MathTimeWorkAfternoonDuration(dataChamCong.CheckTime, workTimeEnd, workTimeApprove, middleStart, middleEnd);
-                dataChamCong.TimeOTDuration = MathTimeOTDurationDaily(dataChamCong.CheckTime, workTimeEnd);
-                dataChamCong.TimeViolatingRuleFirstDuration = MathTimeViolatingRuleDurationFirst(dataChamCong.ProcessDate, dataChamCong.CheckTime, workTimeMonday, workTimeDaily, middleStart, middleEnd);
-                dataChamCong.TimeViolatingRuleLastDuration = MathTimeViolatingRuleDurationLast(dataChamCong.CheckTime, middleEnd, workTimeEnd);
-                dataChamCong.Status = DataChamCongConsts.SUCCESS;
+                var dataChamCong = await _dataChamCongRepository.FirstOrDefaultAsync((int)input.Id);
+
+                var timeCheckList = dataChamCong.CheckTime.Split('~');
+                var timeStr = input.CheckTime;
+
+                if (!timeCheckList.Any(x => x.Equals(timeStr)))
+                {
+                    var checkTime = input.CheckTime;
+
+                    dataChamCong.CheckOut = checkTime;
+                    dataChamCong.ProcessDate = input.ProcessDate.Date;
+                    dataChamCong.CheckTime += $"~{checkTime}";
+                    dataChamCong.TimeWorkMorningDuration = MathTimeWorkMorningDuration(dataChamCong.CheckTime, dataChamCong.ProcessDate, workTimeMonday, workTimeDaily, workTimeApprove, middleStart, middleEnd);
+                    dataChamCong.TimeWorkAfternoonDuration = MathTimeWorkAfternoonDuration(dataChamCong.CheckTime, workTimeEnd, workTimeApprove, middleStart, middleEnd);
+                    dataChamCong.TimeOTDuration = MathTimeOTDurationDaily(dataChamCong.CheckTime, workTimeEnd);
+                    dataChamCong.TimeViolatingRuleFirstDuration = MathTimeViolatingRuleDurationFirst(dataChamCong.ProcessDate, dataChamCong.CheckTime, workTimeMonday, workTimeDaily, middleStart, middleEnd);
+                    dataChamCong.TimeViolatingRuleLastDuration = MathTimeViolatingRuleDurationLast(dataChamCong.CheckTime, middleEnd, workTimeEnd);
+                    dataChamCong.Status = DataChamCongConsts.SUCCESS;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
             }
         }
+
+        public DateTime getCurrentDateTime() => DateTime.Now;
+        //{
+        //    return DateTime.Now;
+        //}
 
         [AbpAuthorize(AppPermissions.Pages_DataChamCongs_Delete)]
         public async Task Delete(EntityDto input)
@@ -382,14 +519,14 @@ namespace Hinnova.QLNS
                 switch (processDate.DayOfWeek)
                 {
                     case DayOfWeek.Monday:
-                        if (workTimeMonday != null && timeCheckList != null && timeCheckList.Count() > 0)
+                        if (workTimeMonday != null && timeCheckList.Any())
                         {
                             double minutesFirst = (timeCheckList.First() - workTimeMonday.Value.ToTimeSpan()).TotalMinutes;
                             result = minutesFirst > 0 ? minutesFirst : 0;
                         }
                         break;
                     default:
-                        if (workTimeDaily != null && timeCheckList != null && timeCheckList.Count() > 0)
+                        if (workTimeDaily != null && timeCheckList.Any())
                         {
                             double minutesFirst = (timeCheckList.First() - workTimeDaily.Value.ToTimeSpan()).TotalMinutes;
                             result = minutesFirst > 0 ? minutesFirst : 0;
@@ -399,7 +536,7 @@ namespace Hinnova.QLNS
             }
             if (IsWorkStartAfternoon(timeCheckList, middleStart, middleEnd))
             {
-                if (middleEnd != null && timeCheckList != null && timeCheckList.Count() > 0)
+                if (middleEnd != null && timeCheckList.Any())
                 {
                     double minutesFirst = (timeCheckList.First() - middleEnd.Value.ToTimeSpan()).TotalMinutes;
                     result = minutesFirst > 0 ? minutesFirst : 0;

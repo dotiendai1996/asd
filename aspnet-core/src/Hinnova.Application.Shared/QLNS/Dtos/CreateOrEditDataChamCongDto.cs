@@ -9,7 +9,7 @@ namespace Hinnova.QLNS.Dtos
     public class CreateOrEditDataChamCongDto : EntityDto<int?>
     {
         [Required]
-        public int MaChamCong { get; set; }
+        public int? MaChamCong { get; set; }
         [Required]
         public string TimeCheck { get; set; }
 

@@ -49,6 +49,8 @@ namespace Hinnova
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CM_BRANCH, CM_BRANCHDto>().ReverseMap();
+            configuration.CreateMap<CM_BRANCHDto, CM_BRANCH>().ReverseMap();
             configuration.CreateMap<CreateOrEditQuanLyTrucTiepPNPDto, QuanLyTrucTiepPNP>().ReverseMap();
             configuration.CreateMap<QuanLyTrucTiepPNPDto, QuanLyTrucTiepPNP>().ReverseMap();
             configuration.CreateMap<CreateOrEditQuanLyNghiPhepDto, QuanLyNghiPhep>().ReverseMap();

@@ -36,6 +36,7 @@ namespace Hinnova.Dto
 
         public IEnumerable<OrganizationUnitDto> OrganizationUnits { get; set; }
 
+
         public UserDto()
         {
             Roles = new List<RoleDto>();
@@ -62,5 +63,6 @@ namespace Hinnova.Dto
 
             public string DisplayName { get; set; }
         }
+        public string EmployeeCode { get; set; }
     }
 }

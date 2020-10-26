@@ -7,7 +7,7 @@ namespace Hinnova.QLNS.Dtos
     public class CreateOrEditMobileDataChamCongDto : EntityDto
     {
         [Required]
-        public int MaChamCong { get; set; }
+        public int? MaChamCong { get; set; }
         [Required]
         public string CheckTime { get; set; }
         [Required]

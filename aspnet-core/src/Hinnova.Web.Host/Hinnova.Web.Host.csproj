@@ -16,6 +16,12 @@
     <FileUpgradeFlags>40</FileUpgradeFlags>
     <UpgradeBackupLocation>D:\GSoft\QLNS_1\aspnet-core\Backup\src\Hinnova.Web.Host\</UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="App_Data\**" />
@@ -76,6 +82,7 @@
     <PackageReference Include="Abp.AspNetZeroCore" Version="2.0.0" />
     <PackageReference Include="Abp.Castle.Log4Net" Version="5.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.0.0" />
+    <PackageReference Include="Novell.Directory.Ldap.NETStandard" Version="3.3.1" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\swagger\ui\index.html" />
